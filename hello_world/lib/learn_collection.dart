@@ -1,4 +1,9 @@
 void testCollection() {
+  _testList();
+}
+
+//任何以 _ 开头的标识符，都是“库私有（library-private）”
+void _testList() {
   final animals = ['狗', '猫', '熊'];
   //for in
   for (var animal in animals) {
