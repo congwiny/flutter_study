@@ -1,6 +1,28 @@
 void testCollection() {
   //_testList();
-  _testSet();
+  //_testSet();
+  _testMap();
+}
+
+void _testMap() {
+  //Map<String, String> animals;
+  final animals = {'dog': '狗', 'cat': '猫', 'bear': '熊'};
+  print(animals['dog']);
+  //添加元素
+  animals['bird'] = '鸟';
+
+  //for in 遍历 map
+  for (var entry in animals.entries) {
+    print('${entry.key} -> ${entry.value}');
+  }
+  print('------');
+  //移除元素
+  animals.remove('cat');
+
+  //forEach 遍历 map
+  animals.forEach((key, value) {
+    print('$key -> $value');
+  });
 }
 
 void _testSet() {
