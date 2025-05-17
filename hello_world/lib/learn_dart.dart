@@ -24,7 +24,7 @@ void runDemo() {
 
   try {
     drive();
-  } catch (error) {
-    print(error);
+  } on NoGasException catch (error) {
+    print(error.message);
   }
 }
