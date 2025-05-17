@@ -2,13 +2,9 @@ void greet() {
   print('Hello world');
 }
 
+class NoGasException implements Exception {}
+
 void runDemo() {
-  var title;
-  print('title=${title}');
-
-  title = '小白兔开发';
-  print('title=${title}');
-
   getGasoline() {
     return 0;
   }
@@ -16,7 +12,7 @@ void runDemo() {
   drive() {
     var gasoline = getGasoline();
     if (gasoline == 0) {
-      throw '没油了';
+      throw NoGasException();
     }
     print('呜呜～');
   }
