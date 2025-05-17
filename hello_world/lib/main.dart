@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/learn_exception.dart';
+import 'package:hello_world/learn_collection.dart';
 
 void main() {
   runApp(const MyApp());
-  runDemo();
+  //testException();
+  testCollection();
 }
 
 class MyApp extends StatelessWidget {

@@ -9,7 +9,7 @@ class NoGasException implements Exception {
   NoGasException(this.message);
 }
 
-void runDemo() {
+void testException() {
   getGasoline() {
     return 0;
   }
