@@ -22,5 +22,9 @@ void runDemo() {
     print('呜呜～');
   }
 
-  drive();
+  try {
+    drive();
+  } catch (error) {
+    print(error);
+  }
 }
