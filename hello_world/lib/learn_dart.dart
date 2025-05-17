@@ -2,7 +2,12 @@ void greet() {
   print('Hello world');
 }
 
-class NoGasException implements Exception {}
+class NoGasException implements Exception {
+  //message属性
+  String message;
+  //构造函数，接收参数赋值给message属性
+  NoGasException(this.message);
+}
 
 void runDemo() {
   getGasoline() {
@@ -12,7 +17,7 @@ void runDemo() {
   drive() {
     var gasoline = getGasoline();
     if (gasoline == 0) {
-      throw NoGasException();
+      throw NoGasException('没有油了！');
     }
     print('呜呜～');
   }
