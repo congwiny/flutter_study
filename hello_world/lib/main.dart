@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/learn_dart.dart';
 
 void main() {
   runApp(const MyApp());
+  runDemo();
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo by Congwiny'),
+      home: const MyHomePage(title: 'Flutter Demo by'),
     );
   }
 }
