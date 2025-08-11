@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/learn_exception.dart';
 import 'package:hello_world/learn_collection.dart';
 import 'package:hello_world/learn_var.dart';
+import 'package:hello_world/learn_null_safety.dart';
 
 void main() {
   runApp(const MyApp());
   //testException();
   //testCollection();
-  testVar();
+  testNullSafety();
 }
 
 class MyApp extends StatelessWidget {
