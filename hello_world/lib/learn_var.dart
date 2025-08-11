@@ -49,3 +49,15 @@ void testObject() {
   Object a = 42;
   //var b = a + 10; // 编译报错：Object 不能用于 +
 }
+
+/// 对比 final 和 const
+/// var：可多次赋值（类型一致时）。
+/// final：只能赋值一次（运行时确定值）。
+/// const：编译时常量，不可重新赋值。
+void testConstFinal() {
+  final age = 30;
+  //age = 31; // 编译报错！
+
+  const pi = 3.14;
+  //pi = 3.2; // 编译报错！
+}
