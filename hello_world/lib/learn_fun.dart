@@ -13,6 +13,8 @@ int add(int a, int b) {
 ///单表达式函数
 int add2(int a, int b) => a + b;
 
-void testFun() {
-  add2(1, 2);
+///二 函数参数
+////1. 必须位置参数
+void printSum(int a, int b) {
+  print(a + b);
 }
