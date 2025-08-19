@@ -27,9 +27,26 @@ void printDetails(String name, [int? age, String? city = 'beijing']) {
   if (city != null) print('City: $city');
 }
 
+////3. 命名可选参数 {}
+////   命名参数用 {} 包裹，调用时需指定参数名
+////   注意： 命名可选参数的参数有以下要求：
+///       1.使用 required
+///       2.给赋值
+///       3.给可空的参数
+void printUser({required String name, int age = 18, String? city}) {
+  print('Name: $name');
+  print('Age: $age');
+  if (city != null) print('City: $city');
+}
+
 void testFun() {
-  // 调用方式
+  // 位置可选参数调用方式
   printDetails('Alice');
   printDetails('Bob', 30);
   printDetails('Charlie', 25, 'New York');
+
+  // 命名可选参数调用方式
+  printUser(name: 'Alice');
+  printUser(name: 'Bob', age: 30);
+  printUser(name: 'Charlie', city: 'London', age: 25);
 }
