@@ -33,7 +33,8 @@ void printDetails(String name, [int? age, String? city = 'beijing']) {
 ///       1.使用 required
 ///       2.给赋值
 ///       3.给可空的参数
-void printUser({required String name, int age = 18, String? city}) {
+void printUser(int id, {required String name, int age = 18, String? city}) {
+  print('Id: $id');
   print('Name: $name');
   print('Age: $age');
   if (city != null) print('City: $city');
@@ -46,7 +47,7 @@ void testFun() {
   printDetails('Charlie', 25, 'New York');
 
   // 命名可选参数调用方式
-  printUser(name: 'Alice');
-  printUser(name: 'Bob', age: 30);
-  printUser(name: 'Charlie', city: 'London', age: 25);
+  printUser(1, name: 'Alice');
+  printUser(2, name: 'Bob', age: 30);
+  printUser(3, name: 'Charlie', city: 'London', age: 25);
 }
