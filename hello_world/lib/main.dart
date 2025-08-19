@@ -3,12 +3,14 @@ import 'package:hello_world/learn_exception.dart';
 import 'package:hello_world/learn_collection.dart';
 import 'package:hello_world/learn_var.dart';
 import 'package:hello_world/learn_null_safety.dart';
+import 'package:hello_world/learn_fun.dart';
 
 void main() {
   runApp(const MyApp());
   //testException();
   //testCollection();
-  testNullSafety();
+  //testNullSafety();
+  testFun();
 }
 
 class MyApp extends StatelessWidget {
