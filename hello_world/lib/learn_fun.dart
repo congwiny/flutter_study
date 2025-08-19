@@ -40,6 +40,20 @@ void printUser(int id, {required String name, int age = 18, String? city}) {
   if (city != null) print('City: $city');
 }
 
+///三 函数作为一等公民
+///1. 将函数赋值给变量
+var hello = (String name) => print('Hello, $name!');
+
+///2. 函数作为参数
+void executeFunction(void Function() fn) {
+  fn();
+}
+
+///3. 函数作为返回值
+Function multiplyBy(int multiplier) {
+  return (int value) => value * multiplier;
+}
+
 void testFun() {
   // 位置可选参数调用方式
   printDetails('Alice');
@@ -50,4 +64,14 @@ void testFun() {
   printUser(1, name: 'Alice');
   printUser(2, name: 'Bob', age: 30);
   printUser(3, name: 'Charlie', city: 'London', age: 25);
+
+  //调用函数变量
+  hello('Alice');
+
+  //调用函数作为参数
+  executeFunction(() => print('Executed!'));
+
+  //返回一个函数
+  var doubleIt = multiplyBy(2);
+  print(doubleIt(5)); // 输出 10
 }
