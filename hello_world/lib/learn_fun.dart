@@ -18,3 +18,18 @@ int add2(int a, int b) => a + b;
 void printSum(int a, int b) {
   print(a + b);
 }
+
+////2. 位置可选参数 []
+////   位置可选参数顺序固定，带默认值的必须放在最后
+void printDetails(String name, [int? age, String? city = 'beijing']) {
+  print('Name: $name');
+  if (age != null) print('Age: $age');
+  if (city != null) print('City: $city');
+}
+
+void testFun() {
+  // 调用方式
+  printDetails('Alice');
+  printDetails('Bob', 30);
+  printDetails('Charlie', 25, 'New York');
+}
