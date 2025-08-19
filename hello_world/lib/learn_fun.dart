@@ -87,4 +87,19 @@ void testFun() {
   // 匿名函数（箭头）
   var doubled = list.map((n) => n * 2).toList();
   print(doubled); // [2, 4, 6]
+
+  //调用闭包
+  var c = counter();
+  print(c()); // 1
+  print(c()); // 2
+
+  var c2 = counter();
+  print(c2()); // 1  （每个闭包都有自己的环境）
+}
+
+///五 闭包
+//说明：匿名函数可以捕获并持有外部作用域变量的引用（而不是拷贝），从而形成带状态的函数。
+Function counter() {
+  int count = 0; // 外部变量被“捕获”
+  return () => ++count; // 匿名函数形成闭包
 }
