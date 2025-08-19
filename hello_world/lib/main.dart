@@ -4,13 +4,15 @@ import 'package:hello_world/learn_collection.dart';
 import 'package:hello_world/learn_var.dart';
 import 'package:hello_world/learn_null_safety.dart';
 import 'package:hello_world/learn_fun.dart';
+import 'package:hello_world/learn_fun_async.dart';
 
 void main() {
   runApp(const MyApp());
   //testException();
   //testCollection();
   //testNullSafety();
-  testFun();
+  // testFun();
+  testFunAsync(); // 调用异步函数
 }
 
 class MyApp extends StatelessWidget {
