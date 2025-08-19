@@ -74,4 +74,17 @@ void testFun() {
   //返回一个函数
   var doubleIt = multiplyBy(2);
   print(doubleIt(5)); // 输出 10
+
+  ///四 匿名函数（Lambda / inline function）
+  var list = [1, 2, 3];
+  // 匿名函数（块）
+  list.forEach((item) {
+    print(item * 2);
+  });
+  // 简写形式
+  list.forEach((item) => print(item * 2));
+
+  // 匿名函数（箭头）
+  var doubled = list.map((n) => n * 2).toList();
+  print(doubled); // [2, 4, 6]
 }
