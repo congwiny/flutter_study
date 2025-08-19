@@ -15,9 +15,19 @@ Future<String> fetchData() async {
   return "数据加载完成";
 }
 
+///3. Future 的使用方式
+////1. 使用 then 处理 Future
+void testFutureThen() {
+  fetchData().then((value) {
+    print('加载结果：$value');
+  });
+}
+
 void testFunAsync() async {
   print("开始请求数据...");
   String result = await fetchData(); // 等待异步函数执行完成
   print(result);
   print("请求结束");
+
+  testFutureThen();
 }
