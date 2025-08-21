@@ -52,12 +52,32 @@ void testFutureWithError() async {
   }
 }
 
+///4.多个异步操作的顺序执行
+Future<String> task1() async {
+  await Future.delayed(Duration(seconds: 1));
+  return "任务1完成";
+}
+
+Future<String> task2() async {
+  await Future.delayed(Duration(seconds: 1));
+  return "任务2完成";
+}
+
 void testFunAsync() async {
-  print("开始请求数据...");
-  String result = await fetchData(); // 等待异步函数执行完成
-  print(result);
-  print("请求结束");
+  // print("开始请求数据...");
+  // String result = await fetchData(); // 等待异步函数执行完成
+  // print(result);
+  // print("请求结束");
 
   //testFutureThen();
-  testFutureWithError();
+  //testFutureWithError();
+
+  print("开始执行任务..."); //多个异步操作的顺序执行
+  String result1 = await task1();
+  print(result1);
+
+  String result2 = await task2();
+  print(result2);
+
+  print("所有任务完成");
 }
