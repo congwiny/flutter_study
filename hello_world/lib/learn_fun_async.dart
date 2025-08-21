@@ -23,11 +23,37 @@ void testFutureThen() {
   });
 }
 
+////2. 处理异常
+Future<String> fetchWithError() async {
+  await Future.delayed(Duration(seconds: 1));
+  throw Exception("网络错误");
+}
+
+void testFutureWithError() async {
+  //1. 捕获异常1: 使用 Future.catchError
+  fetchWithError()
+      .then((value) {
+        print('加载结果：$value');
+      })
+      .catchError((error) {
+        print("捕获异常1: $error");
+      });
+
+  //2. 捕获异常2: 使用 try...catch
+  try {
+    String data = await fetchWithError();
+    print(data);
+  } catch (e) {
+    print("捕获异常2: $e");
+  }
+}
+
 void testFunAsync() async {
   print("开始请求数据...");
   String result = await fetchData(); // 等待异步函数执行完成
   print(result);
   print("请求结束");
 
-  testFutureThen();
+  //testFutureThen();
+  testFutureWithError();
 }
