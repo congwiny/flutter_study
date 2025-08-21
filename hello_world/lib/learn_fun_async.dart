@@ -63,6 +63,8 @@ Future<String> task2() async {
   return "任务2完成";
 }
 
+///5. 多个异步操作的并发执行
+
 void testFunAsync() async {
   // print("开始请求数据...");
   // String result = await fetchData(); // 等待异步函数执行完成
@@ -72,12 +74,15 @@ void testFunAsync() async {
   //testFutureThen();
   //testFutureWithError();
 
-  print("开始执行任务..."); //多个异步操作的顺序执行
-  String result1 = await task1();
-  print(result1);
+  print("开始执行任务...");
+  //多个异步操作的顺序执行
+  // String result1 = await task1();
+  // print(result1);
 
-  String result2 = await task2();
-  print(result2);
+  // String result2 = await task2();
+  // print(result2);
 
-  print("所有任务完成");
+  //  print("所有任务完成");
+  List<String> results = await Future.wait([task1(), task2()]);
+  print(results); // ["任务1完成", "任务2完成"]
 }
