@@ -37,6 +37,10 @@ void testFutureWithError() async {
       })
       .catchError((error) {
         print("捕获异常1: $error");
+      })
+      .whenComplete(() {
+        //无论异步任务执行成功或失败都会执行到whenComplete
+        print("任务执行完成");
       });
 
   //2. 捕获异常2: 使用 try...catch
