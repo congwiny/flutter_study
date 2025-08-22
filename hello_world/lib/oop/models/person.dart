@@ -5,7 +5,11 @@ class Person {
   List<String> hobbies;
 
   // 默认构造函数
-  Person(this.name, this.age, this.description, this.hobbies);
+  Person(this.name, this.age, this.description, this.hobbies) {
+    if (hobbies.isEmpty) {
+      throw ArgumentError('hobbies cannot be empty');
+    }
+  }
 
   //命名构造函数
   //this.name 直接给属性赋值
