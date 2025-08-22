@@ -85,4 +85,13 @@ void testFunAsync() async {
   //  print("所有任务完成");
   List<String> results = await Future.wait([task1(), task2()]);
   print(results); // ["任务1完成", "任务2完成"]
+
+  //Future.wait 之后添加 then 和 catchError
+  Future.wait([task1(), task2()])
+      .then((results) {
+        print(results[0] + results[1]);
+      })
+      .catchError((e) {
+        print(e);
+      });
 }
