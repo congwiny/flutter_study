@@ -1,6 +1,7 @@
 import 'models/person.dart';
 import 'models/employee.dart';
 import 'models/immutable_point.dart';
+import 'models/student.dart';
 
 void testOop() {
   // 创建对象
@@ -36,4 +37,8 @@ void testOop() {
   const p11 = ImmutablePoint(1, 2);
   const p22 = ImmutablePoint(1, 2);
   print(identical(p11, p22)); // true，常量对象会被复用
+
+  Student s = Student('S001');
+  s.setMajor('Computer Science');
+  print(s.major); // 输出: Computer Science
 }
