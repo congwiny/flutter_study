@@ -83,15 +83,35 @@ void testFunAsync() async {
   // print(result2);
 
   //  print("所有任务完成");
-  List<String> results = await Future.wait([task1(), task2()]);
-  print(results); // ["任务1完成", "任务2完成"]
+  // List<String> results = await Future.wait([task1(), task2()]);
+  // print(results); // ["任务1完成", "任务2完成"]
 
-  //Future.wait 之后添加 then 和 catchError
-  Future.wait([task1(), task2()])
-      .then((results) {
-        print(results[0] + results[1]);
-      })
-      .catchError((e) {
-        print(e);
-      });
+  // //Future.wait 之后添加 then 和 catchError
+  // Future.wait([task1(), task2()])
+  //     .then((results) {
+  //       print(results[0] + results[1]);
+  //     })
+  //     .catchError((e) {
+  //       print(e);
+  //     });
+
+  ///await for 用于监听流中的每个值。
+  await for (int value in countStream(5)) {
+    print("接收到: $value");
+  }
+}
+
+///6. Stream 的异步函数
+////当需要持续接收数据（如 WebSocket、事件流），可以使用 async* 生成 Stream。
+///
+//// async* 表示这是一个异步生成器函数，返回 Stream。
+///  yield 用于发出一个值。
+///
+
+// 生成一个每秒输出一个数字的流
+Stream<int> countStream(int max) async* {
+  for (int i = 1; i <= max; i++) {
+    await Future.delayed(Duration(seconds: 1));
+    yield i; // 类似 return，但可以多次返回
+  }
 }
