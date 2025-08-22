@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/learn_exception.dart';
-import 'package:hello_world/learn_collection.dart';
-import 'package:hello_world/learn_var.dart';
-import 'package:hello_world/learn_null_safety.dart';
-import 'package:hello_world/learn_fun.dart';
-import 'package:hello_world/learn_fun_async.dart';
+import 'package:hello_world/imports.dart';
 
 void main() {
   runApp(const MyApp());

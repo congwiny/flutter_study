@@ -1,7 +1,7 @@
 ///一 基本函数定义
 ///简单函数
 ////1.无返回值函数
-void greet() {
+void greet2() {
   print("Hello");
 }
 
