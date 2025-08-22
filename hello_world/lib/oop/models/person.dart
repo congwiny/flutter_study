@@ -6,6 +6,18 @@ class Person {
   String _description;
   List<String> hobbies;
 
+  // 公共getter方法访问私有字段
+  String get desc => _description;
+
+  // 公共setter方法修改私有字段（带验证）
+  set desc(String value) {
+    if (value.isNotEmpty) {
+      _description = value;
+    } else {
+      throw ArgumentError('Desc cannot be empty');
+    }
+  }
+
   // 默认构造函数
   Person(this.name, this.age, this._description, this.hobbies) {
     if (hobbies.isEmpty) {

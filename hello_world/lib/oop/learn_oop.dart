@@ -1,4 +1,5 @@
 import 'models/person.dart';
+import 'models/employee.dart';
 
 void testOop() {
   // 创建对象
@@ -14,8 +15,14 @@ void testOop() {
   //person2.name = 'sss'; // 错误，name是 final类型的，无法修改
   person2.age = 50;
   //person2._description; // 不同库，不可以访问Person私有字段
+
+  print('Person2 Desc: ${person2.desc}'); //通过公共getter访问
+
   person2.introduce();
 
   Employee employee = Employee('Alice', 25, "Love Cat", ['Sing']);
   employee.showEmployeeInfo(); //Employee 与 Person相同库，可以访问Person私有变量
+
+  Employee2 employee2 = Employee2('Alice', 25, "Love Cat", ['Sing']);
+  employee2.showEmployeeInfo();
 }

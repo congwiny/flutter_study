@@ -10,6 +10,9 @@ class Employee2 {
   void showEmployeeInfo() {
     print('Employee: ${_person.name}');
     //print('Desc: ${_person._description}'); // 不可以访问私有字段
+    _person.desc = "congwiny"; //通过公共setter修改
+    print('Desc: ${_person.desc}'); //通过公共getter访问
+
     print('Hobbies: \$${_person.hobbies}');
   }
 }
