@@ -1,5 +1,6 @@
 class Person {
-  String name;
+  //final 只能赋值一次
+  final String name;
   int age;
   String description;
   List<String> hobbies;

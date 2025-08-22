@@ -11,4 +11,7 @@ void testOop() {
 
   Person person2 = Person.fromBirthYear('Charlie', 1995, "Love Dog");
   person2.introduce();
+  //person2.name = 'sss'; // 错误，name是 final类型的，无法修改
+  person2.age = 50;
+  person2.introduce();
 }
