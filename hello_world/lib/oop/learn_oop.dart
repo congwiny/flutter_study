@@ -13,5 +13,9 @@ void testOop() {
   person2.introduce();
   //person2.name = 'sss'; // 错误，name是 final类型的，无法修改
   person2.age = 50;
+  //person2._description; // 不同库，不可以访问Person私有字段
   person2.introduce();
+
+  Employee employee = Employee('Alice', 25, "Love Cat", ['Sing']);
+  employee.showEmployeeInfo(); //Employee 与 Person相同库，可以访问Person私有变量
 }
