@@ -1,3 +1,5 @@
+import 'dart:async';
+
 ///1. 为什么需要异步函数
 ////在 Dart 中，某些操作（例如 网络请求、文件读取、数据库操作）需要较长时间才能完成。
 ////如果这些操作在主线程中以同步方式执行，会导致 UI 卡顿 或 阻塞后续逻辑。
@@ -100,7 +102,9 @@ void testFunAsync() async {
   //   print("接收到: $value");
   // }
 
-  testStreamFromFutures();
+  //testStreamFromFutures();
+
+  testFutureOtherUse();
 }
 
 ///6. Stream 的异步函数
@@ -145,4 +149,30 @@ void testStreamFromFutures() {
       print("onDone");
     },
   );
+}
+
+///7. Future其他用法
+void testFutureOtherUse() async {
+  ////1.使用 Future.sync 创建同步 Future（调试用）
+  Future<String> syncFuture = Future.sync(() => "立即返回");
+  testFutureTimeOut();
+}
+
+////2. timeout设置超时
+Future<String> slowTask() {
+  return Future.delayed(Duration(seconds: 3), () {
+    return "任务完成";
+  });
+}
+
+void testFutureTimeOut() async {
+  try {
+    // 设置最多等待 2 秒
+    String result = await slowTask().timeout(Duration(seconds: 2));
+    print(result);
+  } on TimeoutException {
+    print("超时了：任务耗时太长！");
+  } on Exception catch (e) {
+    print("其他异常: $e");
+  }
 }
