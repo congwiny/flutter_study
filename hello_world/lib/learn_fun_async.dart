@@ -96,13 +96,15 @@ void testFunAsync() async {
   //     });
 
   ///await for 用于监听流中的每个值。
-  await for (int value in countStream(5)) {
-    print("接收到: $value");
-  }
+  // await for (int value in countStream(5)) {
+  //   print("接收到: $value");
+  // }
+
+  testStreamFromFutures();
 }
 
 ///6. Stream 的异步函数
-////当需要持续接收数据（如 WebSocket、事件流），可以使用 async* 生成 Stream。
+////1. 当需要持续接收数据（如 WebSocket、事件流），可以使用 async* 生成 Stream。
 ///
 //// async* 表示这是一个异步生成器函数，返回 Stream。
 ///  yield 用于发出一个值。
@@ -114,4 +116,33 @@ Stream<int> countStream(int max) async* {
     await Future.delayed(Duration(seconds: 1));
     yield i; // 类似 return，但可以多次返回
   }
+}
+
+////2. Stream.fromFutures
+
+void testStreamFromFutures() {
+  Stream.fromFutures([
+    // 1秒后返回结果
+    Future.delayed(Duration(seconds: 1), () {
+      return "hello 1";
+    }),
+    // 抛出一个异常
+    Future.delayed(Duration(seconds: 2), () {
+      throw AssertionError("Error");
+    }),
+    // 3秒后返回结果
+    Future.delayed(Duration(seconds: 3), () {
+      return "hello 3";
+    }),
+  ]).listen(
+    (data) {
+      print(data);
+    },
+    onError: (e) {
+      print(e.message);
+    },
+    onDone: () {
+      print("onDone");
+    },
+  );
 }
