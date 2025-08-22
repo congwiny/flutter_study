@@ -1,5 +1,6 @@
 import 'models/person.dart';
 import 'models/employee.dart';
+import 'models/immutable_point.dart';
 
 void testOop() {
   // 创建对象
@@ -25,4 +26,14 @@ void testOop() {
 
   Employee2 employee2 = Employee2('Alice', 25, "Love Cat", ['Sing']);
   employee2.showEmployeeInfo();
+
+  //可变对象，不相等
+  ImmutablePoint p1 = ImmutablePoint(1, 2);
+  ImmutablePoint p2 = ImmutablePoint(1, 2);
+  print(identical(p1, p2)); // false
+
+  // const不可变对象
+  const p11 = ImmutablePoint(1, 2);
+  const p22 = ImmutablePoint(1, 2);
+  print(identical(p11, p22)); // true，常量对象会被复用
 }
