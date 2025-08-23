@@ -167,3 +167,24 @@ class Musician extends Performer with Musical {
     print('Stopping the music');
   }
 }
+
+///2.3 关键特性和规则
+//// a) 混入多个 Mixin
+//// 一个类可以使用 with 后跟多个用逗号分隔的 Mixin。
+///  顺序很重要，后混入的 Mixin 会覆盖先前混入的 Mixin 或父类的同名方法/属性。
+
+mixin A {
+  String message = 'A';
+  void log() {
+    print('A.log: $message');
+  }
+}
+
+mixin B {
+  String message = 'B';
+  void log() {
+    print('B.log: $message');
+  }
+}
+
+class C with A, B {}

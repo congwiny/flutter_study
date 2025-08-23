@@ -53,9 +53,14 @@ void testInterface() {
 
 void testMixin() {
   var musician = Musician();
-  musician.perform(); // 输出: Performing... (来自 Performer 类)
-  musician.entertainMe(); // 输出: Humming a tune (来自 Musical Mixin)
-  musician.canPlayPiano = true;
-  musician.entertainMe(); // 输出: Playing piano (来自 Musical Mixin)
-  musician.stop(); // 输出: Stopping the music (由 Musician 类实现)
+  // musician.perform(); // 输出: Performing... (来自 Performer 类)
+  // musician.entertainMe(); // 输出: Humming a tune (来自 Musical Mixin)
+  // musician.canPlayPiano = true;
+  // musician.entertainMe(); // 输出: Playing piano (来自 Musical Mixin)
+  // musician.stop(); // 输出: Stopping the music (由 Musician 类实现)
+
+  var c = C();
+  c.log(); // 输出: B.log: B
+  print(c.message); // 输出: B
+  // 因为 B 在 A 之后混入，所以 B 的成员覆盖了 A 的成员
 }
