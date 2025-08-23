@@ -47,3 +47,25 @@ class Dog extends Animal {
     bark(); // 调用自己的 bark 方法
   }
 }
+
+//抽象类不能被实例化
+abstract class Shape {
+  //抽象属性
+  String get color;
+
+  void draw(); // 抽象方法
+
+  void commonMethod() {
+    print('This is a shape.');
+  }
+}
+
+//Circle 继承自 抽象类
+class Circle extends Shape {
+  @override
+  String get color => 'Red'; //实现抽象属性
+  @override
+  void draw() {
+    print('Drawing a $color circle.');
+  }
+}

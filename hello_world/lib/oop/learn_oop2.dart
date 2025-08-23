@@ -24,4 +24,11 @@ void testOop2() {
 
   //无法访问Dog的属性
   // print('${myDog.breed}');
+
+  testAbstract();
+}
+
+void testAbstract() {
+  Shape circle = Circle();
+  circle.draw(); // 输出: Drawing a Red circle.
 }
