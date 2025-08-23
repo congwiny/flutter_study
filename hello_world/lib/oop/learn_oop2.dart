@@ -25,10 +25,27 @@ void testOop2() {
   //无法访问Dog的属性
   // print('${myDog.breed}');
 
-  testAbstract();
+  //testAbstract();
+  testInterface();
 }
 
 void testAbstract() {
   Shape circle = Circle();
   circle.draw(); // 输出: Drawing a Red circle.
+}
+
+void testInterface() {
+  Duck donald = Duck('Donald');
+  donald.fly(); // 输出: Donald is flying in the sky
+  donald.swim(); // 输出: Donald is swimming in the water
+  donald.quack(); // 输出: Donald says: Quack! Quack!
+
+  Airplane boeing = Airplane();
+  boeing.fly(); // 输出: Airplane is flying at high altitude
+
+  // 多态的使用
+  List<Flyable> flyingObjects = [Duck('Daffy'), Airplane()];
+  for (var obj in flyingObjects) {
+    obj.fly();
+  }
 }

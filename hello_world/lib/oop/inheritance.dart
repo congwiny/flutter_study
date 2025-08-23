@@ -69,3 +69,49 @@ class Circle extends Shape {
     print('Drawing a $color circle.');
   }
 }
+
+//在 Dart 中，每个类都隐式地定义了一个接口。
+//这意味着任何类都可以被其他类实现（implements），而不仅仅是传统的接口。
+
+//虽然任何类都可以作为接口，但通常我们使用抽象类来明确定义纯粹的接口：
+
+// 作为纯接口使用的抽象类
+abstract class Flyable {
+  void fly();
+}
+
+class Swimmable {
+  void swim() {
+    print('swimming');
+  }
+}
+
+// Duck 类 使用 extends继承一个类，可使用implements 实现多个接口
+class Duck extends Animal implements Flyable, Swimmable {
+  String name;
+
+  Duck(this.name) : super(name, 3);
+
+  @override
+  void fly() {
+    print('$name is flying in the sky');
+  }
+
+  @override
+  void swim() {
+    print('$name is swimming in the water');
+  }
+
+  // 自己的方法
+  void quack() {
+    print('$name says: Quack! Quack!');
+  }
+}
+
+// 飞机也可以实现 Flyable 接口
+class Airplane implements Flyable {
+  @override
+  void fly() {
+    print('Airplane is flying at high altitude');
+  }
+}
