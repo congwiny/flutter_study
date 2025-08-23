@@ -171,9 +171,11 @@ class Musician extends Performer with Musical {
 ///2.3 关键特性和规则
 //// a) 混入多个 Mixin
 //// 一个类可以使用 with 后跟多个用逗号分隔的 Mixin。
-///  顺序很重要，后混入的 Mixin 会覆盖先前混入的 Mixin 或父类的同名方法/属性。
+////  顺序很重要，后混入的 Mixin 会覆盖先前混入的 Mixin 或父类的同名方法/属性。
 
-mixin A {
+//// b) on 关键字：限制可混入的类类型
+//// A 现在只能被混入到 CC 或其子类中
+mixin A on CC {
   String message = 'A';
   void log() {
     print('A.log: $message');
@@ -187,4 +189,7 @@ mixin B {
   }
 }
 
-class C with A, B {}
+// C 继承自 CC，所以可以混入 A
+class C extends CC with A, B {}
+
+class CC {}
