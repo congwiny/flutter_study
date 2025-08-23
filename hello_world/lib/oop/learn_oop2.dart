@@ -26,7 +26,8 @@ void testOop2() {
   // print('${myDog.breed}');
 
   //testAbstract();
-  testInterface();
+  //testInterface();
+  testMixin();
 }
 
 void testAbstract() {
@@ -48,4 +49,13 @@ void testInterface() {
   for (var obj in flyingObjects) {
     obj.fly();
   }
+}
+
+void testMixin() {
+  var musician = Musician();
+  musician.perform(); // 输出: Performing... (来自 Performer 类)
+  musician.entertainMe(); // 输出: Humming a tune (来自 Musical Mixin)
+  musician.canPlayPiano = true;
+  musician.entertainMe(); // 输出: Playing piano (来自 Musical Mixin)
+  musician.stop(); // 输出: Stopping the music (由 Musician 类实现)
 }

@@ -115,3 +115,55 @@ class Airplane implements Flyable {
     print('Airplane is flying at high altitude');
   }
 }
+
+//使用 mixin
+// Mixin 是 Dart 语言中一项非常强大且独特的特性，
+// 它提供了一种在类层次结构中复用代码的方法，无需使用传统的继承。
+// 这对于实现类似多重继承的效果，但又避免了多重继承的复杂性
+
+//1. 核心概念：Mixin 是什么？
+//你可以将 Mixin 想象成一个代码片段或一组可复用的方法/属性，它可以被“混入”（mixed in）到其他类中。
+//被混入的类会自动获得 Mixin 的所有功能（属性和方法），而无需成为其子类。
+//核心目的：代码复用和组合（Composition over Inheritance）。
+
+//2. 如何定义和使用 Mixin？
+//使用 mixin 关键字来定义一个 Mixin。Mixin 本身不能直接被实例化。
+
+///2.1 定义 Mixin
+mixin Musical {
+  // 可以包含属性
+  bool canPlayPiano = false;
+
+  // 可以包含方法（包括抽象方法）
+  void entertainMe() {
+    if (canPlayPiano) {
+      print('Playing piano');
+    } else {
+      print('Humming a tune');
+    }
+  }
+
+  // 甚至可以包含抽象方法，要求混入的类必须实现它
+  void stop();
+}
+
+///2.2 使用 Mixin（with 关键字）
+// 一个普通的类
+class Performer {
+  void perform() {
+    print('Performing...');
+  }
+}
+
+// 使用 `with` 将 Musical Mixin 混入到 Musician 类中
+class Musician extends Performer with Musical {
+  // Musician 现在拥有：
+  // 1. Performer 类的 perform() 方法
+  // 2. Musical Mixin 的 canPlayPiano 属性和 entertainMe() 方法
+  // 3. 并且必须实现 Musical Mixin 中定义的抽象方法 stop()
+
+  @override
+  void stop() {
+    print('Stopping the music');
+  }
+}
