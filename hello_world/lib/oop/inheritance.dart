@@ -193,3 +193,36 @@ mixin B {
 class C extends CC with A, B {}
 
 class CC {}
+
+//// c) Mixin 的线性化（Linearization）
+
+//// Dart 处理 Mixin 继承的方式是“线性化”，这意味着它会创建一个线性的继承链。
+//// 当你使用 class C extends A with B, D 时，Dart 会将其理解为：class C = D(B(A))。
+
+class A1 {
+  void hi() => print('A');
+}
+
+mixin B1 {
+  void hi() => print('B');
+}
+
+mixin C1 {
+  void hi() => print('C');
+}
+
+class D1 extends A1 with B1, C1 {}
+
+void testLinearization() {
+  print('-----');
+  var d1 = D1();
+  d1.hi(); // 输出: C
+  //  线性化顺序：D1 -> C1 -> B1 -> A1 -> Object
+  //  查找 hi() 方法时，最先在 C1 中找到，所以执行 C1 的 hi()
+
+  print(d1 is A1); // true
+  print(d1 is B1); // true
+  print(d1 is C1); // true
+
+  // d1 是所有这些类型的子类型
+}

@@ -63,4 +63,6 @@ void testMixin() {
   c.log(); // 输出: B.log: B
   print(c.message); // 输出: B
   // 因为 B 在 A 之后混入，所以 B 的成员覆盖了 A 的成员
+
+  testLinearization();
 }
