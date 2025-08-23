@@ -226,3 +226,25 @@ void testLinearization() {
 
   // d1 是所有这些类型的子类型
 }
+
+////一个类可以同时使用这三者，顺序是固定的：extends -> with -> implements。
+class SuperClass {
+  void superMethod() => print('Super');
+}
+
+mixin MixinA {
+  void mixinMethod() => print('MixinA');
+}
+
+abstract class Interface {
+  void interfaceMethod() {} // 只是一个接口，无实现
+}
+
+// 正确的顺序：extends -> with -> implements
+class MyClass extends SuperClass with MixinA implements Interface {
+  // 必须实现 Interface 中的所有方法，因为 `implements` 不提供实现
+  @override
+  void interfaceMethod() {
+    print('Implemented interface method');
+  }
+}
