@@ -54,3 +54,37 @@ class User {
     return _cache.putIfAbsent(id, () => User._internal(id, name));
   }
 }
+
+//// 3. 返回子类实例（多态构造）
+//// 根据参数动态返回不同子类对象。
+
+// 抽象类
+abstract class Animal {
+  void speak();
+
+  // 工厂构造函数：根据类型创建不同动物
+  factory Animal(String type) {
+    switch (type.toLowerCase()) {
+      case 'dog':
+        return Dog();
+      case 'cat':
+        return Cat();
+      default:
+        throw ArgumentError('Unknown animal type: $type');
+    }
+  }
+}
+
+class Dog implements Animal {
+  @override
+  void speak() {
+    print('Woof!');
+  }
+}
+
+class Cat implements Animal {
+  @override
+  void speak() {
+    print('Meow!');
+  }
+}

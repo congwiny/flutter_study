@@ -30,4 +30,11 @@ void testFactoryConstructor() {
 
   print(identical(logger1, logger2)); // true，同一个实例
   logger1.log('Hello Dart!');
+
+  //工厂构造函数：根据类型创建不同子类实例（多态构造）
+  //应用场景：工厂模式、依赖注入、插件系统等。
+  f.Animal dog = f.Animal('dog');
+  f.Animal cat = f.Animal('cat');
+  dog.speak(); // Woof!
+  cat.speak(); // Meow!
 }
