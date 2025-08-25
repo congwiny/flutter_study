@@ -1,17 +1,17 @@
-import 'private_constructor.dart';
-import 'factory_constructor.dart';
+import 'private_constructor.dart' as p;
+import 'factory_constructor.dart' as f;
 
 void testOop3() {
-  testPrivateConstructor();
+  p.testPrivateConstructor();
 
-  var config1 = AppConfig();
-  var config2 = AppConfig();
+  var config1 = p.AppConfig();
+  var config2 = p.AppConfig();
 
   print(identical(config1, config2)); // 输出: true
   config1.loadConfig();
 
   var user =
-      User.builder()
+      p.User.builder()
           .setName('Grace')
           .setEmail('grace@example.com')
           .setAge(40)
@@ -25,8 +25,8 @@ void testOop3() {
 }
 
 void testFactoryConstructor() {
-  Logger logger1 = Logger();
-  Logger logger2 = Logger();
+  f.Logger logger1 = f.Logger();
+  f.Logger logger2 = f.Logger();
 
   print(identical(logger1, logger2)); // true，同一个实例
   logger1.log('Hello Dart!');

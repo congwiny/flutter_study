@@ -36,3 +36,21 @@ class Logger {
     print('[LOG] $message');
   }
 }
+
+////2. 对象缓存 / 实例复用
+/// 避免重复创建相同对象，提升性能。
+class User {
+  final String id;
+  final String name;
+
+  // 缓存已创建的用户
+  static final Map<String, User> _cache = {};
+
+  // 私有构造函数
+  User._internal(this.id, this.name);
+
+  // 工厂构造函数：优先从缓存返回
+  factory User(String id, String name) {
+    return _cache.putIfAbsent(id, () => User._internal(id, name));
+  }
+}
