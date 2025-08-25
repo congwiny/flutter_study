@@ -53,3 +53,64 @@ class AppConfig {
     print('Loading configuration...');
   }
 }
+
+/**
+ 2. 实现建造者模式（Builder Pattern）
+ */
+class User {
+  final String name;
+  final String email;
+  final int age;
+  final List<String> roles;
+
+  User._({
+    required this.name,
+    required this.email,
+    required this.age,
+    required this.roles,
+  });
+
+  // 工厂构造函数提供简单的创建方式
+  factory User.create(String name, String email, int age) {
+    return User._(name: name, email: email, age: age, roles: []);
+  }
+
+  // 静态方法返回 builder
+  static UserBuilder builder() {
+    return UserBuilder();
+  }
+}
+
+class UserBuilder {
+  String? _name;
+  String? _email;
+  int? _age;
+  List<String> _roles = [];
+
+  UserBuilder setName(String name) {
+    _name = name;
+    return this;
+  }
+
+  UserBuilder setEmail(String email) {
+    _email = email;
+    return this;
+  }
+
+  UserBuilder setAge(int age) {
+    _age = age;
+    return this;
+  }
+
+  UserBuilder addRole(String role) {
+    _roles.add(role);
+    return this;
+  }
+
+  User build() {
+    if (_name == null || _email == null || _age == null) {
+      throw StateError('Name, email, and age are required');
+    }
+    return User._(name: _name!, email: _email!, age: _age!, roles: _roles);
+  }
+}

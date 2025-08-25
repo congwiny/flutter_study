@@ -8,4 +8,15 @@ void testOop3() {
 
   print(identical(config1, config2)); // 输出: true
   config1.loadConfig();
+
+  var user =
+      User.builder()
+          .setName('Grace')
+          .setEmail('grace@example.com')
+          .setAge(40)
+          .addRole('admin')
+          .addRole('user')
+          .build();
+
+  print('User: ${user.name}, Roles: ${user.roles}');
 }
