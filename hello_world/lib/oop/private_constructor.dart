@@ -31,3 +31,25 @@ void testPrivateConstructor() {
   // 通过公共方法访问
   var obj4 = MyClass.create(100);
 }
+
+/**
+2. 主要用途和场景
+用途 1：实现单例模式（Singleton）
+ */
+class AppConfig {
+  // 私有构造函数
+  AppConfig._internal() {
+    print('AppConfig initialized');
+  }
+
+  // 静态单例实例
+  static final AppConfig _instance = AppConfig._internal();
+
+  // 工厂构造函数提供全局访问点
+  factory AppConfig() => _instance;
+
+  // 实例方法
+  void loadConfig() {
+    print('Loading configuration...');
+  }
+}
