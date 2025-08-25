@@ -1,4 +1,5 @@
 import 'private_constructor.dart';
+import 'factory_constructor.dart';
 
 void testOop3() {
   testPrivateConstructor();
@@ -19,4 +20,14 @@ void testOop3() {
           .build();
 
   print('User: ${user.name}, Roles: ${user.roles}');
+
+  testFactoryConstructor();
+}
+
+void testFactoryConstructor() {
+  Logger logger1 = Logger();
+  Logger logger2 = Logger();
+
+  print(identical(logger1, logger2)); // true，同一个实例
+  logger1.log('Hello Dart!');
 }
