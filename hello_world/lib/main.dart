@@ -8,7 +8,8 @@ void main() {
   //testNullSafety();
   // testFun();
   //testFunAsync(); // 调用异步函数
-  testOop2();
+  //testOop2();
+  testOop3();
 }
 
 class MyApp extends StatelessWidget {
