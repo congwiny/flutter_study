@@ -108,3 +108,28 @@ class Person {
   @override
   String toString() => 'Person(name: $name, age: $age)';
 }
+
+////5. 工厂构造函数 + 命名工厂构造函数（组合使用）
+class Color {
+  final int r, g, b;
+
+  Color._(this.r, this.g, this.b);
+
+  // 工厂构造函数：从十六进制字符串创建颜色
+  factory Color.fromHex(String hex) {
+    hex = hex.replaceAll('#', '');
+    if (hex.length == 6) {
+      int val = int.tryParse(hex, radix: 16) ?? 0;
+      int r = (val >> 16) & 0xff;
+      int g = (val >> 8) & 0xff;
+      int b = val & 0xff;
+      return Color._(r, g, b);
+    }
+    return Color._(0, 0, 0); // 默认黑色
+  }
+
+  // 命名工厂构造函数
+  factory Color.red() => Color._(255, 0, 0);
+  factory Color.green() => Color._(0, 255, 0);
+  factory Color.blue() => Color._(0, 0, 255);
+}

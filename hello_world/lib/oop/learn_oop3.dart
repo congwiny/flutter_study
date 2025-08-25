@@ -41,4 +41,11 @@ void testFactoryConstructor() {
   Map<String, dynamic> jsonData = {'name': 'Bob', 'age': 30};
   f.Person person = f.Person.fromJson(jsonData);
   print(person); // Person(name: Bob, age: 30)
+
+  f.Color red1 = f.Color.red();
+  f.Color red2 = f.Color.fromHex('#FF0000');
+  f.Color custom = f.Color.fromHex('#3498db');
+
+  print('Red: ${red1.r}, ${red1.g}, ${red1.b}'); // 255, 0, 0
+  print('Custom: ${custom.r}, ${custom.g}, ${custom.b}'); // 52, 152, 219
 }
