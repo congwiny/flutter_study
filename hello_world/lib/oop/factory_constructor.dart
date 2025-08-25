@@ -88,3 +88,23 @@ class Cat implements Animal {
     print('Meow!');
   }
 }
+
+//// 4. 解析 JSON 并返回实例
+//// 常用于从 JSON 数据创建对象。
+class Person {
+  final String name;
+  final int age;
+
+  Person._internal(this.name, this.age);
+
+  // 工厂构造函数：从 JSON 创建 Person
+  factory Person.fromJson(Map<String, dynamic> json) {
+    if (json['name'] == null) {
+      throw ArgumentError('Name is required');
+    }
+    return Person._internal(json['name'], json['age'] ?? 0);
+  }
+
+  @override
+  String toString() => 'Person(name: $name, age: $age)';
+}

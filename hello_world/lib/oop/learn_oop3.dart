@@ -37,4 +37,8 @@ void testFactoryConstructor() {
   f.Animal cat = f.Animal('cat');
   dog.speak(); // Woof!
   cat.speak(); // Meow!
+
+  Map<String, dynamic> jsonData = {'name': 'Bob', 'age': 30};
+  f.Person person = f.Person.fromJson(jsonData);
+  print(person); // Person(name: Bob, age: 30)
 }
