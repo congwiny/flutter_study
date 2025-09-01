@@ -60,4 +60,17 @@ void testConstFinal() {
 
   const pi = 3.14;
   //pi = 3.2; // 编译报错！
+
+  const a1 = A("m");
+  var a2 = A("m");
+  print("-----");
+  print(identical(a1, a2)); // false
+  print("-----");
+  const a3 = A("m");
+  print(identical(a1, a3)); // true
+}
+
+class A {
+  final String m;
+  const A(this.m);
 }
