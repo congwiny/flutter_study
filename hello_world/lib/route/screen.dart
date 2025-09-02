@@ -96,12 +96,12 @@ class FirstScreen extends StatelessWidget {
       appBar: AppBar(title: Text('首页')),
       body: Center(
         child: ElevatedButton(
-          child: Text('前往第三页并传参'),
+          child: Text('前往第二页并传参'),
           onPressed: () {
             // 使用命名路由传递参数
             Navigator.pushNamed(
               context,
-              '/third',
+              '/second',
               arguments: {'message': '来自首页的问候', 'value': 42},
             );
           },
@@ -114,14 +114,24 @@ class FirstScreen extends StatelessWidget {
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
     return Scaffold(
       appBar: AppBar(title: Text('第二页')),
       body: Center(
-        child: ElevatedButton(
-          child: Text('返回'),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('接收到的消息: ${args['message']}'),
+            Text('接收到的数值: ${args['value']}'),
+            ElevatedButton(
+              child: Text('返回'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
       ),
     );
