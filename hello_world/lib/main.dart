@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/imports.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyApp2());
   //testException();
   //testCollection();
   //testNullSafety();
   // testFun();
   //testFunAsync(); // 调用异步函数
   //testOop2();
-  testOop3();
+  //testOop3();
+  testConstFinal();
 }
 
 class MyApp extends StatelessWidget {
@@ -125,6 +126,101 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class MyApp2 extends StatelessWidget {
+  const MyApp2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: const HomePage());
+  }
+}
+
+// 一个状态ful Widget，代表一个可点击的彩色格子
+class ColorfulTile extends StatefulWidget {
+  final Color color;
+  const ColorfulTile({super.key, required this.color});
+
+  @override
+  State<ColorfulTile> createState() => _ColorfulTileState();
+}
+
+class _ColorfulTileState extends State<ColorfulTile> {
+  // 这个状态是Widget内部自己管理的！
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant ColorfulTile oldWidget) {
+    debugPrint("didUpdateWidget");
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    debugPrint("didChangeDependencies");
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("_ColorfulTileState build");
+    return Container(
+      color: widget.color,
+      child: ListTile(title: Text('Count: $_counter'), onTap: _increment),
+    );
+  }
+}
+
+// 主页，包含一个列表和一个交换列表项的按钮
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // 存颜色，而不是存 Widget
+  List<Color> _colors = [Colors.red, Colors.blue];
+
+  void _swapTiles() {
+    setState(() {
+      _colors.insert(1, _colors.removeAt(0));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint("_HomePageState build");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Key Solution Fixed'),
+        actions: [
+          IconButton(onPressed: _swapTiles, icon: const Icon(Icons.swap_horiz)),
+        ],
+      ),
+      body: ListView(
+        children:
+            _colors
+                .map(
+                  (c) => ColorfulTile(
+                    // 保证 State 和 Color 一一对应
+                    key: ValueKey(c),
+                    color: c,
+                  ),
+                )
+                .toList(),
+      ),
     );
   }
 }
