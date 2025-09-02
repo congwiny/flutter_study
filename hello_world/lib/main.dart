@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/imports.dart';
 
 void main() {
-  runApp(const MyApp2());
+  runApp(const MyApp());
   //testException();
   //testCollection();
   //testNullSafety();
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo by'),
+      home: FirstScreen(),
     );
   }
 }
