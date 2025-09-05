@@ -8,3 +8,4 @@ export 'package:hello_world/oop/learn_oop.dart';
 export 'package:hello_world/oop/learn_oop2.dart';
 export 'package:hello_world/oop/learn_oop3.dart';
 export 'package:hello_world/route/screen.dart';
+export 'package:hello_world/assets/image.dart';
