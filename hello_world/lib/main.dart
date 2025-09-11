@@ -11,7 +11,7 @@ void main() {
   //testOop2();
   //testOop3();
   //testConstFinal();
-  testFuture();
+  testIsolate();
 }
 
 class MyApp extends StatelessWidget {

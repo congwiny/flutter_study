@@ -11,3 +11,4 @@ export 'package:hello_world/route/screen.dart';
 export 'package:hello_world/assets/image.dart';
 export 'package:hello_world/assets/config.dart';
 export 'package:hello_world/thread/future.dart';
+export 'package:hello_world/thread/isolate.dart';
