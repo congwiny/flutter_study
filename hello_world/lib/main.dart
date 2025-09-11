@@ -10,7 +10,8 @@ void main() {
   //testFunAsync(); // 调用异步函数
   //testOop2();
   //testOop3();
-  testConstFinal();
+  //testConstFinal();
+  testFuture();
 }
 
 class MyApp extends StatelessWidget {
