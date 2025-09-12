@@ -66,7 +66,7 @@ class TextDemoPage extends StatelessWidget {
             ),
             const Divider(height: 32),
 
-            // 2. 水平对齐方式
+            // 3. 水平对齐方式
             const Text(
               '3. 水平对齐方式',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -82,6 +82,23 @@ class TextDemoPage extends StatelessWidget {
                   Text('右对齐', textAlign: TextAlign.right),
                   Text('两端对齐\n这是第二行\n这是第三行', textAlign: TextAlign.justify),
                 ],
+              ),
+            ),
+            const Divider(height: 32),
+
+            // 4. 多行控制与溢出处理
+            const Text(
+              '4. 多行控制与溢出处理',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              width: 200,
+              color: Colors.yellow[100], // 可见背景
+              child: Text(
+                '这是一段非常非常长的文字，超出了屏幕宽度，需要省略显示...',
+                maxLines: 2, //maxLines 和 overflow 必须同时使用才有效！
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ],
