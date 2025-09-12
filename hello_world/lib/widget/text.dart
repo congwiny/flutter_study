@@ -64,6 +64,26 @@ class TextDemoPage extends StatelessWidget {
                 height: 1.5, // 行高 = fontSize * 1.5
               ),
             ),
+            const Divider(height: 32),
+
+            // 2. 水平对齐方式
+            const Text(
+              '3. 水平对齐方式',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              color: Colors.blue[100], // 背景颜色
+              padding: EdgeInsets.all(16), // 内边距
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch, // 让子项宽度占满
+                children: [
+                  Text('左对齐', textAlign: TextAlign.left),
+                  Text('居中对齐', textAlign: TextAlign.center),
+                  Text('右对齐', textAlign: TextAlign.right),
+                  Text('两端对齐\n这是第二行\n这是第三行', textAlign: TextAlign.justify),
+                ],
+              ),
+            ),
           ],
         ),
       ),
