@@ -101,6 +101,31 @@ class TextDemoPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
             ),
+
+            const Divider(height: 32),
+            // 5. 是否自动换行
+            const Text(
+              '5. 是否自动换行',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Container(
+              width: 100,
+              color: Colors.green[100],
+              child: Text(
+                '这是一段很长的文本，如果softWrap为false，它不会换行，会溢出',
+                //softWrap —— 是否自动换行（默认 true）
+                softWrap: true,
+              ),
+            ),
+
+            Container(
+              width: 100,
+              child: Text(
+                '超长文本不换行，overflow: TextOverflow.ellipsis',
+                softWrap: false, // false：强制不换行
+                overflow: TextOverflow.ellipsis, //用...表示省略
+              ),
+            ),
           ],
         ),
       ),
