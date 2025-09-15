@@ -126,6 +126,17 @@ class TextDemoPage extends StatelessWidget {
                 overflow: TextOverflow.ellipsis, //用...表示省略
               ),
             ),
+
+            const Divider(height: 32),
+            // 6. 使用主题样式
+            const Text(
+              '6. 使用主题样式',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '使用主题样式（推荐）',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
           ],
         ),
       ),
