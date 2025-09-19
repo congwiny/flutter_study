@@ -13,3 +13,4 @@ export 'package:hello_world/assets/config.dart';
 export 'package:hello_world/thread/future.dart';
 export 'package:hello_world/thread/isolate.dart';
 export 'package:hello_world/widget/text.dart';
+export 'package:hello_world/widget/rich_text.dart';
