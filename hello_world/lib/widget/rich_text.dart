@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class RichTextDemoPage extends StatelessWidget {
@@ -13,6 +14,10 @@ class RichTextDemoPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 1. 基础混合样式
+            const Text(
+              '1. 基础混合样式',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             RichText(
               text: TextSpan(
                 style: TextStyle(color: Colors.blue, fontSize: 18), // 父样式
@@ -38,9 +43,13 @@ class RichTextDemoPage extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
 
-            SizedBox(height: 20),
+            const Divider(height: 32),
 
             //推荐使用Text.rich创建富文本
+            const Text(
+              '2. 推荐使用Text.rich创建富文本',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             Text.rich(
               TextSpan(
                 style: TextStyle(color: Colors.blue, fontSize: 18), // 父样式
@@ -64,6 +73,42 @@ class RichTextDemoPage extends StatelessWidget {
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
+            ),
+
+            const Divider(height: 32),
+
+            const Text(
+              '3. 可点击链接（带下划线）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            // 2. 可点击链接（带下划线）
+            Text.rich(
+              TextSpan(
+                style: TextStyle(fontSize: 16),
+                children: [
+                  TextSpan(text: '阅读用户协议和'),
+                  TextSpan(
+                    text: ' 隐私政策',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                    recognizer:
+                        TapGestureRecognizer()
+                          ..onTap = () {
+                            showDialog(
+                              context: context,
+                              builder:
+                                  (ctx) => AlertDialog(
+                                    title: Text('隐私政策'),
+                                    content: Text('您的隐私安全是我们最重要的责任...'),
+                                  ),
+                            );
+                          },
+                  ),
+                  TextSpan(text: ' 以继续'),
+                ],
+              ),
             ),
           ],
         ),
