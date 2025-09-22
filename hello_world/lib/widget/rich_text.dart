@@ -81,7 +81,7 @@ class RichTextDemoPage extends StatelessWidget {
               '3. 可点击链接（带下划线）',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            // 2. 可点击链接（带下划线）
+            // 3. 可点击链接（带下划线）
             Text.rich(
               TextSpan(
                 style: TextStyle(fontSize: 16),
@@ -107,6 +107,36 @@ class RichTextDemoPage extends StatelessWidget {
                           },
                   ),
                   TextSpan(text: ' 以继续'),
+                ],
+              ),
+            ),
+
+            const Divider(height: 32),
+
+            const Text(
+              '4. 多级嵌套 + 样式覆盖',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            Text.rich(
+              TextSpan(
+                style: TextStyle(color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: '父级黑色',
+                    children: [
+                      TextSpan(
+                        text: ' 子级红色',
+                        style: TextStyle(color: Colors.red),
+                        children: [
+                          TextSpan(
+                            text: ' 孙级绿色',
+                            style: TextStyle(color: Colors.green),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
