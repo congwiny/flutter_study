@@ -140,6 +140,31 @@ class RichTextDemoPage extends StatelessWidget {
                 ],
               ),
             ),
+
+            const Divider(height: 32),
+
+            const Text(
+              '5. 图文混排',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            Text.rich(
+              TextSpan(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                children: [
+                  TextSpan(text: '点赞 '),
+                  WidgetSpan(
+                    child: Icon(Icons.thumb_up, size: 18, color: Colors.red),
+                    alignment: PlaceholderAlignment.middle, // 垂直居中对齐
+                  ),
+                  TextSpan(text: ' 评论 '),
+                  WidgetSpan(
+                    child: Icon(Icons.comment, size: 18, color: Colors.blue),
+                    alignment: PlaceholderAlignment.middle,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
