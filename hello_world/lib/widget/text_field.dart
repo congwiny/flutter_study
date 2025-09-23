@@ -85,6 +85,35 @@ class TextFieldDemoPage extends StatelessWidget {
                 contentPadding: EdgeInsets.all(16),
               ),
             ),
+            const Divider(height: 32),
+
+            // 4. 文本控制属性
+            const Text(
+              '4. 文本控制属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+
+            TextField(
+              // 控制器
+              controller: TextEditingController(),
+              // 初始值
+              // controller.text = '初始值', // 在代码中设置
+              // 最大行数
+              maxLines: 1, // 单行输入
+              // maxLines: null, // 多行输入，无限行
+              // maxLines: 5, // 限制最多5行
+
+              // 最小行数
+              minLines: 1,
+              // 最大字符数
+              maxLength: 50,
+              // 是否显示字符计数
+              obscureText: false, // 设置为true用于密码输入
+              // 密码字符
+              obscuringCharacter: '*', // 默认是圆点
+            ),
           ],
         ),
       ),
