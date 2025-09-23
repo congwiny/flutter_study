@@ -114,6 +114,39 @@ class TextFieldDemoPage extends StatelessWidget {
               // 密码字符
               obscuringCharacter: '*', // 默认是圆点
             ),
+
+            const Divider(height: 32),
+
+            // 5. 键盘和输入属性
+            const Text(
+              '5. 键盘和输入属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+            TextField(
+              // 键盘类型
+              keyboardType: TextInputType.text, // 文本键盘
+              // keyboardType: TextInputType.emailAddress, // 邮箱键盘
+              // keyboardType: TextInputType.phone, // 电话键盘
+              // keyboardType: TextInputType.number, // 数字键盘
+              // keyboardType: TextInputType.multiline, // 多行文本键盘
+
+              // 键盘动作按钮
+              textInputAction: TextInputAction.done, // 完成
+              // textInputAction: TextInputAction.next, // 下一个
+              // textInputAction: TextInputAction.search, // 搜索
+              // textInputAction: TextInputAction.send, // 发送
+
+              // 文本对齐方式
+              textAlign: TextAlign.start,
+              // 文本方向
+              textDirection: TextDirection.ltr,
+              // 文本样式
+              style: TextStyle(fontSize: 16, color: Colors.black),
+              // 自动对焦
+              autofocus: false,
+            ),
           ],
         ),
       ),
