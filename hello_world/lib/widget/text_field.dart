@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 //TextField 是 Flutter 中最常用的文本输入组件，用于接收用户的文本输入。
 //它提供了丰富的配置选项和交互功能。
@@ -179,6 +180,18 @@ class TextFieldDemoPage extends StatelessWidget {
 
             SizedBox(height: 20),
             PasswordField(),
+
+            const Divider(height: 32),
+
+            // 9. 限制输入内容
+            const Text(
+              '9.限制输入内容',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+            //金额输入框（只允许数字和小数点，最多两位小数）
+            MoneyField(),
           ],
         ),
       ),
@@ -357,6 +370,55 @@ class _PasswordFieldState extends State<PasswordField> {
         ),
         border: OutlineInputBorder(),
       ),
+    );
+  }
+}
+
+class MoneyField extends StatefulWidget {
+  @override
+  _MoneyFieldState createState() => _MoneyFieldState();
+}
+
+class _MoneyFieldState extends State<MoneyField> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller,
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      inputFormatters: [
+        // 只允许数字和小数点
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+
+        // 限制长度（可选）
+        LengthLimitingTextInputFormatter(10),
+      ],
+      decoration: InputDecoration(
+        labelText: '金额',
+        prefixText: '¥',
+        border: OutlineInputBorder(),
+      ),
+      onChanged: (value) {
+        // 进一步验证（防止输入多个小数点）
+        if (value.contains('.')) {
+          final parts = value.split('.');
+          if (parts.length > 2) {
+            // 移除多余的点
+            final validValue = parts[0] + '.' + parts.sublist(1).join('');
+            _controller.value = TextEditingValue(
+              text: validValue,
+              selection: TextSelection.collapsed(offset: validValue.length),
+            );
+          }
+        }
+      },
     );
   }
 }
