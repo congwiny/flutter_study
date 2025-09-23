@@ -168,6 +168,17 @@ class TextFieldDemoPage extends StatelessWidget {
 
             SizedBox(height: 20),
             FocusableTextField(),
+
+            const Divider(height: 32),
+
+            // 8. 带眼睛图标的密码框
+            const Text(
+              '8.带眼睛图标的密码框',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+            PasswordField(),
           ],
         ),
       ),
@@ -310,5 +321,42 @@ class _FocusableTextFieldState extends State<FocusableTextField> {
     _controller1.dispose();
     _controller2.dispose();
     super.dispose();
+  }
+}
+
+class PasswordField extends StatefulWidget {
+  @override
+  _PasswordFieldState createState() => _PasswordFieldState();
+}
+
+class _PasswordFieldState extends State<PasswordField> {
+  final _controller = TextEditingController();
+  bool _obscureText = true;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: _controller,
+      obscureText: _obscureText,
+      decoration: InputDecoration(
+        labelText: '密码',
+        prefixIcon: Icon(Icons.lock),
+        suffixIcon: IconButton(
+          icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
+          onPressed: () {
+            setState(() {
+              _obscureText = !_obscureText;
+            });
+          },
+        ),
+        border: OutlineInputBorder(),
+      ),
+    );
   }
 }
