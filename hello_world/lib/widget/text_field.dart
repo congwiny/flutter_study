@@ -147,9 +147,92 @@ class TextFieldDemoPage extends StatelessWidget {
               // 自动对焦
               autofocus: false,
             ),
+            const Divider(height: 32),
+
+            // 6. 控制器（TextEditingController）
+            const Text(
+              '6. 控制器（TextEditingController）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+            TextFieldWithController(),
           ],
         ),
       ),
     );
+  }
+}
+
+class TextFieldWithController extends StatefulWidget {
+  @override
+  _TextFieldWithControllerState createState() =>
+      _TextFieldWithControllerState();
+}
+
+class _TextFieldWithControllerState extends State<TextFieldWithController> {
+  final TextEditingController _controller = TextEditingController();
+  String _currentText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // 监听文本变化
+    _controller.addListener(() {
+      setState(() {
+        _currentText = _controller.text;
+      });
+    });
+
+    // 设置初始值（可选）
+    _controller.text = '初始文本';
+  }
+
+  void _clearText() {
+    _controller.clear();
+  }
+
+  void _setText() {
+    _controller.text = '预设文本';
+  }
+
+  void _getSelection() {
+    print('选中文本: ${_controller.selection}');
+    print(
+      '选中内容: ${_controller.text.substring(_controller.selection.start, _controller.selection.end)}',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            labelText: '带控制器的输入框',
+            suffixIcon: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: _clearText, //删除按钮点击事件
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Text('当前文本: $_currentText'),
+        Row(
+          children: [
+            ElevatedButton(onPressed: _setText, child: Text('设置文本')), //设置文本点击事件
+            SizedBox(width: 10),
+            ElevatedButton(onPressed: _getSelection, child: Text('获取选择')),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
