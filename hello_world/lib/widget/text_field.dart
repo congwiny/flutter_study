@@ -8,7 +8,7 @@ class TextFieldDemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('SelectableText 使用大全')),
+      appBar: AppBar(title: Text('TextField 使用大全')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -157,6 +157,17 @@ class TextFieldDemoPage extends StatelessWidget {
 
             SizedBox(height: 20),
             TextFieldWithController(),
+
+            const Divider(height: 32),
+
+            // 7. 焦点控制（FocusNode）
+            const Text(
+              '7.焦点控制（FocusNode）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
+            FocusableTextField(),
           ],
         ),
       ),
@@ -233,6 +244,71 @@ class _TextFieldWithControllerState extends State<TextFieldWithController> {
   @override
   void dispose() {
     _controller.dispose();
+    super.dispose();
+  }
+}
+
+class FocusableTextField extends StatefulWidget {
+  @override
+  _FocusableTextFieldState createState() => _FocusableTextFieldState();
+}
+
+class _FocusableTextFieldState extends State<FocusableTextField> {
+  //创建 FocusNode
+  final FocusNode _focusNode1 = FocusNode();
+  final FocusNode _focusNode2 = FocusNode();
+  //创建控制器
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    //监听焦点变化
+    _focusNode1.addListener(() {
+      print('输入框1焦点状态: ${_focusNode1.hasFocus}');
+    });
+  }
+
+  void _moveToNextField() {
+    _focusNode1.unfocus(); //取消焦点
+    FocusScope.of(context).requestFocus(_focusNode2);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          focusNode: _focusNode1,
+          controller: _controller1,
+          textInputAction: TextInputAction.next,
+          onSubmitted: (value) => _moveToNextField(),
+          decoration: InputDecoration(labelText: '第一个输入框'),
+        ),
+        SizedBox(height: 16),
+        TextField(
+          focusNode: _focusNode2,
+          controller: _controller2,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(labelText: '第二个输入框'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            _focusNode1.requestFocus(); //请求焦点
+          },
+          child: Text('聚焦到第一个输入框'),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    _controller1.dispose();
+    _controller2.dispose();
     super.dispose();
   }
 }
