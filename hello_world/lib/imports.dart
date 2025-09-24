@@ -17,3 +17,4 @@ export 'package:hello_world/widget/rich_text.dart';
 export 'package:hello_world/widget/selectable_text.dart';
 export 'package:hello_world/widget/text_field.dart';
 export 'package:hello_world/widget/text_form_field.dart';
+export 'package:hello_world/widget/text_form_field_user_regist.dart';
