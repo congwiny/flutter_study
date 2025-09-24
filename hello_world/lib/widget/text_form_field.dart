@@ -31,6 +31,15 @@ class TextFormFieldDemoPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             FormTestRoute(),
+
+            const Divider(height: 32),
+            // 3. 动态表单验证
+            const Text(
+              '3. 动态表单验证',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            AsyncValidationField(),
           ],
         ),
       ),
@@ -149,6 +158,99 @@ class _FormTestRouteState extends State<FormTestRoute> {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AsyncValidationField extends StatefulWidget {
+  @override
+  _AsyncValidationFieldState createState() => _AsyncValidationFieldState();
+}
+
+class _AsyncValidationFieldState extends State<AsyncValidationField> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  bool _isChecking = false;
+  String? _asyncError;
+
+  Future<String?> _checkEmailExists(String email) async {
+    // 模拟网络请求
+    await Future.delayed(Duration(seconds: 1));
+
+    // 假设 admin@example.com 已被注册
+    if (email.toLowerCase() == 'admin@example.com') {
+      return '该邮箱已被注册';
+    }
+    return null;
+  }
+
+  Future<void> _validateEmail() async {
+    setState(() => _isChecking = true);
+
+    final error = await _checkEmailExists(_emailController.text);
+
+    setState(() {
+      _isChecking = false;
+      _asyncError = error;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: '邮箱',
+              errorText: _asyncError, // 显示异步错误
+              suffixIcon: _isChecking ? CircularProgressIndicator() : null,
+            ),
+            keyboardType: TextInputType.emailAddress,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return '请输入邮箱';
+              }
+              // 同步验证邮箱格式
+              final emailRegex = RegExp(
+                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+              );
+              if (!emailRegex.hasMatch(value)) {
+                return '邮箱格式不正确';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              // 输入变化时清除异步错误
+              setState(() => _asyncError = null);
+            },
+            onFieldSubmitted: (value) async {
+              // 提交时进行异步验证
+              _validateEmail();
+            },
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () async {
+              // 先进行同步验证
+              if (_formKey.currentState!.validate()) {
+                // 再进行异步验证
+                await _validateEmail();
+
+                // 如果没有异步错误，提交表单
+                if (_asyncError == null) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('验证通过！')));
+                }
+              }
+            },
+            child: Text('提交'),
           ),
         ],
       ),
