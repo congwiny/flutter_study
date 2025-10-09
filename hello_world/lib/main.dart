@@ -11,7 +11,7 @@ void main() {
   //testOop2();
   //testOop3();
   //testConstFinal();
-  testIsolate();
+  //testIsolate();
 }
 
 class MyApp extends StatelessWidget {
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: RegisterPage(),
+      home: ImageExamplePage(),
     );
   }
 }

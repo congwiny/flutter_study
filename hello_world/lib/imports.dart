@@ -18,3 +18,4 @@ export 'package:hello_world/widget/text/selectable_text.dart';
 export 'package:hello_world/widget/text/text_field.dart';
 export 'package:hello_world/widget/text/text_form_field.dart';
 export 'package:hello_world/widget/text/text_form_field_user_regist.dart';
+export 'package:hello_world/widget/image/image.dart';
