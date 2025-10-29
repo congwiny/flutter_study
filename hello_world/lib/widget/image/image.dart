@@ -52,7 +52,7 @@ class ImageExamplePage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Image.network(
-              'https://gips1.baidu.com/it/u=2393805868,4167702749&fm=3074&app=3074&f=PNG?w=1440&h=2560',
+              'https://gips2.baidu.com/it/u=1784304780,761284958&fm=3074&app=3074&f=PNG?w=1440&h=2560',
               width: 200, //设置图片的宽高
               height: 200,
               fit: BoxFit.cover,
@@ -96,6 +96,29 @@ class ImageExamplePage extends StatelessWidget {
                 );
               },
             ),
+            // 3. 圆形图片和形状处理
+            Text(
+              '3. 圆形图片和形状处理',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+// 方法1：使用 ClipRRect
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network('https://b0.bdstatic.com/ugc/R9zs2ULVbNUC4tN4GXNClg4a7ae282109a771076b758b799110e5d.jpg'),
+            ),
+            ClipOval(
+              child: Image.network(
+                'https://b0.bdstatic.com/ugc/R9zs2ULVbNUC4tN4GXNClg4a7ae282109a771076b758b799110e5d.jpg',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+            CircleAvatar(
+              backgroundImage: NetworkImage('https://b0.bdstatic.com/ugc/R9zs2ULVbNUC4tN4GXNClg4a7ae282109a771076b758b799110e5d.jpg'),
+              radius: 50,
+            )
           ],
         ),
       ),
