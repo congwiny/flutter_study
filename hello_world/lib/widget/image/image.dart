@@ -45,6 +45,57 @@ class ImageExamplePage extends StatelessWidget {
               alignment: Alignment.center, //设置图片在容器内的对齐方式
               repeat: ImageRepeat.noRepeat, //当图片小于容器时，是否重复平铺
             ),
+            // 2. Image.network - 加载网络图片
+            Text(
+              '2. Image.network - 加载网络图片',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Image.network(
+              'https://gips1.baidu.com/it/u=2393805868,4167702749&fm=3074&app=3074&f=PNG?w=1440&h=2560',
+              width: 200, //设置图片的宽高
+              height: 200,
+              fit: BoxFit.cover,
+              loadingBuilder: (
+                  //使用 loadingBuilder 来显示加载中的占位符
+                  BuildContext context,
+                  Widget child,
+                  ImageChunkEvent? loadingProgress,
+                  ) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value:
+                    loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                        : null,
+                  ),
+                );
+              },
+              errorBuilder: (
+                  //使用 errorBuilder 来处理图片加载失败的情况。
+                  BuildContext context,
+                  Object error,
+                  StackTrace? stackTrace,
+                  ) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error, color: Colors.red, size: 48),
+                    SizedBox(height: 8),
+                    Text('图片加载失败', style: TextStyle(color: Colors.red)),
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        // 重新加载图片的逻辑
+                      },
+                      child: Text('重试'),
+                    ),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),
