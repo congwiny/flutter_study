@@ -12,9 +12,9 @@ class IconFontDemoPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. 字体图标
+            // 1. 文字图标
             const Text(
-              '1. 字体图标',
+              '1. 文字图标',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
 
@@ -26,6 +26,20 @@ class IconFontDemoPage extends StatelessWidget {
                 color: Colors.green,
               ),
             ),
+            const Divider(height: 32),
+            // 2. 字体图标
+            const Text(
+              '2. Icon字体图标',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Icon(Icons.accessible,color: Colors.green),
+                Icon(Icons.error,color: Colors.green),
+                Icon(Icons.fingerprint,color: Colors.green),
+              ],
+            )
           ],
         ),
       ),
