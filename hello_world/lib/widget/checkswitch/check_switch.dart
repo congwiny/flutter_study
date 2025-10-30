@@ -31,6 +31,7 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
   bool _isChecked = false;
   bool? _tristateValue = false;
   bool _isCheckboxEnabled = false;
+  bool _termsAccepted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,20 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
                 _isChecked = newValue ?? false;
               });
             } : null, // onChanged 为 null 时禁用
+          ),
+          const Divider(height: 32),
+          // 4. CheckboxListTile：带文本的复选框
+          const Text(
+            '4. CheckboxListTile：带文本的复选框',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          CheckboxListTile(
+            title: const Text('我已阅读并同意用户协议'),
+            value: _termsAccepted,
+            onChanged: (value) => setState(() => _termsAccepted = value!),
+            //ListTileControlAffinity.leading：控件在左（默认）
+            // ListTileControlAffinity.trailing：控件在右
+            controlAffinity: ListTileControlAffinity.leading, // 勾选框在左侧（默认）
           )
         ]
     );
@@ -102,6 +117,8 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
     });
   }
 }
+
+
 
 class SwitchTestRoute extends StatefulWidget {
   @override
