@@ -27,6 +27,8 @@ class SwitchTestRoute extends StatefulWidget {
 
 class _SwitchTestRouteState extends State<SwitchTestRoute> {
   bool _switchSelected = true; //维护单选开关状态
+  bool _isSwitchEnabled = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,8 +73,21 @@ class _SwitchTestRouteState extends State<SwitchTestRoute> {
             });
           },
           activeColor: Colors.green,
+        ),
+        const Divider(height: 32),
+        // 3. Switch禁用状态
+        const Text(
+          '3. Switch禁用状态',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        Switch(
+          value: _switchSelected,
+          onChanged: _isSwitchEnabled ? (bool newValue) {
+            setState(() {
+              _switchSelected = newValue;
+            });
+          } : null, // onChanged 为 null 时禁用
         )
-
       ],
     );
   }
