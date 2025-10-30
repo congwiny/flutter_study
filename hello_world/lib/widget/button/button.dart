@@ -102,10 +102,52 @@ class ButtonDemoPage extends StatelessWidget {
               icon: const Icon(Icons.favorite),
               color: Colors.red,
               iconSize: 30,
-            )
+            ),
+            const Divider(height: 32),
+            // 5. ElevatedButton的状态切换
+            const Text(
+              '5. ElevatedButton的状态切换',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ElevatedStateButton(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class ElevatedStateButton extends StatefulWidget {
+  const ElevatedStateButton({super.key});
+
+  @override
+  State<ElevatedStateButton> createState() => _ElevatedButtonState();
+}
+
+class _ElevatedButtonState extends State<ElevatedStateButton> {
+  bool isElevatedEnabled = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          //onPressed：点击回调（必填，若为 null 则按钮禁用）
+          onPressed: isElevatedEnabled ? () => print('Elevated') : null,
+          child: isElevatedEnabled ? const Text('已启用') : const Text('已禁用'),
+        ),
+        const SizedBox(height: 10),
+        // 切换启用状态
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              isElevatedEnabled = !isElevatedEnabled;
+            });
+          },
+          child: Text(isElevatedEnabled ? '禁用上方按钮' : '启用上方按钮'),
+        ),
+      ],
     );
   }
 }
