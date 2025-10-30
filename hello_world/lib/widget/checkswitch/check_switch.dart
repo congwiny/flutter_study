@@ -11,7 +11,9 @@ class SwitchAndCheckDemoPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [SwitchTestRoute()],
+          children: [
+            SwitchTestRoute(),
+          ],
         ),
       ),
     );
@@ -28,7 +30,13 @@ class _SwitchTestRouteState extends State<SwitchTestRoute> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        // 1. Switch的简单使用和样式
+        const Text(
+          '1. Switch的简单使用和样式',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         Switch(
           value: _switchSelected, //当前状态
           onChanged: (value) {
@@ -49,6 +57,22 @@ class _SwitchTestRouteState extends State<SwitchTestRoute> {
             return Colors.red;
           }),
         ),
+        const Divider(height: 32),
+        // 2. 使用 Switch.adaptive 适配不同平台
+        const Text(
+          '2. 使用 Switch.adaptive 适配不同平台',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        Switch.adaptive(
+          value: _switchSelected,
+          onChanged: (bool newValue) {
+            setState(() {
+              _switchSelected = newValue;
+            });
+          },
+          activeColor: Colors.green,
+        )
+
       ],
     );
   }
