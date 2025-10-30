@@ -28,6 +28,7 @@ class SwitchTestRoute extends StatefulWidget {
 class _SwitchTestRouteState extends State<SwitchTestRoute> {
   bool _switchSelected = true; //维护单选开关状态
   bool _isSwitchEnabled = false;
+  bool _darkModeEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +88,45 @@ class _SwitchTestRouteState extends State<SwitchTestRoute> {
               _switchSelected = newValue;
             });
           } : null, // onChanged 为 null 时禁用
-        )
+        ),
+        const Divider(height: 32),
+        // 4. Switch 的典型应用
+        const Text(
+          '4. Switch 的典型应用',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        _buildSettingItem(
+          title: '夜间模式',
+          subtitle: '启用深色主题',
+          value: _darkModeEnabled,
+          onChanged: (value) {
+            setState(() {
+              _darkModeEnabled = value;
+            });
+          },
+        ),
       ],
     );
   }
+}
+
+
+Widget _buildSettingItem({
+  required String title,
+  required String subtitle,
+  required bool value,
+  required ValueChanged<bool> onChanged,
+}) {
+  return ListTile(
+    leading: Icon(Icons.settings),
+    title: Text(title),
+    subtitle: Text(subtitle),
+    trailing: Switch(
+      value: value,
+      onChanged: onChanged,
+    ),
+    onTap: () {
+      onChanged(!value);
+    },
+  );
 }
