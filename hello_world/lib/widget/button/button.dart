@@ -14,7 +14,7 @@ class ButtonDemoPage extends StatelessWidget {
           children: [
             // 1. ElevatedButton（凸起按钮）
             const Text(
-              '1.ElevatedButton（凸起按钮）',
+              '1. ElevatedButton（凸起按钮）',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
@@ -46,6 +46,28 @@ class ButtonDemoPage extends StatelessWidget {
               ),
             ),
             const Divider(height: 32),
+            // 1.  TextButton（文本按钮）
+            const Text(
+              '2. TextButton（文本按钮）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            TextButton(
+              onPressed: () {
+                print('文本按钮被点击了！');
+              },
+              onLongPress: () {
+                print('文本按钮被长按了！');
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red,         // 文字颜色
+                padding: EdgeInsets.all(10),
+                textStyle: TextStyle(
+                  fontSize: 16,
+                  decoration: TextDecoration.underline, // 下划线
+                ),
+              ),
+              child: Text('自定义文本按钮'),
+            )
           ],
         ),
       ),
