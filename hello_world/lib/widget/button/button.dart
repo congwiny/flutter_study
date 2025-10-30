@@ -110,6 +110,33 @@ class ButtonDemoPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ElevatedStateButton(),
+            const Divider(height: 32),
+            // 6. 带图标的按钮
+            const Text(
+              '6. 带图标的按钮',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.save),
+                  label: Text('保存'),
+                ),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.share),
+                  label: Text('分享'),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: Icon(Icons.delete),
+                  label: Text('删除'),
+                ),
+              ],
+            ),
           ],
         ),
       ),
