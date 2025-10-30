@@ -89,6 +89,20 @@ class ButtonDemoPage extends StatelessWidget {
               ),
               child: Text('自定义描边按钮'),
             ),
+            const Divider(height: 32),
+            // 4. IconButton（图标按钮）
+            const Text(
+              '4. IconButton（图标按钮）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            IconButton(
+              onPressed: () {
+                print('图标按钮被点击');
+              },
+              icon: const Icon(Icons.favorite),
+              color: Colors.red,
+              iconSize: 30,
+            )
           ],
         ),
       ),
