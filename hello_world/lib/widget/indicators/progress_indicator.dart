@@ -63,6 +63,13 @@ class ProgressIndicatorExamplePage extends StatelessWidget {
               strokeWidth: 4, // 线条宽度
               strokeCap: StrokeCap.round, // 线条端点样式
             ),
+            const Divider(height: 32),
+            // 3. 表单提交加载状态：
+            const Text(
+              '3. 表单提交加载状态',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            FormSubmitExample()
           ],
         ),
       ),
@@ -143,6 +150,79 @@ class _DownloadProgressExampleState extends State<DownloadProgressExample> {
         ElevatedButton(
           onPressed: _isDownloading ? null : _simulateDownload,
           child: Text(_isDownloading ? '下载中...' : '开始下载'),
+        ),
+      ],
+    );
+  }
+}
+
+class FormSubmitExample extends StatefulWidget {
+  @override
+  _FormSubmitExampleState createState() => _FormSubmitExampleState();
+}
+
+class _FormSubmitExampleState extends State<FormSubmitExample> {
+  bool _isSubmitting = false;
+
+  Future<void> _submitForm() async {
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    // 模拟网络请求
+    await Future.delayed(Duration(seconds: 3));
+
+    setState(() {
+      _isSubmitting = false;
+    });
+
+    // 显示成功消息
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('提交成功!')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextField(
+          decoration: InputDecoration(
+            labelText: '用户名',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        SizedBox(height: 16),
+        TextField(
+          decoration: InputDecoration(
+            labelText: '密码',
+            border: OutlineInputBorder(),
+          ),
+          obscureText: true,
+        ),
+        SizedBox(height: 24),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: _isSubmitting ? null : _submitForm,
+            child: _isSubmitting
+                ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Text('提交中...'),
+              ],
+            )
+                : Text('登录'),
+          ),
         ),
       ],
     );
