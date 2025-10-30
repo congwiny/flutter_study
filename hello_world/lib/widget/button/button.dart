@@ -46,7 +46,7 @@ class ButtonDemoPage extends StatelessWidget {
               ),
             ),
             const Divider(height: 32),
-            // 1.  TextButton（文本按钮）
+            // 2.  TextButton（文本按钮）
             const Text(
               '2. TextButton（文本按钮）',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -59,7 +59,7 @@ class ButtonDemoPage extends StatelessWidget {
                 print('文本按钮被长按了！');
               },
               style: TextButton.styleFrom(
-                foregroundColor: Colors.red,         // 文字颜色
+                foregroundColor: Colors.red, // 文字颜色
                 padding: EdgeInsets.all(10),
                 textStyle: TextStyle(
                   fontSize: 16,
@@ -67,7 +67,28 @@ class ButtonDemoPage extends StatelessWidget {
                 ),
               ),
               child: Text('自定义文本按钮'),
-            )
+            ),
+            const Divider(height: 32),
+            // 3. OutlinedButton（轮廓按钮）
+            const Text(
+              '3. OutlinedButton（轮廓按钮）',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                print('轮廓按钮被点击了！');
+              },
+              onLongPress: () {
+                print('轮廓按钮被长按了！');
+              },
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.green, width: 2), // 边框样式
+                foregroundColor: Colors.green, // 文字颜色
+                shape: StadiumBorder(), // 超椭圆边框（胶囊形）
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+              ),
+              child: Text('自定义描边按钮'),
+            ),
           ],
         ),
       ),
