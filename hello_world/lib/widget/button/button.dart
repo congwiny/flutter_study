@@ -14,7 +14,7 @@ class ButtonDemoPage extends StatelessWidget {
           children: [
             // 1. ElevatedButton（凸起按钮）
             const Text(
-              'ElevatedButton（凸起按钮）',
+              '1.ElevatedButton（凸起按钮）',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ElevatedButton(
@@ -24,7 +24,26 @@ class ButtonDemoPage extends StatelessWidget {
               onLongPress: () {
                 print('按钮被长按了！');
               },
-              child: Text('Elevated Button'),
+              //styleFrom() 是静态工厂方法，用于快速创建 ButtonStyle
+              style: ElevatedButton.styleFrom(
+                //文字/图标颜色
+                foregroundColor: Colors.red,
+                // 背景色
+                backgroundColor: Colors.blue,
+                // 阴影高度（0~24）
+                elevation: 5,
+                // 内边距
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                // 形状
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // 圆角
+                ),
+                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [Icon(Icons.add), SizedBox(width: 8), Text('添加项目')],
+              ),
             ),
             const Divider(height: 32),
           ],
