@@ -29,6 +29,7 @@ class CheckboxTestRoute extends StatefulWidget {
 
 class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
   bool _isChecked = false;
+  bool? _tristateValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +55,35 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
             shape: RoundedRectangleBorder( // 圆角矩形（默认是圆）
               borderRadius: BorderRadius.circular(4),
             ),
+          ),
+          const Divider(height: 32),
+
+          // 2. 三态 Checkbox
+          const Text(
+            '2. 三态 Checkbox',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Checkbox(
+            value: _tristateValue,
+            tristate: true,
+            onChanged: (bool? newValue) {
+              _handleTristateChange(newValue);
+            },
           )
         ]
     );
+  }
+
+  void _handleTristateChange(bool? newValue) {
+    setState(() {
+      if (_tristateValue == false) {
+        _tristateValue = true;      // 未选中 -> 选中
+      } else if (_tristateValue == true) {
+        _tristateValue = null;      // 选中 -> 部分选中
+      } else {
+        _tristateValue = false;     // 部分选中 -> 未选中
+      }
+    });
   }
 }
 
