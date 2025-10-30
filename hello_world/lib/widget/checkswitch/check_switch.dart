@@ -100,7 +100,15 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
             //ListTileControlAffinity.leading：控件在左（默认）
             // ListTileControlAffinity.trailing：控件在右
             controlAffinity: ListTileControlAffinity.leading, // 勾选框在左侧（默认）
-          )
+          ),
+
+          const Divider(height: 32),
+          // 5. Checkbox 多选场景
+          const Text(
+            '5. Checkbox 多选场景',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          HobbySelection()
         ]
     );
   }
@@ -118,6 +126,42 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
   }
 }
 
+class HobbySelection extends StatefulWidget {
+  @override
+  _HobbySelectionState createState() => _HobbySelectionState();
+}
+
+class _HobbySelectionState extends State<HobbySelection> {
+  final List<String> hobbies = ['阅读', '运动', '音乐', '旅行'];
+  //使用 Map<String, bool> 管理多个状态
+  final Map<String, bool> _selectedHobbies = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化所有选项为未选中
+    for (String hobby in hobbies) {
+      _selectedHobbies[hobby] = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: hobbies.map((hobby) {
+        return CheckboxListTile(
+          title: Text(hobby),
+          value: _selectedHobbies[hobby],
+          onChanged: (bool? value) {
+            setState(() {
+              _selectedHobbies[hobby] = value!;
+            });
+          },
+        );
+      }).toList(),
+    );
+  }
+}
 
 
 class SwitchTestRoute extends StatefulWidget {
