@@ -41,7 +41,28 @@ class ProgressIndicatorExamplePage extends StatelessWidget {
               '3. 模拟文件下载（确定进度）',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            DownloadProgressExample()
+            DownloadProgressExample(),
+            const Divider(height: 32),
+            // 1. CircularProgressIndicator不确定进度（默认）：
+            const Text(
+              '1. CircularProgressIndicator不确定进度',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CircularProgressIndicator(),
+            const Divider(height: 32),
+            // 2. CircularProgressIndicator确定进度：
+            const Text(
+              '2. CircularProgressIndicator确定进度',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CircularProgressIndicator(
+              value: 0.7,
+              backgroundColor: Colors.grey[200],
+              //使用 AlwaysStoppedAnimation 固定颜色：
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              strokeWidth: 4, // 线条宽度
+              strokeCap: StrokeCap.round, // 线条端点样式
+            ),
           ],
         ),
       ),
