@@ -37,6 +37,17 @@ class _SwitchTestRouteState extends State<SwitchTestRoute> {
               _switchSelected = value;
             });
           },
+          activeColor: Colors.green,                // 开启时滑块颜色
+          activeTrackColor: Colors.lightGreen,      // 开启时轨道颜色
+          inactiveThumbColor: Colors.grey,          // 关闭时滑块颜色
+          inactiveTrackColor: Colors.grey.shade300, // 关闭时轨道颜色
+          thumbColor: WidgetStateProperty.resolveWith((states) {
+            // 更精细控制不同状态下的颜色（进阶）
+            if (states.contains(WidgetState.selected)) {
+              return Colors.blue;
+            }
+            return Colors.red;
+          }),
         ),
       ],
     );
