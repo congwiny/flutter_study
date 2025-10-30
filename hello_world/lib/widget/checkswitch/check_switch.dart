@@ -13,9 +13,49 @@ class SwitchAndCheckDemoPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SwitchTestRoute(),
+            const Divider(height: 32),
+            CheckboxTestRoute()
           ],
         ),
       ),
+    );
+  }
+}
+
+class CheckboxTestRoute extends StatefulWidget {
+  @override
+  _CheckboxTestRouteState createState() => _CheckboxTestRouteState();
+}
+
+class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
+  bool _isChecked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          // 1. Checkbox的简单使用和样式
+          const Text(
+            '1. Checkbox的简单使用和样式',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Checkbox(
+            value: _isChecked,
+            onChanged: (value) => setState(() => _isChecked = value!),
+            checkColor: Colors.white,
+            // 勾选符号颜色
+            activeColor: Colors.green,
+            // 选中背景色
+            side: BorderSide( // 未选中时边框
+              color: Colors.blue,
+              width: 2,
+            ),
+            shape: RoundedRectangleBorder( // 圆角矩形（默认是圆）
+              borderRadius: BorderRadius.circular(4),
+            ),
+          )
+        ]
     );
   }
 }
