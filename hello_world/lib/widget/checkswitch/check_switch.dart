@@ -30,6 +30,7 @@ class CheckboxTestRoute extends StatefulWidget {
 class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
   bool _isChecked = false;
   bool? _tristateValue = false;
+  bool _isCheckboxEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +70,21 @@ class _CheckboxTestRouteState extends State<CheckboxTestRoute> {
             onChanged: (bool? newValue) {
               _handleTristateChange(newValue);
             },
+          ),
+
+          const Divider(height: 32),
+          // 3. Checkbox禁用状态
+          const Text(
+            '3. Checkbox禁用状态',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Checkbox(
+            value: _isChecked,
+            onChanged: _isCheckboxEnabled ? (bool? newValue) {
+              setState(() {
+                _isChecked = newValue ?? false;
+              });
+            } : null, // onChanged 为 null 时禁用
           )
         ]
     );
