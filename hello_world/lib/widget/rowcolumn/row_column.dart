@@ -4,27 +4,75 @@ class RowColumnExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Row和Column 组件示例')),
-        body: SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '1. 主轴与交叉轴',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  AxisExplanation(),
-                  const Divider(height: 32),
-                  const Text(
-                    '2. Row主轴对齐',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  MainAxisAlignExample(),
-                  const Divider(height: 32),
-                ],
+      appBar: AppBar(title: Text('Row和Column 组件示例')),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '1. 主轴与交叉轴',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            AxisExplanation(),
+            const Divider(height: 32),
+            const Text(
+              '2. Row主轴对齐',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            MainAxisAlignExample(),
+            const Divider(height: 32),
+            const Text(
+              '3. Row主轴Space的区别',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SpaceComparison(),
+            const Divider(height: 32),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class SpaceComparison extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildSpaceExample('spaceBetween', MainAxisAlignment.spaceBetween),
+        _buildSpaceExample('spaceAround', MainAxisAlignment.spaceAround),
+        _buildSpaceExample('spaceEvenly', MainAxisAlignment.spaceEvenly),
+      ],
+    );
+  }
+
+  Widget _buildSpaceExample(String type, MainAxisAlignment alignment) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(border: Border.all()),
+      child: Column(
+        children: [
+          Text(type, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 40,
+            child: Row(
+              mainAxisAlignment: alignment,
+              children: List.generate(
+                3,
+                (index) => Container(
+                  width: 30,
+                  color: [Colors.red, Colors.green, Colors.blue][index],
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 4),
+          Text('剩余空间分配方式不同'),
+        ],
+      ),
     );
   }
 }
