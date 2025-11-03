@@ -39,8 +39,51 @@ class RowColumnExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             FlexWidgetsExample(),
+            const Divider(height: 32),
+            const Text(
+              '6. 设置Row主轴尺寸',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            MainAxisSizeExample()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MainAxisSizeExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildSizeExample('MainAxisSize.max (默认)', MainAxisSize.max),
+        SizedBox(height: 20),
+        _buildSizeExample('MainAxisSize.min', MainAxisSize.min),
+      ],
+    );
+  }
+
+  Widget _buildSizeExample(String label, MainAxisSize size) {
+    return Container(
+      color: Colors.grey[200],
+      child: Column(
+        children: [
+          Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
+          Container(
+            color: Colors.yellow[100],
+            child: Row(
+              //设置主轴的尺寸
+              mainAxisSize: size,
+              children: [
+                Container(width: 50, height: 50, color: Colors.red),
+                Container(width: 50, height: 50, color: Colors.green),
+                Container(width: 50, height: 50, color: Colors.blue),
+              ],
+            ),
+          ),
+          Text('Row宽度: ${size == MainAxisSize.max ? '充满父容器' : '包裹内容'}'),
+        ],
       ),
     );
   }
