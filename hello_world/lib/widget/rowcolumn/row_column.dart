@@ -16,10 +16,61 @@ class RowColumnExamplePage extends StatelessWidget {
                   ),
                   AxisExplanation(),
                   const Divider(height: 32),
-
+                  const Text(
+                    '2. Row主轴对齐',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  MainAxisAlignExample(),
+                  const Divider(height: 32),
                 ],
             ),
         ),
+    );
+  }
+}
+
+class MainAxisAlignExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        //从主轴起点开始排列（默认）
+        _buildExampleRow('start', MainAxisAlignment.start),
+        //从主轴终点开始排列
+        _buildExampleRow('end', MainAxisAlignment.end),
+        //主轴居中对齐
+        _buildExampleRow('center', MainAxisAlignment.center),
+        //主轴两端对齐，item之间的间距都相等
+        _buildExampleRow('spaceBetween', MainAxisAlignment.spaceBetween),
+        //主轴均等间隔排列，将剩余空间平均分配到子组件周围，每个子组件左右（或上下）的空间相等，相邻子组件之间的空间会叠加。
+        _buildExampleRow('spaceAround', MainAxisAlignment.spaceAround),
+        //将剩余空间平均分配，使每个子组件之间的间隔相等，包括两端。
+        _buildExampleRow('spaceEvenly', MainAxisAlignment.spaceEvenly),
+      ],
+    );
+  }
+
+  Widget _buildExampleRow(String label, MainAxisAlignment alignment) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('MainAxisAlignment.$label:'),
+          Container(
+            height: 60,
+            color: Colors.grey[200],
+            child: Row(
+              mainAxisAlignment: alignment,
+              children: [
+                Container(width: 40, height: 40, color: Colors.red),
+                Container(width: 40, height: 40, color: Colors.green),
+                Container(width: 40, height: 40, color: Colors.blue),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
