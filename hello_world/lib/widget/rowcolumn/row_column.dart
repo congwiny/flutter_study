@@ -28,8 +28,69 @@ class RowColumnExamplePage extends StatelessWidget {
             ),
             SpaceComparison(),
             const Divider(height: 32),
+            const Text(
+              '4. Row交叉轴对齐',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CrossAxisAlignExample(),
+            const Divider(height: 32),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CrossAxisAlignExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              //在交叉轴起点对齐。
+              _buildExampleColumn('start', CrossAxisAlignment.start),
+              //在交叉轴终点对齐。
+              _buildExampleColumn('end', CrossAxisAlignment.end),
+              //在交叉轴居中对齐（默认）。
+              _buildExampleColumn('center', CrossAxisAlignment.center),
+              //拉伸子组件以填满交叉轴方向。
+              _buildExampleColumn('stretch', CrossAxisAlignment.stretch),
+              //按基线对齐（需要设置 textBaseline）。
+              _buildExampleColumn('baseline', CrossAxisAlignment.baseline),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildExampleColumn(String label, CrossAxisAlignment alignment) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('CrossAxisAlignment.$label:'),
+          Container(
+            width: 200,
+            height: 80,
+            color: Colors.grey[200],
+            child: Row(
+              crossAxisAlignment: alignment,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Container(width: 30, height: 20, color: Colors.red),
+                Container(width: 30, height: 40, color: Colors.green),
+                Container(width: 30, height: 60, color: Colors.blue),
+                if (alignment == CrossAxisAlignment.baseline)
+                  Text('基线', style: TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
