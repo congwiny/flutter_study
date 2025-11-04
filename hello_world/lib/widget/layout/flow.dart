@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 ///Flow 是一个高性能的自定义布局组件，需要实现 FlowDelegate 来控制子组件的布局。
@@ -42,6 +44,12 @@ class FlowExamplePage extends StatelessWidget {
                 ),
               ),
             ),
+            const Divider(height: 32),
+            const Text(
+              '2. 圆形 Flow 布局',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CircularFlowExample()
           ],
         ),
       ),
@@ -91,5 +99,89 @@ class SimpleFlowDelegate extends FlowDelegate {
   Size getSize(BoxConstraints constraints) {
     // 计算所需尺寸
     return Size(constraints.maxWidth, 200);
+  }
+}
+
+
+class CircularFlowDelegate extends FlowDelegate {
+  final Animation<double> animation;
+
+  CircularFlowDelegate({required this.animation}) : super(repaint: animation);
+
+  @override
+  void paintChildren(FlowPaintingContext context) {
+    final double radius = 100;
+    final double angle = 2 * 3.14159 / context.childCount;
+
+    for (int i = 0; i < context.childCount; i++) {
+      // 计算位置（圆形排列）
+      final double x = radius * (1 + math.cos(i * angle - animation.value * 2 * 3.14159));
+      final double y = radius * (1 + math.sin(i * angle - animation.value * 2 * 3.14159));
+
+      // 计算缩放（根据动画值）
+      final double scale = 0.5 + 0.5 * animation.value;
+
+      final transform = Matrix4.identity()
+        ..translate(x, y)
+        ..scale(scale);
+
+      context.paintChild(i, transform: transform);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CircularFlowDelegate oldDelegate) {
+    return animation != oldDelegate.animation;
+  }
+
+  @override
+  Size getSize(BoxConstraints constraints) {
+    return Size(300, 300);
+  }
+}
+
+class CircularFlowExample extends StatefulWidget {
+  @override
+  _CircularFlowExampleState createState() => _CircularFlowExampleState();
+}
+
+class _CircularFlowExampleState extends State<CircularFlowExample>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Flow(
+          delegate: CircularFlowDelegate(animation: _controller.view),
+          children: List.generate(8, (index) => Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.primaries[index % Colors.primaries.length],
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '$index',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          )),
+        );
   }
 }
