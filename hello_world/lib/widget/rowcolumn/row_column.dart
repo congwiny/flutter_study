@@ -52,8 +52,59 @@ class RowColumnExamplePage extends StatelessWidget {
             ),
             BaselineExample(),
             const Divider(height: 32),
+            const Text(
+              '8. 嵌套布局性能优化',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            PerformanceOptimization(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PerformanceOptimization extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: 16),
+
+          _buildTip('避免深层嵌套', '使用自定义 widget 分解复杂布局'),
+          _buildTip('使用 ConstrainedBox', '提前约束尺寸，减少布局计算'),
+          _buildTip('合理使用 Expanded', '避免不必要的弹性布局'),
+          _buildTip('预计算尺寸', '对固定尺寸使用 SizedBox'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTip(String title, String description) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.lightbulb_outline, color: Colors.amber),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 4),
+                Text(description, style: TextStyle(color: Colors.grey[600])),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
