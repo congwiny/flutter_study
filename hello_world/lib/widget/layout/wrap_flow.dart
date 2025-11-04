@@ -16,10 +16,82 @@ class WrapFlowExamplePage extends StatelessWidget {
             ),
             WrapBasicExample(),
             const Divider(height: 32),
+            const Text(
+              '2. Wrap 核心属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            WrapPropertiesExample(),
+            const Divider(height: 32),
           ],
         ),
       ),
     );
+  }
+}
+
+class WrapPropertiesExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildWrapExample(
+          '1. direction: Axis.horizontal (默认)',
+          Wrap(
+            direction: Axis.horizontal,
+            children: _buildChips(6),
+          ),
+        ),
+
+        _buildWrapExample(
+          '2. direction: Axis.vertical',
+          Container(
+            height: 200,
+            child: Wrap(
+              direction: Axis.vertical,
+              children: _buildChips(6),
+            ),
+          ),
+        ),
+
+        _buildWrapExample(
+          '3. spacing: 主轴间距',
+          Wrap(
+            spacing: 20.0, // 水平间距
+            children: _buildChips(5),
+          ),
+        ),
+
+        _buildWrapExample(
+          '4. runSpacing: 交叉轴间距',
+          Wrap(
+            runSpacing: 15.0, // 垂直间距
+            children: _buildChips(8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWrapExample(String title, Widget wrap) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          wrap,
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildChips(int count) {
+    return List.generate(count, (index) => Chip(
+      label: Text('Item $index'),
+      backgroundColor: Colors.primaries[index % Colors.primaries.length][100],
+    ));
   }
 }
 
