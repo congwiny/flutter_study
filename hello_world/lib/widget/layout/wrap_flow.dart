@@ -22,10 +22,16 @@ class WrapFlowExamplePage extends StatelessWidget {
             WrapPropertiesExample(),
             const Divider(height: 32),
             const Text(
-              '2. Wrap 对齐方式',
+              '3. Wrap 对齐方式',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             WrapAlignmentExample(),
+            const Divider(height: 32),
+            const Text(
+              '4. Wrap 交叉轴对齐',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            WrapCrossAlignmentExample(),
           ],
         ),
       ),
@@ -33,6 +39,59 @@ class WrapFlowExamplePage extends StatelessWidget {
   }
 }
 
+
+class WrapCrossAlignmentExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildCrossAlignmentExample(
+          'crossAxisAlignment: WrapCrossAlignment.start',
+          WrapCrossAlignment.start,
+        ),
+        _buildCrossAlignmentExample(
+          'crossAxisAlignment: WrapCrossAlignment.center',
+          WrapCrossAlignment.center,
+        ),
+        _buildCrossAlignmentExample(
+          'crossAxisAlignment: WrapCrossAlignment.end',
+          WrapCrossAlignment.end,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCrossAlignmentExample(String title, WrapCrossAlignment alignment) {
+    return Container(
+      width: 250,
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 12)),
+          SizedBox(height: 8),
+          Container(
+            height: 80,
+            child: Wrap(
+              direction: Axis.vertical,
+              crossAxisAlignment: alignment,
+              children: [
+                Container(width: 80, height: 20, color: Colors.red),
+                Container(width: 60, height: 30, color: Colors.green),
+                Container(width: 100, height: 25, color: Colors.blue),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class WrapAlignmentExample extends StatelessWidget {
   @override
