@@ -57,9 +57,69 @@ class RowColumnExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             PerformanceOptimization(),
+            const Divider(height: 32),
+            const Text(
+              '9. 溢出问题处理',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            OverflowSolutions()
           ],
         ),
       ),
+    );
+  }
+}
+
+class OverflowSolutions extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text('1. 溢出问题示例', style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          width: 200,
+          height: 50,
+          color: Colors.red[100],
+          child: Row(
+            children: [
+              Container(width: 80, color: Colors.blue),
+              Container(width: 80, color: Colors.green),
+              Container(width: 80, color: Colors.orange), // 溢出！
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20),
+        Text('2. 解决方案：使用 Expanded', style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          width: 200,
+          height: 50,
+          color: Colors.green[100],
+          child: Row(
+            children: [
+              Expanded(child: Container(color: Colors.blue)),
+              Expanded(child: Container(color: Colors.green)),
+              Expanded(child: Container(color: Colors.orange)),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20),
+        Text('3. 解决方案：使用 ListView', style: TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          width: 200,
+          height: 50,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              Container(width: 80, color: Colors.blue),
+              Container(width: 80, color: Colors.green),
+              Container(width: 80, color: Colors.orange),
+              Container(width: 80, color: Colors.purple),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
