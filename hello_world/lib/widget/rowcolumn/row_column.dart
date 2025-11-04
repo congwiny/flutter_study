@@ -44,10 +44,57 @@ class RowColumnExamplePage extends StatelessWidget {
               '6. 设置Row主轴尺寸',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            MainAxisSizeExample()
+            MainAxisSizeExample(),
+            const Divider(height: 32),
+            const Text(
+              '7. Row文本基线对齐',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BaselineExample(),
+            const Divider(height: 32),
           ],
         ),
       ),
+    );
+  }
+}
+
+class BaselineExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        //基线位置: 字母主体底部, 适用: 拉丁字母、西文 (Flutter 默认, 优先使用 alphabetic，除非有特殊排版需求	)
+        _buildBaselineRow('alphabetic', TextBaseline.alphabetic),
+        SizedBox(height: 20),
+        //基线位置: 字形框底部（通常更低）, 适用: 中文、日文、韩文等方块字 (仅在纯 CJK 或专业排版时使用)
+        _buildBaselineRow('ideographic', TextBaseline.ideographic),
+      ],
+    );
+  }
+
+  Widget _buildBaselineRow(String label, TextBaseline baseline) {
+    return Column(
+      children: [
+        Text('TextBaseline.$label'),
+        Container(
+          height: 80,
+          color: Colors.grey[200],
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: baseline,
+            children: [
+              Text(
+                'Hello',
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+              Text('World', style: TextStyle(fontSize: 16)),
+              Text('你好世界', style: TextStyle(fontSize: 24, color: Colors.red)),
+            ],
+          ),
+        ),
+        Text('不同字体大小的文本按基线对齐'),
+      ],
     );
   }
 }
@@ -100,7 +147,8 @@ class FlexWidgetsExample extends StatelessWidget {
           child: Row(
             children: [
               Container(width: 50, color: Colors.red),
-              Expanded( // 等价于 Flexible(fit: FlexFit.tight)
+              Expanded(
+                // 等价于 Flexible(fit: FlexFit.tight)
                 // 占据所有剩余空间
                 child: Container(color: Colors.blue),
               ),
@@ -133,14 +181,12 @@ class FlexWidgetsExample extends StatelessWidget {
               //flex 权重默认为 1
               Flexible(
                 fit: FlexFit.loose, // 可以小于分配的空间
-                child: Container(
-                  color: Colors.red,
-                    child: Text('你好')
-                ),
+                child: Container(color: Colors.red, child: Text('你好')),
               ),
               //flex 权重默认为 1
               Flexible(
-                fit: FlexFit.tight, // 根据两个Flexible权重，此Flexible分配的空间为 Row宽度 * 1/2
+                fit: FlexFit.tight,
+                // 根据两个Flexible权重，此Flexible分配的空间为 Row宽度 * 1/2
                 child: Container(color: Colors.green),
               ),
             ],
