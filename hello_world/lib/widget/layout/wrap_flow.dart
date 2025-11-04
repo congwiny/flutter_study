@@ -32,6 +32,12 @@ class WrapFlowExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             WrapCrossAlignmentExample(),
+            const Divider(height: 32),
+            const Text(
+              '5. Wrap 文本方向',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            WrapTextDirectionExample(),
           ],
         ),
       ),
@@ -39,6 +45,54 @@ class WrapFlowExamplePage extends StatelessWidget {
   }
 }
 
+
+class WrapTextDirectionExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildTextDirectionExample(
+            'TextDirection.ltr\n(从左到右)',
+            TextDirection.ltr,
+          ),
+        ),
+        Expanded(
+          child: _buildTextDirectionExample(
+            'TextDirection.rtl\n(从右到左)',
+            TextDirection.rtl,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTextDirectionExample(String title, TextDirection direction) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(title, textAlign: TextAlign.center),
+          SizedBox(height: 8),
+          Wrap(
+            textDirection: direction,
+            children: List.generate(5, (index) => Container(
+              margin: EdgeInsets.all(2),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              color: Colors.blue[100],
+              child: Text('$index'),
+            )),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class WrapCrossAlignmentExample extends StatelessWidget {
   @override
