@@ -185,3 +185,85 @@ class _CircularFlowExampleState extends State<CircularFlowExample>
         );
   }
 }
+
+
+class TagSelectorExample extends StatefulWidget {
+  @override
+  _TagSelectorExampleState createState() => _TagSelectorExampleState();
+}
+
+class _TagSelectorExampleState extends State<TagSelectorExample> {
+  final List<String> allTags = [
+    'Flutter', 'Dart', 'Widget', 'Layout', 'Animation',
+    'State', 'Provider', 'Bloc', 'HTTP', 'Database'
+  ];
+
+  final List<String> selectedTags = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('标签选择器')),
+      body: Column(
+        children: [
+          // 已选标签
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('已选标签:', style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: selectedTags.map((tag) => Chip(
+                    label: Text(tag),
+                    onDeleted: () => setState(() => selectedTags.remove(tag)),
+                  )).toList(),
+                ),
+              ],
+            ),
+          ),
+
+          Divider(),
+
+          // 所有标签
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('所有标签:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  SizedBox(height: 8),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: allTags.map((tag) => FilterChip(
+                          label: Text(tag),
+                          selected: selectedTags.contains(tag),
+                          onSelected: (selected) {
+                            setState(() {
+                              if (selected) {
+                                selectedTags.add(tag);
+                              } else {
+                                selectedTags.remove(tag);
+                              }
+                            });
+                          },
+                        )).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
