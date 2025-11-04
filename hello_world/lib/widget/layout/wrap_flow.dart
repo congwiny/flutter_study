@@ -8,7 +8,6 @@ class WrapFlowExamplePage extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               '1. Wrap 基础示例',
@@ -22,8 +21,78 @@ class WrapFlowExamplePage extends StatelessWidget {
             ),
             WrapPropertiesExample(),
             const Divider(height: 32),
+            const Text(
+              '2. Wrap 对齐方式',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            WrapAlignmentExample(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+
+class WrapAlignmentExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.start',
+          WrapAlignment.start,
+        ),
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.center',
+          WrapAlignment.center,
+        ),
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.end',
+          WrapAlignment.end,
+        ),
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.spaceBetween',
+          WrapAlignment.spaceBetween,
+        ),
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.spaceAround',
+          WrapAlignment.spaceAround,
+        ),
+        _buildAlignmentExample(
+          'alignment: WrapAlignment.spaceEvenly',
+          WrapAlignment.spaceEvenly,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAlignmentExample(String title, WrapAlignment alignment) {
+    return Container(
+      width: 300,
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 12)),
+          SizedBox(height: 8),
+          Wrap(
+            alignment: alignment,
+            children: [
+              Container(width: 60, height: 30, color: Colors.red),
+              Container(width: 50, height: 30, color: Colors.green),
+              Container(width: 70, height: 30, color: Colors.blue),
+              Container(width: 80, height: 30, color: Colors.pink),
+              Container(width: 90, height: 30, color: Colors.orange),
+              Container(width: 100, height: 30, color: Colors.cyan),
+            ],
+          ),
+        ],
       ),
     );
   }
