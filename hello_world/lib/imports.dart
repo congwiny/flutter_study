@@ -25,6 +25,6 @@ export 'package:hello_world/widget/checkswitch/check_switch.dart';
 export 'package:hello_world/widget/indicators/progress_indicator.dart';
 export 'package:hello_world/widget/layout/row_column.dart';
 export 'package:hello_world/widget/layout/flex.dart';
-export 'package:hello_world/widget/layout/wrap_flow.dart';
+export 'package:hello_world/widget/layout/wrap.dart';
 
 

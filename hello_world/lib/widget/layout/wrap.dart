@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class WrapFlowExamplePage extends StatelessWidget {
+class WrapExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('流式布局示例')),
+      appBar: AppBar(title: Text('Wrap布局示例')),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
