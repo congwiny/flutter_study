@@ -13,8 +13,50 @@ class AlignExamplePage extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           AlignBasicExample(),
+          const Divider(height: 32),
+          const Text(
+            '2. widthFactor 和 heightFactor',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          AlignFactorExample(),
         ],
       ),
+    );
+  }
+}
+
+class AlignFactorExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildWidthFactor('widthFactor: null（默认）', null), //Align宽度为最大宽度
+        _buildWidthFactor('widthFactor: 1.0', 1.0),//Align宽度为子组件宽度
+        _buildWidthFactor('widthFactor: 2.0', 2.0),//Align宽度为子组件宽度*2
+      ],
+    );
+  }
+
+  Widget _buildWidthFactor(String label, double? widthFactor) {
+    return Column(
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          height: 120,
+          color: Colors.grey[300], // 灰色背景用于观察 Align 的实际尺寸
+          child: Align(
+            alignment: Alignment.topRight,
+            widthFactor: widthFactor,
+            child: Container(
+              width: 60,
+              height: 60,
+              color: Colors.red,
+              alignment: Alignment.center,
+              child: const Text('Child', style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -121,6 +163,7 @@ class AlignBasicExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Center容器让子项获得松散约束
+    //Center 实际上是 Align 的一个特化版本, 固定 alignment: Alignment.center
     return Center(
       child: Container(
         width: 100,
