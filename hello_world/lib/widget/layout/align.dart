@@ -15,10 +15,90 @@ class AlignExamplePage extends StatelessWidget {
           AlignBasicExample(),
           const Divider(height: 32),
           const Text(
-            '2. widthFactor 和 heightFactor',
+            '2. Align widthFactor 和 heightFactor',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           AlignFactorExample(),
+          const Divider(height: 32),
+          const Text(
+            '3. Center 基础示例',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          CenterBasicExample()
+        ],
+      ),
+    );
+  }
+}
+
+class CenterBasicExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: [
+          _buildCenterExample(
+            '1. 简单居中',
+            Container(
+              width: 200,
+              height: 100,
+              color: Colors.grey[200],
+              child: Center(
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  color: Colors.blue,
+                  child: Center(child: Text('居中')),
+                ),
+              ),
+            ),
+          ),
+
+          _buildCenterExample(
+            '2. 文本居中',
+            Container(
+              width: 200,
+              height: 80,
+              color: Colors.green[100],
+              child: Center(
+                child: Text(
+                  '这段文本会居中显示',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+
+          _buildCenterExample(
+            '3. 多个子组件居中',
+            Container(
+              width: 200,
+              height: 120,
+              color: Colors.orange[100],
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.star, size: 30, color: Colors.orange),
+                    SizedBox(height: 8),
+                    Text('图标和文本都居中'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+  }
+
+  Widget _buildCenterExample(String title, Widget example) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          example,
         ],
       ),
     );
