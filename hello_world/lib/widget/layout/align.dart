@@ -24,7 +24,83 @@ class AlignExamplePage extends StatelessWidget {
             '3. Center 基础示例',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          CenterBasicExample()
+          CenterBasicExample(),
+          const Divider(height: 32),
+          const Text(
+            '4. Center 的其他等价实现',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          CenterEquivalenceExample()
+        ],
+      ),
+    );
+  }
+}
+
+class CenterEquivalenceExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: [
+          _buildComparison(
+            '使用 Center 组件',
+            Center(
+              child: Container(
+                width: 80,
+                height: 80,
+                color: Colors.blue,
+                child: Center(child: Text('Center')),
+              ),
+            ),
+          ),
+
+          _buildComparison(
+            '使用 Align 实现相同效果',
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                width: 80,
+                height: 80,
+                color: Colors.green,
+                child: Center(child: Text('Align')),
+              ),
+            ),
+          ),
+
+          _buildComparison(
+            '使用 Container 的 alignment',
+            Container(
+              alignment: Alignment.center, // Container 的 alignment 属性
+              child: Container(
+                width: 80,
+                height: 80,
+                color: Colors.orange,
+                child: Center(child: Text('Container')),
+              ),
+            ),
+          ),
+        ],
+      );
+  }
+
+  Widget _buildComparison(String title, Widget widget) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 100,
+            width: double.infinity,
+            color: Colors.grey[100],
+            child: widget,
+          ),
         ],
       ),
     );
