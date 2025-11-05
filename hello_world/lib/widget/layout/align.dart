@@ -37,6 +37,149 @@ class AlignExamplePage extends StatelessWidget {
   }
 }
 
+class InteractiveAlignmentEditor extends StatefulWidget {
+  @override
+  _InteractiveAlignmentEditorState createState() => _InteractiveAlignmentEditorState();
+}
+
+class _InteractiveAlignmentEditorState extends State<InteractiveAlignmentEditor> {
+  double _dx = 0.0;
+  double _dy = 0.0;
+  bool _useFractionalOffset = false;
+
+  void _toggleCoordinateSystem(bool newValue) {
+    if (_useFractionalOffset == newValue) return;
+
+    if (newValue) {
+      // 从 Alignment 切换到 FractionalOffset
+      // Alignment(-1..1) => FractionalOffset(0..1)
+      final newDx = (_dx + 1) / 2;
+      final newDy = (_dy + 1) / 2;
+      setState(() {
+        _dx = newDx.clamp(0.0, 1.0);
+        _dy = newDy.clamp(0.0, 1.0);
+        _useFractionalOffset = true;
+      });
+    } else {
+      // 从 FractionalOffset 切换到 Alignment
+      // FractionalOffset(0..1) => Alignment(-1..1)
+      final newDx = _dx * 2 - 1;
+      final newDy = _dy * 2 - 1;
+      setState(() {
+        _dx = newDx.clamp(-1.0, 1.0);
+        _dy = newDy.clamp(-1.0, 1.0);
+        _useFractionalOffset = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final sliderMin = _useFractionalOffset ? 0.0 : -1.0;
+    final sliderMax = _useFractionalOffset ? 1.0 : 1.0;
+
+    return Scaffold(
+      appBar: AppBar(title: Text('交互式对齐编辑器')),
+      body: Column(
+        children: [
+          // 控制面板
+          Container(
+            padding: EdgeInsets.all(16),
+            color: Colors.grey[100],
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('X: ${_dx.toStringAsFixed(2)}'),
+                          Slider(
+                            value: _dx,
+                            min: sliderMin,
+                            max: sliderMax,
+                            onChanged: (value) => setState(() => _dx = value),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Y: ${_dy.toStringAsFixed(2)}'),
+                          Slider(
+                            value: _dy,
+                            min: sliderMin,
+                            max: sliderMax,
+                            onChanged: (value) => setState(() => _dy = value),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Text('使用 FractionalOffset:'),
+                    Switch(
+                      value: _useFractionalOffset,
+                      onChanged: _toggleCoordinateSystem,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Text(
+                  _useFractionalOffset
+                      ? 'FractionalOffset(${_dx.toStringAsFixed(2)}, ${_dy.toStringAsFixed(2)})'
+                      : 'Alignment(${_dx.toStringAsFixed(2)}, ${_dy.toStringAsFixed(2)})',
+                  style: TextStyle(fontFamily: 'monospace'),
+                ),
+              ],
+            ),
+          ),
+
+          // 预览区域
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Align(
+                alignment: _useFractionalOffset
+                    ? FractionalOffset(_dx, _dy)
+                    : Alignment(_dx, _dy),
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(Icons.ads_click, color: Colors.white, size: 30),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 class AlignmentVsFractionalOffset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
