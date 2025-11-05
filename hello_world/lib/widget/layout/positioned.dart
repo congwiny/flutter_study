@@ -31,6 +31,80 @@ class PositionedExamplePage extends StatelessWidget {
             ),
             AvatarBadgeExample(),
             const Divider(height: 32),
+            const Text(
+              '4. 卡片叠加效果',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CardStackExample()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CardStackExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 300,
+      color: Colors.blue[100],
+      child: Stack(
+        children: [
+          // 第三张卡片
+          Positioned(
+            top: 40,
+            left: 20,
+            right: 20,
+            child: _buildCard('卡片 3', Colors.grey[400]!, 0),
+          ),
+
+          // 第二张卡片
+          Positioned(
+            top: 20,
+            left: 10,
+            right: 10,
+            child: _buildCard('卡片 2', Colors.grey[300]!, 4),
+          ),
+
+          // 第一张卡片（最顶层）
+          _buildCard('卡片 1', Colors.white, 8),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCard(String title, Color color, double elevation) {
+    return Card(
+      elevation: elevation,
+      color: color,
+      child: Container(
+        height: 200,
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text('这是卡片的内容区域，可以放置各种组件和内容。'),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: Text('取消'),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('确认'),
+                ),
+              ],
+            ),
           ],
         ),
       ),
