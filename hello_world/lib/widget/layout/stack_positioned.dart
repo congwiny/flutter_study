@@ -29,14 +29,57 @@ class StackPositionedExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             StackFitExample(),
+            const Divider(height: 32),
+            const Text(
+              '4.Stack clipBehavior属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            // 默认裁剪（Clip.hardEdge）
+            _buildClipBehavior(Clip.hardEdge, 'Clip.hardEdge（默认）'),
+            // 不裁剪
+            _buildClipBehavior(Clip.none, 'Clip.none（不裁剪）'),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildClipBehavior(Clip clipBehavior, String label) {
+    return Column(
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Container(
+          margin: const EdgeInsets.all(20),
+          color: Colors.grey[300],
+          // Stack 宽高固定为 150x150
+          child: SizedBox(
+            width: 150,
+            height: 150,
+            child: Stack(
+              clipBehavior: clipBehavior, // 关键属性
+              children: [
+                Container(color: Colors.blue.withOpacity(0.3)),
+                // 故意让子组件超出边界
+                Positioned(
+                  top: -20,
+                  left: -20,
+                  child: Container(width: 60, height: 60, color: Colors.red),
+                ),
+                Positioned(
+                  bottom: -30,
+                  right: -10,
+                  child: Container(width: 40, height: 40, color: Colors.green),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-///fit 是 Stack 组件中一个非常重要但容易被忽视的属性，它直接决定了 Stack 自身尺寸（width/height）如何计算，进而影响整个布局的表现。
+/////fit 是 Stack 组件中一个非常重要但容易被忽视的属性，它直接决定了 Stack 自身尺寸（width/height）如何计算，进而影响整个布局的表现。
 /// fit 属性的本质作用: fit 控制的是：Stack 容器本身的大小（size）是如何被确定的。
 /// fit 的类型是 StackFit，它有三个可选值：StackFit.loose（默认值）, StackFit.expand, StackFit.passthrough（较少使用）
 
