@@ -37,6 +37,136 @@ class AlignExamplePage extends StatelessWidget {
   }
 }
 
+class AlignmentVsFractionalOffset extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Alignment vs FractionalOffset')),
+      body: Column(
+        children: [
+          _buildComparisonItem(
+            '相同点: 中心位置',
+            'Alignment.center',
+            Align(
+              alignment: Alignment.center,
+              child: _buildMarker('Alignment'),
+            ),
+            'FractionalOffset.center',
+            Align(
+              alignment: FractionalOffset.center,
+              child: _buildMarker('FractionalOffset'),
+            ),
+          ),
+
+          _buildComparisonItem(
+            '不同点: 坐标系',
+            'Alignment(0.5, 0)',
+            Align(
+              alignment: Alignment(0.5, 0), // 水平中心偏右，顶部
+              child: _buildMarker('A(0.5,0)'),
+            ),
+            'FractionalOffset(0.5, 0)',
+            Align(
+              alignment: FractionalOffset(0.5, 0), // 水平中心，顶部
+              child: _buildMarker('F(0.5,0)'),
+            ),
+          ),
+
+          _buildComparisonItem(
+            '边界位置',
+            'Alignment.topLeft\n(-1, -1)',
+            Align(
+              alignment: Alignment.topLeft,
+              child: _buildMarker('A(-1,-1)'),
+            ),
+            'FractionalOffset.topLeft\n(0, 0)',
+            Align(
+              alignment: FractionalOffset.topLeft,
+              child: _buildMarker('F(0,0)'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComparisonItem(
+      String title,
+      String leftLabel,
+      Widget leftWidget,
+      String rightLabel,
+      Widget rightWidget,
+      ) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(leftLabel, style: TextStyle(fontSize: 12)),
+                    SizedBox(height: 4),
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: leftWidget,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  children: [
+                    Text(rightLabel, style: TextStyle(fontSize: 12)),
+                    SizedBox(height: 4),
+                    Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: rightWidget,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMarker(String text) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.blue.withOpacity(0.7),
+        shape: BoxShape.circle,
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white, fontSize: 8),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
 ///FractionalOffset
 /// 除了Alignment，我们还可以使用FractionalOffset。
 /// FractionalOffset的坐标系以父组件的左上角为原点(0,0)，右下角为(1,1)。
