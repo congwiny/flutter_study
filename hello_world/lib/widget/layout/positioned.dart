@@ -25,12 +25,93 @@ class PositionedExamplePage extends StatelessWidget {
             ),
             PositionedCombinationsExample(),
             const Divider(height: 32),
+            const Text(
+              '3. 头像徽章设计',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            AvatarBadgeExample(),
+            const Divider(height: 32),
           ],
         ),
       ),
     );
   }
 }
+
+
+class AvatarBadgeExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 16,
+      children: [
+        _buildAvatarWithBadge(
+          'assets/images/avatar1.jpg',
+          Colors.green,
+          '在线',
+        ),
+        SizedBox(height: 30),
+        _buildAvatarWithBadge(
+          'assets/images/avatar2.webp',
+          Colors.red,
+          '3',
+        ),
+        SizedBox(height: 30),
+        _buildAvatarWithBadge(
+          'assets/images/avatar3.png',
+          Colors.orange,
+          'VIP',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAvatarWithBadge(String imageUrl, Color badgeColor, String badgeText) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        // 头像
+        Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey, width: 2),
+            image: DecorationImage(
+              image: AssetImage(imageUrl),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+
+        // 徽章
+        Positioned(
+          right: -5,
+          bottom: -5,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: badgeColor,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.white, width: 2),
+            ),
+            child: Text(
+              badgeText,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 class PositionedCombinationsExample extends StatelessWidget {
   @override
