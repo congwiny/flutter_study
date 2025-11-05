@@ -19,8 +19,105 @@ class PositionedExamplePage extends StatelessWidget {
             ),
             PositionedBasicExample(),
             const Divider(height: 32),
+            const Text(
+              '2. Positioned 各种组合',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            PositionedCombinationsExample(),
+            const Divider(height: 32),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PositionedCombinationsExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _buildPositionedExample(
+          '1. 四边定位 (类似 padding)',
+          Stack(
+            children: [
+              Container(color: Colors.grey[300]),
+              Positioned(
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: 20,
+                child: Container(color: Colors.blue),
+              ),
+            ],
+          ),
+        ),
+
+        _buildPositionedExample(
+          '2. 左右定位 + 高度',
+          Stack(
+            children: [
+              Container(color: Colors.grey[300]),
+              Positioned(
+                left: 30,
+                right: 30,
+                top: 40,
+                height: 60,
+                child: Container(color: Colors.green),
+              ),
+            ],
+          ),
+        ),
+
+        _buildPositionedExample(
+          '3. 上下定位 + 宽度',
+          Stack(
+            children: [
+              Container(color: Colors.grey[300]),
+              Positioned(
+                top: 50,
+                bottom: 50,
+                left: 40,
+                width: 80,
+                child: Container(color: Colors.red),
+              ),
+            ],
+          ),
+        ),
+
+        _buildPositionedExample(
+          '4. 单边定位 + 尺寸',
+          Stack(
+            children: [
+              Container(color: Colors.grey[300]),
+              Positioned(
+                bottom: 20,
+                right: 20,
+                width: 100,
+                height: 50,
+                child: Container(color: Colors.orange),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPositionedExample(String title, Stack stack) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontSize: 14)),
+          SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 150,
+            child: stack,
+          ),
+        ],
       ),
     );
   }
