@@ -38,6 +38,95 @@ class PositionedExamplePage extends StatelessWidget {
   }
 }
 
+class FabWithBottomNavExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('FAB + 底部导航')),
+      body: Stack(
+        children: [
+          // 主内容
+          ListView.builder(
+            itemCount: 20,
+            itemBuilder: (context, index) => ListTile(
+              title: Text('列表项 $index'),
+              subtitle: Text('这是列表项的详细内容'),
+            ),
+          ),
+
+          // 底部导航
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(Icons.home, '首页', true),
+                  _buildNavItem(Icons.search, '搜索', false),
+                  SizedBox(width: 40), // 为 FAB 留出空间
+                  _buildNavItem(Icons.notifications, '通知', false),
+                  _buildNavItem(Icons.person, '我的', false),
+                ],
+              ),
+            ),
+          ),
+
+          // 浮动操作按钮
+          Positioned(
+            left: MediaQuery.of(context).size.width / 2 - 30,
+            bottom: 30,
+            child: Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.5),
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Icon(Icons.add, color: Colors.white, size: 30),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, String text, bool isActive) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: isActive ? Colors.blue : Colors.grey, size: 24),
+        SizedBox(height: 4),
+        Text(
+          text,
+          style: TextStyle(
+            color: isActive ? Colors.blue : Colors.grey,
+            fontSize: 12,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class AvatarBadgeExample extends StatelessWidget {
   @override
