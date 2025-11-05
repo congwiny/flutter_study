@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Stack 是一个层叠布局容器，允许其子组件在垂直方向上堆叠显示。子组件可以部分或完全重叠，类似于 CSS 中的绝对定位（position: absolute）。
-/// Positioned 是一个定位组件，只能作为 Stack 的直接子组件使用。它通过设置 top、bottom、left、right 等属性来精确控制子组件在 Stack 中的位置。
-/// Positioned 必须是 Stack 的直接子节点，否则会抛出异常。
-class StackPositionedExamplePage extends StatelessWidget {
+class StackExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
