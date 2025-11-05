@@ -27,5 +27,6 @@ export 'package:hello_world/widget/layout/row_column.dart';
 export 'package:hello_world/widget/layout/flex.dart';
 export 'package:hello_world/widget/layout/wrap.dart';
 export 'package:hello_world/widget/layout/flow.dart';
+export 'package:hello_world/widget/layout/stack_positioned.dart';
 
 
