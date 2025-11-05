@@ -24,9 +24,82 @@ class StackPositionedExamplePage extends StatelessWidget {
             ),
             StackAlignmentExample(),
             const Divider(height: 32),
+            const Text(
+              '3. Stack Fit属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            StackFitExample(),
           ],
         ),
       ),
+    );
+  }
+}
+
+///fit 是 Stack 组件中一个非常重要但容易被忽视的属性，它直接决定了 Stack 自身尺寸（width/height）如何计算，进而影响整个布局的表现。
+/// fit 属性的本质作用: fit 控制的是：Stack 容器本身的大小（size）是如何被确定的。
+/// fit 的类型是 StackFit，它有三个可选值：StackFit.loose（默认值）, StackFit.expand, StackFit.passthrough（较少使用）
+
+class StackFitExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // StackFit.loose行为规则：
+        //    Stack 的尺寸仅由非 Positioned 的子组件决定。
+        //    Positioned 子组件完全不影响 Stack 的大小。
+        //    如果没有任何非 Positioned 子组件，则 Stack 的尺寸为 0×0。
+        //一句话记住 : 我有多大，看我的“普通孩子”（非 Positioned）。
+
+        //StackFit.loose 适用场景：
+        //    你有一个明确的“背景”或“容器”作为非 Positioned 子组件。
+        //    你想让 Stack 的大小“包裹”住主要内容区域。
+        Stack(
+          fit: StackFit.loose, // 默认，可省略
+          children: [
+            Container(width: 200, height: 150, color: Colors.grey), // ← 非 Positioned
+            Positioned(top: 10, left: 10, child: Text("Hello")),
+          ],
+        ),
+
+        //// ❌ Stack 尺寸 = 0×0！文字和图标虽然存在，但 Stack 本身没有空间 → 可能看不见！
+        // Stack(
+        //   fit: StackFit.loose,
+        //   children: [
+        //     Positioned(top: 10, left: 10, child: Text("Hello2")),
+        //     Positioned(bottom: 20, right: 30, child: Icon(Icons.star)),
+        //   ],
+        // ),
+
+        SizedBox(height: 20),
+
+        // StackFit.expand 行为规则：
+        //    Stack 会尽可能扩展，以填满父容器提供的最大约束（max width/height）。
+        //    即使没有子组件，或者只有 Positioned 子组件，Stack 也会撑满可用空间。
+        //    要求父 widget 必须提供明确的最大尺寸约束（如 SizedBox、Container with width/height、Center、Column/Row 中的 Expanded 等）。否则会抛出异常！
+        //    子组件的宽高受到StackFit.expand的影响，填充满 Stack
+
+        //一句话记住 : 我要占满爸爸给我的所有空间（但爸爸必须告诉我有多大）。
+
+        // StackFit.expand 适用场景：
+        //    你想让 Stack 全屏覆盖（如弹窗背景、封面图层叠）。
+        //    所有内容都是通过 Positioned 精确定位的，不需要“背景容器”。
+        // 正确用法：父容器提供了约束
+        Container(
+          color: Colors.grey,
+          width: 300,
+          height: 200,
+          child: Stack(
+            fit: StackFit.expand, //设置了StackFit.expand，那么绿色的子组件的宽高就被设置为 Stack的宽高
+            children: [
+              Container(color: Colors.red),
+              Container(width: 100, height: 100, color: Colors.green),
+            ],
+          ),
+        )
+
+      ],
     );
   }
 }
