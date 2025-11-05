@@ -18,10 +18,96 @@ class StackPositionedExamplePage extends StatelessWidget {
             ),
             StackBasicExample(),
             const Divider(height: 32),
+            const Text(
+              '2. Stack Alignment属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            StackAlignmentExample(),
+            const Divider(height: 32),
           ],
         ),
       ),
     );
+  }
+}
+
+class StackAlignmentExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildStackExample(
+          //alignment：决定如何对齐非定位子组件（没有使用 Positioned 包裹的子组件）。
+          '1. alignment: Alignment.topLeft (默认)',
+          Stack(alignment: Alignment.topLeft, children: _buildLayers()),
+        ),
+
+        _buildStackExample(
+          '2. alignment: Alignment.topCenter',
+          Stack(alignment: Alignment.topCenter, children: _buildLayers()),
+        ),
+
+        _buildStackExample(
+          '3. alignment: Alignment.topRight',
+          Stack(alignment: Alignment.topRight, children: _buildLayers()),
+        ),
+
+        _buildStackExample(
+          '4. alignment: Alignment.centerLeft',
+          Stack(alignment: Alignment.centerLeft, children: _buildLayers()),
+        ),
+
+        _buildStackExample(
+          '5. alignment: Alignment.center',
+          Stack(alignment: Alignment.center, children: _buildLayers()),
+        ),
+
+        _buildStackExample(
+          '6. alignment: Alignment.centerRight',
+          Stack(alignment: Alignment.centerRight, children: _buildLayers()),
+        ),
+        _buildStackExample(
+          '7. alignment: Alignment.bottomLeft',
+          Stack(alignment: Alignment.bottomLeft, children: _buildLayers()),
+        ),
+        _buildStackExample(
+          '8. alignment: Alignment.bottomCenter',
+          Stack(alignment: Alignment.bottomCenter, children: _buildLayers()),
+        ),
+        _buildStackExample(
+          '9. alignment: Alignment.bottomRight',
+          Stack(alignment: Alignment.bottomRight, children: _buildLayers()),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStackExample(String title, Stack stack) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 150,
+            color: Colors.grey[200],
+            child: stack,
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildLayers() {
+    return [
+      Container(width: 180, height: 130, color: Colors.red.withOpacity(0.7)),
+      Container(width: 130, height: 80, color: Colors.green.withOpacity(0.7)),
+      Container(width: 80, height: 30, color: Colors.blue.withOpacity(0.7)),
+    ];
   }
 }
 
