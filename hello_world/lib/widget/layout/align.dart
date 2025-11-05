@@ -19,6 +19,104 @@ class AlignExamplePage extends StatelessWidget {
   }
 }
 
+class AlignmentCoordinateSystem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Alignment 坐标系')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Alignment(x, y) 坐标系:', style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text('• x: -1.0(左) 到 1.0(右)'),
+            Text('• y: -1.0(上) 到 1.0(下)'),
+            SizedBox(height: 20),
+
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Stack(
+                  children: [
+                    // 坐标系网格
+                    _buildCoordinateGrid(),
+
+                    // 各种对齐点
+                    _buildAlignmentPoint('(-1, -1)', Alignment.topLeft),
+                    _buildAlignmentPoint('(0, -1)', Alignment.topCenter),
+                    _buildAlignmentPoint('(1, -1)', Alignment.topRight),
+                    _buildAlignmentPoint('(-1, 0)', Alignment.centerLeft),
+                    _buildAlignmentPoint('(0, 0)', Alignment.center),
+                    _buildAlignmentPoint('(1, 0)', Alignment.centerRight),
+                    _buildAlignmentPoint('(-1, 1)', Alignment.bottomLeft),
+                    _buildAlignmentPoint('(0, 1)', Alignment.bottomCenter),
+                    _buildAlignmentPoint('(1, 1)', Alignment.bottomRight),
+
+                    // 自定义点
+                    _buildAlignmentPoint('(0.5, -0.5)', Alignment(0.5, -0.5)),
+                    _buildAlignmentPoint('(-0.7, 0.3)', Alignment(-0.7, 0.3)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCoordinateGrid() {
+    return Column(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(child: Container(color: Colors.grey[100])),
+              Container(width: 1, color: Colors.red),
+              Expanded(child: Container(color: Colors.grey[100])),
+            ],
+          ),
+        ),
+        Container(height: 1, color: Colors.red),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(child: Container(color: Colors.grey[100])),
+              Container(width: 1, color: Colors.red),
+              Expanded(child: Container(color: Colors.grey[100])),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAlignmentPoint(String label, Alignment alignment) {
+    return Align(
+      alignment: alignment,
+      child: Container(
+        width: 60,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.blue.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class AlignBasicExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
