@@ -37,6 +37,82 @@ class AlignExamplePage extends StatelessWidget {
   }
 }
 
+///FractionalOffset
+/// 除了Alignment，我们还可以使用FractionalOffset。
+/// FractionalOffset的坐标系以父组件的左上角为原点(0,0)，右下角为(1,1)。
+/// 所以，FractionalOffset(0.5, 0.5)表示父组件的中心。
+/// 在Align中，我们可以使用FractionalOffset来替代Alignment。
+///
+class FractionalOffsetExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('FractionalOffset 坐标系')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('FractionalOffset(dx, dy) 坐标系:', style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text('• dx: 0.0(左) 到 1.0(右)'),
+            Text('• dy: 0.0(上) 到 1.0(下)'),
+            SizedBox(height: 20),
+
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: Stack(
+                  children: [
+                    // 各种 FractionalOffset 点
+                    _buildFractionalPoint('(0, 0)', FractionalOffset.topLeft),
+                    _buildFractionalPoint('(0.5, 0)', FractionalOffset.topCenter),
+                    _buildFractionalPoint('(1, 0)', FractionalOffset.topRight),
+                    _buildFractionalPoint('(0, 0.5)', FractionalOffset.centerLeft),
+                    _buildFractionalPoint('(0.5, 0.5)', FractionalOffset.center),
+                    _buildFractionalPoint('(1, 0.5)', FractionalOffset.centerRight),
+                    _buildFractionalPoint('(0, 1)', FractionalOffset.bottomLeft),
+                    _buildFractionalPoint('(0.5, 1)', FractionalOffset.bottomCenter),
+                    _buildFractionalPoint('(1, 1)', FractionalOffset.bottomRight),
+
+                    // 自定义点
+                    _buildFractionalPoint('(0.2, 0.3)', FractionalOffset(0.2, 0.3)),
+                    _buildFractionalPoint('(0.8, 0.7)', FractionalOffset(0.8, 0.7)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFractionalPoint(String label, FractionalOffset offset) {
+    return Align(
+      alignment: offset, // FractionalOffset 可以用于 Align
+      child: Container(
+        width: 60,
+        height: 30,
+        decoration: BoxDecoration(
+          color: Colors.purple.withOpacity(0.7),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 class CenterEquivalenceExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
