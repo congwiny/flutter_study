@@ -36,6 +36,13 @@ class StackExamplePage extends StatelessWidget {
             _buildClipBehavior(Clip.hardEdge, 'Clip.hardEdge（默认）'),
             // 不裁剪
             _buildClipBehavior(Clip.none, 'Clip.none（不裁剪）'),
+            const Divider(height: 32),
+            const Text(
+              '5. IndexedStack 控制显示层级',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            IndexedStackExample(),
+            const Divider(height: 32),
           ],
         ),
       ),
@@ -72,6 +79,61 @@ class StackExamplePage extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class IndexedStackExample extends StatefulWidget {
+  @override
+  _IndexedStackExampleState createState() => _IndexedStackExampleState();
+}
+
+class _IndexedStackExampleState extends State<IndexedStackExample> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // 控制按钮
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => setState(() => _currentIndex = 0),
+              child: Text('显示红色'),
+            ),
+            ElevatedButton(
+              onPressed: () => setState(() => _currentIndex = 1),
+              child: Text('显示绿色'),
+            ),
+            ElevatedButton(
+              onPressed: () => setState(() => _currentIndex = 2),
+              child: Text('显示蓝色'),
+            ),
+          ],
+        ),
+
+        SizedBox(height: 20),
+
+        // IndexedStack
+        Container(
+          width: 200,
+          height: 200,
+          child: IndexedStack(
+            index: _currentIndex,
+            children: [
+              // 只有当前索引对应的组件会显示
+              Container(color: Colors.red, child: Center(child: Text('红色层', style: TextStyle(color: Colors.white)))),
+              Container(color: Colors.green, child: Center(child: Text('绿色层', style: TextStyle(color: Colors.white)))),
+              Container(color: Colors.blue, child: Center(child: Text('蓝色层', style: TextStyle(color: Colors.white)))),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20),
+        Text('当前显示: 索引 $_currentIndex'),
       ],
     );
   }
