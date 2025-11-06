@@ -34,6 +34,147 @@ class LayoutBuilderExamplePage extends StatelessWidget {
   }
 }
 
+
+class ResponsiveCard extends StatelessWidget {
+  final String title;
+  final String content;
+  final IconData icon;
+
+  const ResponsiveCard({
+    Key? key,
+    required this.title,
+    required this.content,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final bool isWide = constraints.maxWidth > 300;
+
+        return Card(
+          elevation: 4,
+          child: Padding(
+            padding: EdgeInsets.all(isWide ? 20 : 16),
+            child: isWide ? _buildWideLayout() : _buildCompactLayout(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildWideLayout() {
+    return Row(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: Colors.white, size: 30),
+        ),
+        SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                content,
+                style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCompactLayout() {
+    return Column(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: Colors.white, size: 20),
+        ),
+        SizedBox(height: 12),
+        Text(
+          title,
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(height: 8),
+        Text(
+          content,
+          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+class ResponsiveCardExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('自定义响应式组件')),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            // 宽卡片
+            Container(
+              width: 400,
+              margin: EdgeInsets.only(bottom: 16),
+              child: ResponsiveCard(
+                title: '功能特性',
+                content: '这是一个宽卡片布局，当有足够空间时会显示图标和文本的水平排列。',
+                icon: Icons.star,
+              ),
+            ),
+            // 窄卡片
+            Container(
+              width: 200,
+              margin: EdgeInsets.only(bottom: 16),
+              child: ResponsiveCard(
+                title: '设置选项',
+                content: '这是一个窄卡片布局，空间有限时会切换到垂直排列。',
+                icon: Icons.settings,
+              ),
+            ),
+            // 自适应宽度卡片
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return Container(
+                  width: constraints.maxWidth * 0.8,
+                  child: ResponsiveCard(
+                    title: '自适应卡片',
+                    content: '这个卡片的宽度是父容器宽度的80%，会根据可用空间自动调整布局。',
+                    icon: Icons.auto_awesome,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ConstraintsInfoExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
