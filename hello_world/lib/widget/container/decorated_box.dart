@@ -22,8 +22,105 @@ class DecoratedBoxExamplePage extends StatelessWidget {
             ),
             DecoratedBoxVsContainer(),
             const Divider(height: 32),
+            const Text(
+              '3. BoxDecoration 颜色和渐变',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ColorAndGradientExample(),
+            const Divider(height: 32),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ColorAndGradientExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildDecorationExample(
+            '1. 纯色背景',
+            BoxDecoration(
+              color: Colors.blue[100],
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildDecorationExample(
+            '2. 线性渐变',
+            BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.blue, Colors.purple],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildDecorationExample(
+            '3. 径向渐变',
+            BoxDecoration(
+              gradient: RadialGradient(
+                center: Alignment.center,
+                radius: 0.8,
+                colors: [Colors.yellow, Colors.orange],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildDecorationExample(
+            '4. 扫描渐变',
+            BoxDecoration(
+              gradient: SweepGradient(
+                center: Alignment.center,
+                colors: [Colors.red, Colors.yellow, Colors.green, Colors.blue, Colors.red],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildDecorationExample(
+            '5. 渐变 + 颜色透明度',
+            BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.red.withOpacity(0.3),
+                  Colors.blue.withOpacity(0.7),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDecorationExample(String title, BoxDecoration decoration) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 80,
+            child: DecoratedBox(
+              decoration: decoration,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
