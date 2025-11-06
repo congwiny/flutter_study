@@ -30,5 +30,6 @@ export 'package:hello_world/widget/layout/flow.dart';
 export 'package:hello_world/widget/layout/stack.dart';
 export 'package:hello_world/widget/layout/positioned.dart';
 export 'package:hello_world/widget/layout/align.dart';
+export 'package:hello_world/widget/layout/layout_builder.dart';
 
 
