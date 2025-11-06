@@ -22,6 +22,59 @@ class LayoutBuilderExamplePage extends StatelessWidget {
             ),
             BoxConstraintsExplanation(),
             const Divider(height: 32),
+            const Text(
+              '3. 获取约束信息',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ConstraintsInfoExample(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ConstraintsInfoExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Container(
+          padding: EdgeInsets.all(16),
+          color: Colors.blue[100],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildInfoCard('最大宽度', '${constraints.maxWidth}'),
+              _buildInfoCard('最大高度', '${constraints.maxHeight}'),
+              _buildInfoCard('最小宽度', '${constraints.minWidth}'),
+              _buildInfoCard('最小高度', '${constraints.minHeight}'),
+              _buildInfoCard('是否有界宽度', '${constraints.hasBoundedWidth}'),
+              _buildInfoCard('是否有界高度', '${constraints.hasBoundedHeight}'),
+              _buildInfoCard(
+                  '是否有紧约束宽度', '${constraints.hasTightWidth}'),
+              _buildInfoCard(
+                  '是否有紧约束高度', '${constraints.hasTightHeight}'),
+              _buildInfoCard(
+                  '是否无限宽度', '${constraints.maxWidth.isInfinite}'),
+              _buildInfoCard(
+                  '是否无限高度', '${constraints.maxHeight.isInfinite}'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildInfoCard(String title, String value) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Text('$title:', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(width: 8),
+            Text(value, style: TextStyle(fontFamily: 'monospace')),
           ],
         ),
       ),
