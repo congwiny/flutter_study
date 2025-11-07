@@ -38,7 +38,99 @@ class ClipExamplePage extends StatelessWidget {
               '5. ClipRRect 圆角矩形剪裁',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ClipRRectBasic()
+            ClipRRectBasic(),
+            const Divider(height: 32),
+            const Text(
+              '6. 圆角卡片设计',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            RoundedCardDesign()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RoundedCardDesign extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildRoundedCard(
+            '产品卡片',
+            '这是一个现代化的圆角卡片设计',
+            Colors.blue,
+            Icons.shopping_cart,
+          ),
+          SizedBox(height: 16),
+          _buildRoundedCard(
+            '服务介绍',
+            '提供专业的解决方案和优质的服务体验',
+            Colors.green,
+            Icons.construction,
+          ),
+          SizedBox(height: 16),
+          _buildRoundedCard(
+            '活动推广',
+            '参与我们的精彩活动，享受特别优惠',
+            Colors.orange,
+            Icons.event,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRoundedCard(String title, String description, Color color, IconData icon) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 4,
+              color: color,
+            ),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(icon, color: color),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 4),
+                        Text(description, style: TextStyle(color: Colors.grey[600])),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
