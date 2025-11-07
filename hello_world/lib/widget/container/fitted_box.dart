@@ -50,9 +50,87 @@ class FittedBoxExamplePage extends StatelessWidget {
               '7. 图标和图片适配',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            IconAndImageFitting()
+            IconAndImageFitting(),
+            const Divider(height: 32),
+            const Text(
+              '8. 文本缩放适配',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            TextScalingWithFittedBox()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TextScalingWithFittedBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildTextExample(
+            '1. 长文本自动缩放',
+            '这是一个非常非常非常非常非常非常长的文本',
+            true,
+          ),
+          _buildTextExample(
+            '2. 短文本居中显示',
+            '短文本',
+            true,
+          ),
+          _buildTextExample(
+            '3. 无 FittedBox 的对比',
+            '这是一个很长的文本会溢出容器',
+            false,
+          ),
+          _buildTextExample(
+            '4. 多行文本适配',
+            '这是第一行\n这是第二行很长的文本\n第三行',
+            true,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextExample(String title, String text, bool useFittedBox) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 60,
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              border: Border.all(color: Colors.grey),
+            ),
+            child: useFittedBox
+                ? FittedBox(
+              child: Text(
+                text,
+                style: TextStyle(fontSize: 20), // 初始字体大小
+              ),
+            )
+                : Text(
+              text,
+              style: TextStyle(fontSize: 20),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            '使用 FittedBox: $useFittedBox',
+            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+          ),
+        ],
       ),
     );
   }
