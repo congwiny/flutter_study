@@ -28,8 +28,101 @@ class DecoratedBoxExamplePage extends StatelessWidget {
             ),
             ColorAndGradientExample(),
             const Divider(height: 32),
+            const Text(
+              '4. BoxDecoration 边框和圆角',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BorderAndBorderRadiusExample(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BorderAndBorderRadiusExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildBorderExample(
+            '1. 统一边框',
+            BoxDecoration(
+              border: Border.all(
+                color: Colors.blue,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildBorderExample(
+            '2. 不同方向的边框',
+            BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Colors.red, width: 4),
+                left: BorderSide(color: Colors.green, width: 2),
+                right: BorderSide(color: Colors.blue, width: 2),
+                bottom: BorderSide(color: Colors.orange, width: 4),
+              ),
+            ),
+          ),
+          _buildBorderExample(
+            '3. 不对称圆角',
+            BoxDecoration(
+              color: Colors.purple[100],
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+                bottomRight: Radius.circular(20),
+              ),
+              border: Border.all(color: Colors.purple),
+            ),
+          ),
+          _buildBorderExample(
+            '4. 圆形',
+            BoxDecoration(
+              color: Colors.orange[100],
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.orange, width: 3),
+            ),
+          ),
+          _buildBorderExample(
+            '5. 椭圆',
+            BoxDecoration(
+              color: Colors.teal[100],
+              borderRadius: BorderRadius.circular(50), // 高度的一半
+              border: Border.all(color: Colors.teal, width: 2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBorderExample(String title, BoxDecoration decoration) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 80,
+            child: DecoratedBox(
+              decoration: decoration,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
