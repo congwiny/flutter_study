@@ -22,8 +22,88 @@ class ContainerExamplePage extends StatelessWidget {
             ),
             ContainerEquivalence(),
             const Divider(height: 32),
+            const Text(
+              '3. 尺寸相关属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ContainerSizeProperties()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ContainerSizeProperties extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildSizeExample(
+            '1. width 和 height',
+            '固定尺寸',
+            Container(
+              width: 120,
+              height: 60,
+              color: Colors.blue[100],
+              child: Center(child: Text('120 x 60')),
+            ),
+          ),
+          _buildSizeExample(
+            '2. constraints',
+            '尺寸约束',
+            Container(
+              constraints: BoxConstraints(
+                minWidth: 100,
+                maxWidth: 200,
+                minHeight: 50,
+                maxHeight: 100,
+              ),
+              color: Colors.green[100],
+              child: Center(child: Text('约束容器 (200 x 100)')),
+            ),
+          ),
+          _buildSizeExample(
+            '3. 无尺寸约束',
+            '充满可用空间',
+            Container(
+              color: Colors.orange[100],
+              child: Center(child: Text('充满父容器')),
+            ),
+          ),
+          _buildSizeExample(
+            '4. 结合 constraints 和尺寸',
+            'constraints 优先',
+            Container(
+              width: 300,  // 会被忽略
+              height: 200, // 会被忽略
+              constraints: BoxConstraints.tightFor(width: 150, height: 80),
+              color: Colors.purple[100],
+              child: Center(child: Text('150 x 80')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSizeExample(String title, String description, Widget container) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 4),
+          Text(description, style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 8),
+          Container(
+            height: 100,
+            child: Center(child: container),
+          ),
+        ],
       ),
     );
   }
