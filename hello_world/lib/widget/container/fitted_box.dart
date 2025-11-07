@@ -16,8 +16,69 @@ class FittedBoxExamplePage extends StatelessWidget {
             ),
             FittedBoxBasicExample(),
             const Divider(height: 32),
+            const Text(
+              '1. FittedBox 核心作用',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            FittedBoxCoreConcept(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class FittedBoxCoreConcept extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildComparison(
+            '无 FittedBox - 溢出',
+            Container(
+              width: 150,
+              height: 80,
+              color: Colors.red,
+              child: Container(
+                width: 200, // 超出父容器
+                height: 120,
+                color: Colors.blue.withOpacity(0.4),
+                child: Center(child: Text('溢出')),
+              ),
+            ),
+          ),
+          _buildComparison(
+            '有 FittedBox - 自动缩放',
+            Container(
+              width: 150,
+              height: 80,
+              color: Colors.red,
+              child: FittedBox(
+                child: Container(
+                  width: 200,
+                  height: 120,
+                  color: Colors.blue.withOpacity(0.5),
+                  child: Center(child: Text('自动缩放')),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComparison(String title, Widget content) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          content,
+        ],
       ),
     );
   }
