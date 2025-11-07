@@ -33,8 +33,98 @@ class ClipExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ClipRectCustom(),
+            const Divider(height: 32),
+            const Text(
+              '5. ClipRRect 圆角矩形剪裁',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ClipRRectBasic()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ClipRRectBasic extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildRRectExample(
+            '1. 统一圆角',
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                width: 150,
+                height: 100,
+                color: Colors.blue,
+                child: Center(child: Text(
+                    '圆角20', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+          _buildRRectExample(
+            '2. 不同圆角',
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(30),
+              ),
+              child: Container(
+                width: 150,
+                height: 100,
+                color: Colors.green,
+                child: Center(child: Text(
+                    '不同圆角', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+          _buildRRectExample(
+            '3. 图片圆角',
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                'https://picsum.photos/150/100',
+                width: 150,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          _buildRRectExample(
+            '4. 圆形按钮',
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Container(
+                width: 120,
+                height: 50,
+                color: Colors.orange,
+                child: Center(
+                  child: Text('圆角按钮', style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRRectExample(String title, Widget child) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          child,
+        ],
       ),
     );
   }
