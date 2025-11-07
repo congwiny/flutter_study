@@ -28,8 +28,95 @@ class ClipExamplePage extends StatelessWidget {
             ),
             ClipOvalBasic(),
             const Divider(height: 32),
+            const Text(
+              '4. 自定义剪裁区域',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ClipRectCustom(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomRectClipper extends CustomClipper<Rect> {
+  final double clipPercentage;
+
+  CustomRectClipper({required this.clipPercentage});
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(
+        0,
+        0,
+        size.width * clipPercentage,
+        size.height
+    );
+  }
+
+  @override
+  bool shouldReclip(CustomRectClipper oldClipper) {
+    return clipPercentage != oldClipper.clipPercentage;
+  }
+}
+
+class ClipRectCustom extends StatefulWidget {
+  @override
+  _ClipRectCustomState createState() => _ClipRectCustomState();
+}
+
+class _ClipRectCustomState extends State<ClipRectCustom> {
+  double _clipPercentage = 0.5;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Text('剪裁比例: ${(_clipPercentage * 100).toInt()}%',
+              style: TextStyle(fontSize: 18)),
+          SizedBox(height: 16),
+          Slider(
+            value: _clipPercentage,
+            min: 0,
+            max: 1,
+            onChanged: (value) {
+              setState(() {
+                _clipPercentage = value;
+              });
+            },
+          ),
+          SizedBox(height: 20),
+          Container(
+            width: 200,
+            height: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+            ),
+            child: ClipRect(
+              clipper: CustomRectClipper(clipPercentage: _clipPercentage),
+              child: Container(
+                width: 200,
+                height: 100,
+                color: Colors.blue,
+                child: Center(
+                  child: Text(
+                    '自定义剪裁区域',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            '使用 CustomClipper<Rect> 实现自定义矩形剪裁区域',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey[600]),
+          ),
+        ],
       ),
     );
   }
