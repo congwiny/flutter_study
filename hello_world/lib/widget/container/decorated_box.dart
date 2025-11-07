@@ -33,8 +33,119 @@ class DecoratedBoxExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             BorderAndBorderRadiusExample(),
+            const Divider(height: 32),
+            const Text(
+              '5. BoxDecoration 阴影效果',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BoxShadowExample()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BoxShadowExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildShadowExample(
+            '1. 基础阴影',
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          _buildShadowExample(
+            '2. 大模糊阴影',
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 15,
+                  spreadRadius: 2,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+          ),
+          _buildShadowExample(
+            '3. 多重阴影',
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: Offset(-5, -5),
+                ),
+                BoxShadow(
+                  color: Colors.red.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: Offset(5, 5),
+                ),
+              ],
+            ),
+          ),
+          _buildShadowExample(
+            '4. 彩色阴影',
+            BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.purple.withOpacity(0.4),
+                  blurRadius: 8,
+                  offset: Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.4),
+                  blurRadius: 8,
+                  offset: Offset(4, 0),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShadowExample(String title, BoxDecoration decoration) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 80,
+            child: DecoratedBox(
+              decoration: decoration,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
