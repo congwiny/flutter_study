@@ -56,9 +56,135 @@ class ContainerExamplePage extends StatelessWidget {
               '8. 响应式 Container',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ResponsiveContainer()
+            ResponsiveContainer(),
+            const Divider(height: 32),
+            const Text(
+              '9. 自定义 Container 扩展',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CustomContainerExample()
           ],
         ),
+      ),
+    );
+  }
+}
+
+// 自定义 Container 扩展
+extension CustomContainer on Container {
+  // 创建卡片样式的 Container
+  static Container card({
+    required Widget child,
+    Color backgroundColor = Colors.white,
+    EdgeInsetsGeometry padding = const EdgeInsets.all(16),
+    EdgeInsetsGeometry margin = const EdgeInsets.all(8),
+    double elevation = 2,
+  }) {
+    return Container(
+      margin: margin,
+      padding: padding,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: elevation * 2,
+            offset: Offset(0, elevation),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
+  // 创建渐变按钮样式的 Container
+  static Container gradientButton({
+    required String text,
+    required List<Color> colors,
+    VoidCallback? onTap,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: colors,
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: colors.first.withOpacity(0.3),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: padding,
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomContainerExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          CustomContainer.card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('卡片标题', style: TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.bold)),
+                SizedBox(height: 8),
+                Text('这是一个使用自定义扩展创建的卡片容器'),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          CustomContainer.gradientButton(
+            text: '渐变按钮',
+            colors: [Colors.purple, Colors.pink],
+            onTap: () {
+              print('按钮被点击');
+            },
+          ),
+          SizedBox(height: 16),
+          CustomContainer.card(
+            backgroundColor: Colors.blue[50]!,
+            child: Row(
+              children: [
+                Icon(Icons.info, color: Colors.blue),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text('这是一个信息卡片，使用不同的背景色'),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
