@@ -39,8 +39,82 @@ class FittedBoxExamplePage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             FittedBoxAlignment(),
+            const Divider(height: 32),
+            const Text(
+              '6. Fit 和 Alignment 组合效果',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            FitAndAlignmentCombination()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class FitAndAlignmentCombination extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildCombinationExample(
+            'BoxFit.contain + Alignment.topLeft',
+            BoxFit.contain,
+            Alignment.topLeft,
+          ),
+          _buildCombinationExample(
+            'BoxFit.cover + Alignment.center',
+            BoxFit.cover,
+            Alignment.center,
+          ),
+          _buildCombinationExample(
+            'BoxFit.none + Alignment.bottomRight',
+            BoxFit.none,
+            Alignment.bottomRight,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCombinationExample(String title, BoxFit fit, Alignment alignment) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              border: Border.all(color: Colors.grey),
+            ),
+            child: FittedBox(
+              fit: fit,
+              alignment: alignment,
+              child: Container(
+                width: 120,
+                height: 80,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.red, Colors.yellow],
+                  ),
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                child: Center(
+                  child: Text(
+                    '120x80',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
