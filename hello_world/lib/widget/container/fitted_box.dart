@@ -26,11 +26,126 @@ class FittedBoxExamplePage extends StatelessWidget {
               '3. FittedBox的fit属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            BoxFitExplanation()
+            BoxFitExplanation(),
+            const Divider(height: 32),
+            const Text(
+              '4. 各种 Fit 模式的视觉效果对比',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BoxFitVisualComparison(),
+            const Divider(height: 32),
           ],
         ),
       ),
     );
+  }
+}
+
+class BoxFitVisualComparison extends StatelessWidget {
+  final List<BoxFit> fits = [
+    BoxFit.fill,
+    BoxFit.contain,
+    BoxFit.cover,
+    BoxFit.fitWidth,
+    BoxFit.fitHeight,
+    BoxFit.none,
+    BoxFit.scaleDown,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: EdgeInsets.all(16),
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 0.8,
+      ),
+      itemCount: fits.length,
+      itemBuilder: (context, index) {
+        final fit = fits[index];
+        return _buildFitCard(fit);
+      },
+    );
+  }
+
+  Widget _buildFitCard(BoxFit fit) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 50,
+            height: 100,
+            color: Colors.green[100],
+            child: FittedBox(
+              fit: fit,
+              child: Container(
+                width: 80,   // 故意设置非正方形
+                height: 120,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.red, Colors.blue],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(color: Colors.black, width: 1),
+                ),
+                child: Center(
+                  child: Text(
+                    '80x120',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Text(
+                  fit.toString().split('.').last,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 4),
+                Text(
+                  _getFitDescription(fit),
+                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getFitDescription(BoxFit fit) {
+    switch (fit) {
+      case BoxFit.fill:
+        return '拉伸填充';
+      case BoxFit.contain:
+        return '保持比例显示';
+      case BoxFit.cover:
+        return '覆盖整个区域';
+      case BoxFit.fitWidth:
+        return '宽度适配';
+      case BoxFit.fitHeight:
+        return '高度适配';
+      case BoxFit.none:
+        return '不缩放';
+      case BoxFit.scaleDown:
+        return '需要时缩小';
+    }
   }
 }
 
