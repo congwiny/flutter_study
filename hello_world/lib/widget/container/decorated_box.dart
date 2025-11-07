@@ -44,9 +44,126 @@ class DecoratedBoxExamplePage extends StatelessWidget {
               '6. BoxDecoration 背景图像',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            BackgroundImageExample()
+            BackgroundImageExample(),
+            const Divider(height: 32),
+            const Text(
+              '7. 复杂装饰组合',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ComplexDecorationExample()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ComplexDecorationExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildComplexExample(
+            '1. 渐变 + 阴影 + 边框',
+            BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue, Colors.purple],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.white, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 8,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+          ),
+          _buildComplexExample(
+            '2. 背景图 + 渐变叠加 + 边框',
+            BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('https://picsum.photos/400/200'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.blue.withOpacity(0.3),
+                  BlendMode.overlay,
+                ),
+              ),
+              gradient: LinearGradient(
+                colors: [Colors.transparent, Colors.black54],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          _buildComplexExample(
+            '3. 多重边框效果',
+            BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey, width: 1),
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(color: Colors.grey, offset: Offset(4, 4)),
+              ],
+            ),
+          ),
+          _buildComplexExample(
+            '4. 霓虹灯效果',
+            BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue.withOpacity(0.8),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+                BoxShadow(
+                  color: Colors.purple.withOpacity(0.6),
+                  blurRadius: 20,
+                  spreadRadius: 1,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComplexExample(String title, BoxDecoration decoration) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 100,
+            child: DecoratedBox(
+              decoration: decoration,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
