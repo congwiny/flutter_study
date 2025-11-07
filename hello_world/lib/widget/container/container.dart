@@ -23,12 +23,115 @@ class ContainerExamplePage extends StatelessWidget {
             ContainerEquivalence(),
             const Divider(height: 32),
             const Text(
-              '3. 尺寸相关属性',
+              '3. Container尺寸相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ContainerSizeProperties()
+            ContainerSizeProperties(),
+            const Divider(height: 32),
+            const Text(
+              '3. Container装饰相关属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ContainerDecorationProperties()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ContainerDecorationProperties extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildDecorationExample(
+            '1. color 属性',
+            '设置背景颜色',
+            Container(
+              width: 150,
+              height: 80,
+              color: Colors.blue,
+              child: Center(child: Text('纯色背景', style: TextStyle(color: Colors.white))),
+            ),
+          ),
+          _buildDecorationExample(
+            '2. decoration 属性',
+            '复杂装饰效果',
+            Container(
+              width: 150,
+              height: 80,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.red, Colors.orange],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Center(child: Text('渐变+阴影', style: TextStyle(color: Colors.white))),
+            ),
+          ),
+          _buildDecorationExample(
+            '3. color 与 decoration 冲突',
+            '不能同时设置 color 和 decoration',
+            Container(
+              width: 150,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.green, // 在 decoration 中设置颜色
+                borderRadius: BorderRadius.circular(8),
+              ),
+              // color: Colors.blue, // 错误：不能同时设置
+              child: Center(child: Text('在 decoration 中设置颜色')),
+            ),
+          ),
+          _buildDecorationExample(
+            '4. foregroundDecoration',
+            '前景装饰（绘制在 child 之上）',
+            Container(
+              width: 150,
+              height: 80,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                border: Border.all(color: Colors.black),
+              ),
+              foregroundDecoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.transparent, Colors.black54],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: Center(child: Text('前景渐变遮罩', style: TextStyle(color: Colors.white))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDecorationExample(String title, String description, Widget container) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 4),
+          Text(description, style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 8),
+          Center(child: container),
+        ],
       ),
     );
   }
