@@ -38,9 +38,85 @@ class ContainerExamplePage extends StatelessWidget {
               '3. Container 布局相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ContainerLayoutProperties()
+            ContainerLayoutProperties(),
+            const Divider(height: 32),
+            const Text(
+              '4. Container 尺寸确定规则',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ContainerLayoutBehavior()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ContainerLayoutBehavior extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildRuleExample(
+            '规则 1: 有 child，无约束',
+            'Container 包裹 child 的尺寸',
+            Container(
+              color: Colors.red[100],
+              child: Text('包裹文本内容'),
+            ),
+          ),
+          _buildRuleExample(
+            '规则 2: 无 child，无约束',
+            'Container 尽可能大',
+            Container(
+              color: Colors.green[100],
+              height: 60,
+            ),
+          ),
+          _buildRuleExample(
+            '规则 3: 有 width/height',
+            '使用指定尺寸',
+            Container(
+              width: 150,
+              height: 60,
+              color: Colors.blue[100],
+              child: Center(child: Text('指定尺寸')),
+            ),
+          ),
+          _buildRuleExample(
+            '规则 4: 有 constraints',
+            '遵守约束条件',
+            Container(
+              constraints: BoxConstraints.expand(height: 80),
+              color: Colors.orange[100],
+              child: Center(child: Text('高度约束')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRuleExample(String rule, String description, Widget example) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(rule, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 4),
+          Text(description, style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 8),
+          example,
+        ],
       ),
     );
   }
