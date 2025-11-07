@@ -16,6 +16,61 @@ class ClipExamplePage extends StatelessWidget {
             ),
             ClipBasicExample(),
             const Divider(height: 32),
+            const Text(
+              '2. Clip 组件家族',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ClipFamilyOverview(),
+            const Divider(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ClipFamilyOverview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildClipType(
+                  'ClipOval', '圆形/椭圆剪裁', Icons.circle, Colors.blue),
+              _buildClipType(
+                  'ClipRect', '矩形剪裁', Icons.crop_square, Colors.green),
+            ]),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [_buildClipType(
+                'ClipRRect', '圆角矩形剪裁', Icons.rounded_corner,
+                Colors.orange),
+              _buildClipType(
+                  'ClipPath', '路径剪裁', Icons.architecture, Colors.purple),
+            ])
+      ],
+    );
+  }
+
+  Widget _buildClipType(String name, String description, IconData icon, Color color) {
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: color),
+            SizedBox(height: 8),
+            Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
+            Text(
+              description,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ),
           ],
         ),
       ),
