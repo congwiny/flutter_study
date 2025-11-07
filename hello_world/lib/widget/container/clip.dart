@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 class ClipExamplePage extends StatelessWidget {
@@ -44,9 +46,114 @@ class ClipExamplePage extends StatelessWidget {
               '6. 圆角卡片设计',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            RoundedCardDesign()
+            RoundedCardDesign(),
+            const Divider(height: 32),
+            const Text(
+              '7. ClipPath 路径剪裁',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ClipPathBasic()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(size.width / 2, 0); // 顶点
+    path.lineTo(size.width, size.height); // 右下角
+    path.lineTo(0, size.height); // 左下角
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class StarClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    const numberOfPoints = 5;
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    for (int i = 0; i < numberOfPoints * 2; i++) {
+      double angle = i * math.pi / numberOfPoints;
+      double currentRadius = i % 2 == 0 ? radius : radius / 2;
+      double x = center.dx + currentRadius * math.cos(angle);
+      double y = center.dy + currentRadius * math.sin(angle);
+
+      if (i == 0) {
+        path.moveTo(x, y);
+      } else {
+        path.lineTo(x, y);
+      }
+    }
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
+  }
+}
+
+class ClipPathBasic extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildPathExample(
+            '1. 三角形剪裁',
+            ClipPath(
+              clipper: TriangleClipper(),
+              child: Container(
+                width: 150,
+                height: 150,
+                color: Colors.blue,
+                child: Center(child: Text(
+                    '三角形', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+          _buildPathExample(
+            '2. 五角星剪裁',
+            ClipPath(
+              clipper: StarClipper(),
+              child: Container(
+                width: 150,
+                height: 150,
+                color: Colors.red,
+                child: Center(child: Text(
+                    '五角星', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPathExample(String title, Widget child) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          child,
+        ],
       ),
     );
   }
