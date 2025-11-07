@@ -38,9 +38,104 @@ class DecoratedBoxExamplePage extends StatelessWidget {
               '5. BoxDecoration 阴影效果',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            BoxShadowExample()
+            BoxShadowExample(),
+            const Divider(height: 32),
+            const Text(
+              '6. BoxDecoration 背景图像',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BackgroundImageExample()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BackgroundImageExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildImageExample(
+            '1. fit: BoxFit.cover',
+            BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('https://picsum.photos/400/200'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildImageExample(
+            '2. fit: BoxFit.contain',
+            BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('https://picsum.photos/100/100'),
+                fit: BoxFit.contain,
+                repeat: ImageRepeat.repeat,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildImageExample(
+            '3. fit: BoxFit.cover',
+            BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('https://picsum.photos/400/200'),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.blue.withOpacity(0.6),
+                  BlendMode.overlay,
+                ),
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          _buildImageExample(
+            '4. fit: BoxFit.fitWidth',
+            BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage('https://picsum.photos/400/200'),
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.topCenter,
+              ),
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImageExample(String title, BoxDecoration decoration) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          Container(
+            height: 120,
+            child: DecoratedBox(
+              decoration: decoration,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
