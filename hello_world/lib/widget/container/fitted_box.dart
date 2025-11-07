@@ -17,12 +17,88 @@ class FittedBoxExamplePage extends StatelessWidget {
             FittedBoxBasicExample(),
             const Divider(height: 32),
             const Text(
-              '1. FittedBox 核心作用',
+              '2. FittedBox 核心作用',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             FittedBoxCoreConcept(),
+            const Divider(height: 32),
+            const Text(
+              '3. FittedBox的fit属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            BoxFitExplanation()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BoxFitExplanation extends StatelessWidget {
+  final List<Map<String, dynamic>> fits = [
+    {'name': 'BoxFit.fill', 'fit': BoxFit.fill, 'description': '拉伸填充，不保持比例'},
+    {'name': 'BoxFit.contain', 'fit': BoxFit.contain, 'description': '保持比例，完全显示(默认)'},
+    {'name': 'BoxFit.cover', 'fit': BoxFit.cover, 'description': '保持比例，覆盖整个区域'},
+    {'name': 'BoxFit.fitWidth', 'fit': BoxFit.fitWidth, 'description': '宽度适配，高度按比例'},
+    {'name': 'BoxFit.fitHeight', 'fit': BoxFit.fitHeight, 'description': '高度适配，宽度按比例'},
+    {'name': 'BoxFit.none', 'fit': BoxFit.none, 'description': '不缩放，对齐显示'},
+    {'name': 'BoxFit.scaleDown', 'fit': BoxFit.scaleDown, 'description': '只在需要时缩小'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Text('BoxFit 影响子组件如何适应 FittedBox 的空间',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          SizedBox(height: 16),
+          ...fits.map((fitInfo) => _buildFitExample(
+            fitInfo['name'] as String,
+            fitInfo['description'] as String,
+            fitInfo['fit'] as BoxFit,
+          )).toList(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFitExample(String name, String description, BoxFit fit) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 4),
+          Text(description, style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 8),
+          Container(
+            width: 200,
+            height: 80,
+            color: Colors.red[100],
+            child: FittedBox(
+              fit: fit,
+              child: Container(
+                width: 150,  // 原始尺寸
+                height: 120,
+                color: Colors.blue.withOpacity(0.7),
+                child: Center(
+                  child: Text(
+                    '150 x 120',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
