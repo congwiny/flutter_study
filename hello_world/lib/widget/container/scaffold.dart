@@ -1,5 +1,103 @@
 import 'package:flutter/material.dart';
 
+class DrawerExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('抽屉菜单示例')),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            // 抽屉头部
+            UserAccountsDrawerHeader(
+              accountName: Text('张三'),
+              accountEmail: Text('zhangsan@example.com'),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Text(
+                  '张',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                image: DecorationImage(
+                  image: NetworkImage('https://picsum.photos/300/200'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.blue.withOpacity(0.6),
+                    BlendMode.darken,
+                  ),
+                ),
+              ),
+            ),
+
+            // 菜单项
+            _buildDrawerItem(Icons.home, '首页', () {}),
+            _buildDrawerItem(Icons.person, '个人资料', () {}),
+            _buildDrawerItem(Icons.settings, '设置', () {}),
+            _buildDrawerItem(Icons.help, '帮助与反馈', () {}),
+
+            Divider(),
+
+            _buildDrawerItem(Icons.exit_to_app, '退出登录', () {}),
+          ],
+        ),
+      ),
+      endDrawer: Drawer(
+        child: Column(
+          children: [
+            Container(
+              height: 120,
+              width: double.infinity,
+              color: Colors.green,
+              child: Center(
+                child: Text(
+                  '右侧抽屉',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.info),
+                    title: Text('关于我们'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.contact_mail),
+                    title: Text('联系我们'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('左侧滑动打开抽屉菜单'),
+            SizedBox(height: 20),
+            Text('右侧滑动打开另一个抽屉'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem(IconData icon, String title, VoidCallback onTap) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: onTap,
+    );
+  }
+}
+
 class CustomAppBarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
