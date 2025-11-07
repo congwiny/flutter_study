@@ -22,8 +22,92 @@ class ClipExamplePage extends StatelessWidget {
             ),
             ClipFamilyOverview(),
             const Divider(height: 32),
+            const Text(
+              '3. ClipOval 基础用法',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ClipOvalBasic(),
+            const Divider(height: 32),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ClipOvalBasic extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildOvalExample(
+            '1. 正方形 -> 圆形',
+            ClipOval(
+              child: Container(
+                width: 100,
+                height: 100,
+                color: Colors.blue,
+                child: Center(
+                    child: Text('圆形', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+          _buildOvalExample(
+            '2. 长方形 -> 椭圆',
+            ClipOval(
+              child: Container(
+                width: 150,
+                height: 100,
+                color: Colors.green,
+                child: Center(
+                    child: Text('椭圆', style: TextStyle(color: Colors.white))),
+              ),
+            ),
+          ),
+          _buildOvalExample(
+            '3. 图片圆形剪裁',
+            ClipOval(
+              child: Image.network(
+                'https://picsum.photos/150',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          _buildOvalExample(
+            '4. 带边框的圆形',
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.red, width: 3),
+              ),
+              child: ClipOval(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.orange,
+                  child: Center(child: Text('带边框')),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOvalExample(String title, Widget child) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          child,
+        ],
       ),
     );
   }
