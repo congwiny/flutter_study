@@ -50,7 +50,13 @@ class DecoratedBoxExamplePage extends StatelessWidget {
               '7. 复杂装饰组合',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ComplexDecorationExample()
+            ComplexDecorationExample(),
+            const Divider(height: 32),
+            const Text(
+              '8. 现代化卡片设计',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ModernCardDesign()
           ],
         ),
       ),
@@ -58,6 +64,132 @@ class DecoratedBoxExamplePage extends StatelessWidget {
   }
 }
 
+class ModernCardDesign extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16), // 卡片内边距
+      child: Column(
+        children: [
+          _buildModernCard(
+            '产品卡片',
+            '这是一个现代化的产品展示卡片',
+            '\$299.99',
+            Colors.blue,
+            Icons.shopping_cart,
+          ),
+          _buildModernCard(
+            '服务卡片',
+            '提供专业的服务解决方案',
+            '了解更多',
+            Colors.green,
+            Icons.construction,
+          ),
+          _buildModernCard(
+            '活动卡片',
+            '参与我们的精彩活动',
+            '立即报名',
+            Colors.orange,
+            Icons.event,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModernCard(String title, String description, String action, Color color, IconData icon) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 12,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: color.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(icon, color: color, size: 24),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+                Text(
+                  description,
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    height: 1.4,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [color, color.withOpacity(0.8)],
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: color.withOpacity(0.3),
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            action,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 class ComplexDecorationExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
