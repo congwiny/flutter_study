@@ -50,10 +50,63 @@ class ContainerExamplePage extends StatelessWidget {
               '7. Container 约束传递机制',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ContainerConstraints()
+            ContainerConstraints(),
+            const Divider(height: 32),
+            const Text(
+              '8. 响应式 Container',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ResponsiveContainer()
           ],
         ),
       ),
+    );
+  }
+}
+
+class ResponsiveContainer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = constraints.maxWidth;
+
+        return Container(
+          width: screenWidth,
+          height: 200,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: screenWidth > 600
+                  ? [Colors.blue, Colors.purple]
+                  : [Colors.green, Colors.blue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: screenWidth > 600
+                ? BorderRadius.circular(20)
+                : BorderRadius.circular(8),
+          ),
+          padding: EdgeInsets.all(screenWidth > 600 ? 32 : 16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                screenWidth > 600 ? '大屏幕' : '小屏幕',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: screenWidth > 600 ? 24 : 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8),
+              Text(
+                '屏幕宽度: ${screenWidth.toStringAsFixed(0)}',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
