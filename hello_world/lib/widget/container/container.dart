@@ -29,24 +29,98 @@ class ContainerExamplePage extends StatelessWidget {
             ContainerSizeProperties(),
             const Divider(height: 32),
             const Text(
-              '3. Container 装饰相关属性',
+              '4. Container 装饰相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ContainerDecorationProperties(),
             const Divider(height: 32),
             const Text(
-              '3. Container 布局相关属性',
+              '5. Container 布局相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ContainerLayoutProperties(),
             const Divider(height: 32),
             const Text(
-              '4. Container 尺寸确定规则',
+              '6. Container 尺寸确定规则',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ContainerLayoutBehavior()
+            ContainerLayoutBehavior(),
+            const Divider(height: 32),
+            const Text(
+              '7. Container 约束传递机制',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ContainerConstraints()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ContainerConstraints extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      height: 500,
+      color: Colors.grey[200],
+      child: Column(
+        children: [
+          _buildConstraintExample(
+            '父容器约束: 300 x 500',
+            Container(
+              width: 250, // 在父约束范围内
+              height: 100,
+              color: Colors.blue[100],
+              child: Center(child: Text('250 x 100')),
+            ),
+          ),
+          _buildConstraintExample(
+            '超过父约束，会被限制',
+            Container(
+              width: 350, // 超过父约束，会被限制
+              height: 100,
+              color: Colors.green[100],
+              child: Center(child: Text('实际: 300 x 100')),
+            ),
+          ),
+          _buildConstraintExample(
+            '无约束子容器',
+            Container(
+              color: Colors.orange[100],
+              child: Container(
+                width: 200,
+                height: 80,
+                color: Colors.orange[300],
+                child: Center(child: Text('子容器')),
+              ),
+            ),
+          ),
+          _buildConstraintExample(
+            '宽度无约束处理',
+            Container(
+              height: 70, // 限制高度
+              child: Container(
+                color: Colors.purple[100],
+                child: Center(child: Text('高度被限制为70')),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConstraintExample(String description, Widget container) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      child: Column(
+        children: [
+          Text(description, style: TextStyle(fontSize: 12)),
+          SizedBox(height: 4),
+          container,
+        ],
       ),
     );
   }
