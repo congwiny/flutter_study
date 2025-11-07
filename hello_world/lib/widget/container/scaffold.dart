@@ -1,5 +1,73 @@
 import 'package:flutter/material.dart';
 
+class CustomAppBarExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.star, color: Colors.yellow),
+            SizedBox(width: 8),
+            Text('自定义 AppBar'),
+          ],
+        ),
+        actions: [
+          Badge(
+            label: Text('3'),
+            child: IconButton(
+              icon: Icon(Icons.notifications),
+              onPressed: () {},
+            ),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(48),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: '搜索...',
+                filled: true,
+                fillColor: Colors.white,
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16),
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue[50]!, Colors.purple[50]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Text('自定义 AppBar 示例', style: TextStyle(fontSize: 20)),
+        ),
+      ),
+    );
+  }
+}
+
 class AppBarProperties extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
