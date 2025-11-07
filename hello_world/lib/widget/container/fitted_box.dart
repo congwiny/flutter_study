@@ -44,9 +44,110 @@ class FittedBoxExamplePage extends StatelessWidget {
               '6. Fit 和 Alignment 组合效果',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            FitAndAlignmentCombination()
+            FitAndAlignmentCombination(),
+            const Divider(height: 32),
+            const Text(
+              '7. 图标和图片适配',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            IconAndImageFitting()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class IconAndImageFitting extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildExample(
+            '1. 大图标在小容器中',
+            Container(
+              width: 40,
+              height: 40,
+              color: Colors.blue[100],
+              child: FittedBox(
+                child: Icon(Icons.star, size: 60, color: Colors.blue),
+              ),
+            ),
+          ),
+          _buildExample(
+            '2. 图片自适应容器',
+            Container(
+              width: 150,
+              height: 80,
+              color: Colors.grey[100],
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: Image.network(
+                  'https://picsum.photos/300/200',
+                  width: 300,
+                  height: 200,
+                ),
+              ),
+            ),
+          ),
+          _buildExample(
+            '3. 保持比例的图片',
+            Container(
+              width: 120,
+              height: 120,
+              color: Colors.green[100],
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Image.network(
+                  'https://picsum.photos/250/150',
+                  width: 250,
+                  height: 150,
+                ),
+              ),
+            ),
+          ),
+          _buildExample(
+            '4. 多个图标统一大小',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildUniformIcon(Icons.home, Colors.red),
+                _buildUniformIcon(Icons.search, Colors.blue),
+                _buildUniformIcon(Icons.settings, Colors.green),
+                _buildUniformIcon(Icons.person, Colors.orange),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExample(String title, Widget content) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 8),
+          content,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUniformIcon(IconData icon, Color color) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: FittedBox(
+        child: Icon(icon, color: color),
       ),
     );
   }
