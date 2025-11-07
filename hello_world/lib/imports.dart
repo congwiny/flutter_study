@@ -34,5 +34,6 @@ export 'package:hello_world/widget/layout/layout_builder.dart';
 export 'package:hello_world/widget/container/padding.dart';
 export 'package:hello_world/widget/container/decorated_box.dart';
 export 'package:hello_world/widget/container/container.dart';
+export 'package:hello_world/widget/container/clip.dart';
 
 
