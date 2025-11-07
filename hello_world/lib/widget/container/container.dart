@@ -68,9 +68,182 @@ class ContainerExamplePage extends StatelessWidget {
               '10. 用户资料卡片',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            UserProfileCard()
+            UserProfileCard(),
+            const Divider(height: 32),
+            const Text(
+              '11. 仪表盘控件',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            DashboardWidget()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class DashboardWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          // 统计卡片行
+          Row(
+            children: [
+              Expanded(
+                child: _buildMetricCard(
+                  '用户增长',
+                  '1,234',
+                  Icons.people,
+                  Colors.blue,
+                  '+12%',
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: _buildMetricCard(
+                  '收入',
+                  '\$12,345',
+                  Icons.attach_money,
+                  Colors.green,
+                  '+8%',
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _buildMetricCard(
+                  '订单数',
+                  '456',
+                  Icons.shopping_cart,
+                  Colors.orange,
+                  '+5%',
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: _buildMetricCard(
+                  '满意度',
+                  '98%',
+                  Icons.star,
+                  Colors.purple,
+                  '+2%',
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          // 图表容器
+          Container(
+            height: 200,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 8,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '性能图表',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 16),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.blue[50]!, Colors.purple[50]!],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '图表区域',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMetricCard(String title, String value, IconData icon, Color color, String growth) {
+    return Container(
+      height: 126,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: color, size: 18),
+              ),
+              Spacer(),
+              Text(
+                growth,
+                style: TextStyle(
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }
