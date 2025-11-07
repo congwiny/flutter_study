@@ -34,8 +34,87 @@ class FittedBoxExamplePage extends StatelessWidget {
             ),
             BoxFitVisualComparison(),
             const Divider(height: 32),
+            const Text(
+              '5. FittedBox 对齐方式',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            FittedBoxAlignment(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class FittedBoxAlignment extends StatelessWidget {
+  final List<Alignment> alignments = [
+    Alignment.topLeft,
+    Alignment.topCenter,
+    Alignment.topRight,
+    Alignment.centerLeft,
+    Alignment.center,
+    Alignment.centerRight,
+    Alignment.bottomLeft,
+    Alignment.bottomCenter,
+    Alignment.bottomRight,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.all(16),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: 0.8,
+      ),
+      itemCount: alignments.length,
+      itemBuilder: (context, index) {
+        return _buildAlignmentExample(alignments[index]);
+      },
+    );
+  }
+
+  Widget _buildAlignmentExample(Alignment alignment) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.all(8),
+              color: Colors.green[100],
+              child: FittedBox(
+                fit: BoxFit.none, // 不缩放，只对齐
+                alignment: alignment,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text(
+                      '子',
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              '(${alignment.x}, ${alignment.y})',
+              style: TextStyle(fontSize: 10),
+            ),
+          ),
+        ],
       ),
     );
   }
