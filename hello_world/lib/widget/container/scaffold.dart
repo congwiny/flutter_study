@@ -1,5 +1,89 @@
 import 'package:flutter/material.dart';
 
+class AppBarProperties extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        // 标题
+        title: Text('AppBar 属性详解'),
+
+        // 标题前的图标（通常是返回按钮）
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+
+        // 操作按钮
+        actions: [
+          IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: Icon(Icons.share), onPressed: () {}),
+          PopupMenuButton<String>(
+            onSelected: (value) {},
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(value: '设置', child: Text('设置')),
+              PopupMenuItem(value: '帮助', child: Text('帮助')),
+            ],
+          ),
+        ],
+
+        // 背景颜色
+        backgroundColor: Colors.purple,
+
+        // 前景颜色（图标和文字颜色）
+        foregroundColor: Colors.white,
+
+        // 阴影高度
+        elevation: 8,
+
+        // 标题间距
+        titleSpacing: 20,
+
+        // 工具栏高度
+        toolbarHeight: 80,
+
+        // 形状
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
+
+        // 是否显示在状态栏下方
+        primary: true,
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('AppBar 常用属性:', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            SizedBox(height: 16),
+            _buildPropertyItem('title', '标题文本或组件'),
+            _buildPropertyItem('leading', '标题前的图标'),
+            _buildPropertyItem('actions', '右侧操作按钮列表'),
+            _buildPropertyItem('backgroundColor', '背景颜色'),
+            _buildPropertyItem('elevation', '阴影高度'),
+            _buildPropertyItem('shape', '自定义形状'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPropertyItem(String name, String description) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('• $name:', style: TextStyle(fontWeight: FontWeight.bold)),
+          Expanded(child: Text(description)),
+        ],
+      ),
+    );
+  }
+}
+
+
 class ScaffoldStructure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
