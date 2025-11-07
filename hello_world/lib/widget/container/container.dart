@@ -17,24 +17,111 @@ class ContainerExamplePage extends StatelessWidget {
             ContainerBasicExample(),
             const Divider(height: 32),
             const Text(
-              '2. Container 的等价实现',
+              '2. Container的等价实现',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ContainerEquivalence(),
             const Divider(height: 32),
             const Text(
-              '3. Container尺寸相关属性',
+              '3. Container 尺寸相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             ContainerSizeProperties(),
             const Divider(height: 32),
             const Text(
-              '3. Container装饰相关属性',
+              '3. Container 装饰相关属性',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            ContainerDecorationProperties()
+            ContainerDecorationProperties(),
+            const Divider(height: 32),
+            const Text(
+              '3. Container 布局相关属性',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            ContainerLayoutProperties()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ContainerLayoutProperties extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          _buildLayoutExample(
+            '1. padding 属性',
+            '内边距',
+            Container(
+              width: 200,
+              height: 100,
+              color: Colors.blue[100],
+              padding: EdgeInsets.all(20),
+              child: Container(
+                color: Colors.blue[300],
+                child: Center(child: Text('内边距区域')),
+              ),
+            ),
+          ),
+          _buildLayoutExample(
+            '2. margin 属性',
+            '外边距',
+            Container(
+              width: 200,
+              height: 100,
+              color: Colors.green[100],
+              margin: EdgeInsets.all(20),
+              child: Center(child: Text('外边距效果')),
+            ),
+          ),
+          _buildLayoutExample(
+            '3. alignment 属性',
+            '子组件对齐方式',
+            Container(
+              width: 200,
+              height: 100,
+              color: Colors.orange[100],
+              alignment: Alignment.bottomRight,
+              child: Container(
+                width: 60,
+                height: 30,
+                color: Colors.orange[300],
+                child: Center(child: Text('右下角')),
+              ),
+            ),
+          ),
+          _buildLayoutExample(
+            '4. transform 属性',
+            '矩阵变换',
+            Container(
+              width: 120,
+              height: 60,
+              color: Colors.purple[100],
+              transform: Matrix4.rotationZ(0.1)..translate(10.0),
+              child: Center(child: Text('旋转和平移')),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLayoutExample(String title, String description, Widget container) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          SizedBox(height: 4),
+          Text(description, style: TextStyle(color: Colors.grey[600])),
+          SizedBox(height: 8),
+          Center(child: container),
+        ],
       ),
     );
   }
