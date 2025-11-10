@@ -1,5 +1,72 @@
 import 'package:flutter/material.dart';
 
+class BottomNavigationExample extends StatefulWidget {
+  @override
+  _BottomNavigationExampleState createState() => _BottomNavigationExampleState();
+}
+
+class _BottomNavigationExampleState extends State<BottomNavigationExample> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    _buildPage('首页', Colors.blue),
+    _buildPage('搜索', Colors.green),
+    _buildPage('收藏', Colors.orange),
+    _buildPage('设置', Colors.purple),
+  ];
+
+  static Widget _buildPage(String title, Color color) {
+    return Container(
+      color: color.withOpacity(0.1),
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('底部导航栏示例')),
+      body: _pages[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed, // 固定类型，显示所有标签
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '首页',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: '搜索',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: '收藏',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: '设置',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class FABLocationAnimation extends StatefulWidget {
   @override
   _FABLocationAnimationState createState() => _FABLocationAnimationState();
