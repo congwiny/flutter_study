@@ -1,5 +1,207 @@
 import 'package:flutter/material.dart';
 
+class ComplexScaffoldExample extends StatefulWidget {
+  @override
+  _ComplexScaffoldExampleState createState() => _ComplexScaffoldExampleState();
+}
+
+class _ComplexScaffoldExampleState extends State<ComplexScaffoldExample> {
+  int _selectedIndex = 0;
+  bool _isDrawerOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 应用栏
+      appBar: AppBar(
+        title: Text('复杂 Scaffold 示例'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+        ),
+        actions: [
+          IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: Icon(Icons.notifications), onPressed: () {}),
+        ],
+      ),
+
+      // 左侧抽屉
+      drawer: _buildDrawer(),
+
+      // 主要内容
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.deepPurple[50]!, Colors.white],
+          ),
+        ),
+        child: Column(
+          children: [
+            // 顶部卡片
+            Container(
+              margin: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.deepPurple[100],
+                    child: Icon(Icons.person, size: 30, color: Colors.deepPurple),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('欢迎回来!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        Text('今天是个美好的一天', style: TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // 功能网格
+            Expanded(
+              child: GridView.count(
+                padding: EdgeInsets.all(16),
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: [
+                  _buildFeatureCard('音乐', Icons.music_note, Colors.red),
+                  _buildFeatureCard('视频', Icons.video_library, Colors.blue),
+                  _buildFeatureCard('照片', Icons.photo_library, Colors.green),
+                  _buildFeatureCard('设置', Icons.settings, Colors.orange),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      // 悬浮按钮
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
+      // 底部导航栏
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: (index) => setState(() => _selectedIndex = index),
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.grey,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+            BottomNavigationBarItem(icon: Icon(Icons.explore), label: '发现'),
+            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: '收藏'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: '我的'),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text('张三'),
+            accountEmail: Text('zhangsan@example.com'),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Text('张', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.deepPurple, Colors.purple],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+          _buildDrawerItem(Icons.home, '首页'),
+          _buildDrawerItem(Icons.person, '个人资料'),
+          _buildDrawerItem(Icons.settings, '设置'),
+          _buildDrawerItem(Icons.help, '帮助'),
+          Divider(),
+          _buildDrawerItem(Icons.exit_to_app, '退出登录'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  Widget _buildFeatureCard(String title, IconData icon, Color color) {
+    return Card(
+      elevation: 4,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: color),
+            SizedBox(height: 8),
+            Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class SnackBarBottomSheetExample extends StatelessWidget {
   void _showSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
