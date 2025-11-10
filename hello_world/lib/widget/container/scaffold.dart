@@ -1,5 +1,81 @@
 import 'package:flutter/material.dart';
 
+class SnackBarBottomSheetExample extends StatelessWidget {
+  void _showSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('这是一个 SnackBar 提示!'),
+        action: SnackBarAction(
+          label: '撤销',
+          onPressed: () {
+            // 撤销操作
+          },
+        ),
+        duration: Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.share),
+              title: Text('分享'),
+              onTap: () {
+                Navigator.pop(context);
+                _showSnackBar(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.save),
+              title: Text('保存'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: Icon(Icons.delete),
+              title: Text('删除'),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('SnackBar 和 BottomSheet')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _showSnackBar(context),
+              child: Text('显示 SnackBar'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _showBottomSheet(context),
+              child: Text('显示 BottomSheet'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CustomBottomNavigation extends StatefulWidget {
   @override
   _CustomBottomNavigationState createState() => _CustomBottomNavigationState();
