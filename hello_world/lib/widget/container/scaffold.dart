@@ -1,5 +1,97 @@
 import 'package:flutter/material.dart';
 
+class FABLocationAnimation extends StatefulWidget {
+  @override
+  _FABLocationAnimationState createState() => _FABLocationAnimationState();
+}
+
+class _FABLocationAnimationState extends State<FABLocationAnimation> {
+  FloatingActionButtonLocation _fabLocation = FloatingActionButtonLocation.endFloat;
+  bool _isFabVisible = true;
+
+  final Map<String, FloatingActionButtonLocation> _fabLocations = {
+    'endFloat': FloatingActionButtonLocation.endFloat,
+    'centerFloat': FloatingActionButtonLocation.centerFloat,
+    'endDocked': FloatingActionButtonLocation.endDocked,
+    'centerDocked': FloatingActionButtonLocation.centerDocked,
+    'startFloat': FloatingActionButtonLocation.startFloat,
+  };
+
+  void _changeFabLocation(String location) {
+    setState(() {
+      _fabLocation = _fabLocations[location]!;
+    });
+  }
+
+  void _toggleFabVisibility() {
+    setState(() {
+      _isFabVisible = !_isFabVisible;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('FAB 位置和动画')),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            _buildLocationSelector(),
+            SizedBox(height: 20),
+            _buildVisibilityToggle(),
+            Spacer(),
+            Text('当前 FAB 位置: ${_fabLocation.toString().split('.').last}'),
+          ],
+        ),
+      ),
+      floatingActionButton: _isFabVisible
+          ? FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      )
+          : null,
+      floatingActionButtonLocation: _fabLocation,
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        child: Container(height: 50),
+      ),
+    );
+  }
+
+  Widget _buildLocationSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('选择 FAB 位置:', style: TextStyle(fontWeight: FontWeight.bold)),
+        Wrap(
+          spacing: 8,
+          children: _fabLocations.keys.map((location) {
+            return ChoiceChip(
+              label: Text(location),
+              selected: _fabLocation == _fabLocations[location],
+              onSelected: (selected) => _changeFabLocation(location),
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVisibilityToggle() {
+    return Row(
+      children: [
+        Text('FAB 可见性:', style: TextStyle(fontWeight: FontWeight.bold)),
+        SizedBox(width: 16),
+        Switch(
+          value: _isFabVisible,
+          onChanged: (value) => _toggleFabVisibility(),
+        ),
+        Text(_isFabVisible ? '显示' : '隐藏'),
+      ],
+    );
+  }
+}
 class DrawerControlExample extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
