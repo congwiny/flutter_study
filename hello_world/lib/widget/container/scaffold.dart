@@ -1,5 +1,51 @@
 import 'package:flutter/material.dart';
 
+class DrawerControlExample extends StatelessWidget {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        title: Text('抽屉控制示例'),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: Center(child: Text('左侧抽屉')),
+      ),
+      endDrawer: Drawer(
+        child: Center(child: Text('右侧抽屉')),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+              child: Text('打开左侧抽屉'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
+              child: Text('打开右侧抽屉'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class DrawerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
