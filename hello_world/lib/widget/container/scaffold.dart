@@ -1,5 +1,52 @@
 import 'package:flutter/material.dart';
 
+class ScaffoldPerformance extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 使用 key 来优化性能
+      key: GlobalKey<ScaffoldState>(),
+
+      appBar: AppBar(
+        title: Text('性能优化示例'),
+        // 避免在 AppBar 中使用复杂的组件
+      ),
+
+      body: ListView.builder(
+        // 对于长列表使用 builder 优化性能
+        itemCount: 100,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('项目 $index'),
+            // 使用 const 构造函数优化
+            leading: const Icon(Icons.star),
+          );
+        },
+      ),
+
+      // 使用 const 构造函数创建不变的组件
+      floatingActionButton: const FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          // 使用 const 创建 BottomNavigationBarItem
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '首页',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: '搜索',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class ComplexScaffoldExample extends StatefulWidget {
   @override
   _ComplexScaffoldExampleState createState() => _ComplexScaffoldExampleState();
