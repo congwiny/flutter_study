@@ -1,5 +1,82 @@
 import 'package:flutter/material.dart';
 
+class CustomBottomNavigation extends StatefulWidget {
+  @override
+  _CustomBottomNavigationState createState() => _CustomBottomNavigationState();
+}
+
+class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('自定义底部导航栏')),
+      body: Container(
+        color: Colors.grey[100],
+        child: Center(
+          child: Text(
+            '当前页面: $_currentIndex',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 70,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildNavItem(Icons.home, '首页', 0),
+            _buildNavItem(Icons.search, '搜索', 1),
+            _buildNavItem(Icons.shopping_cart, '购物车', 2),
+            _buildNavItem(Icons.person, '我的', 3),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    final isSelected = _currentIndex == index;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: isSelected ? Colors.blue : Colors.grey,
+            size: isSelected ? 28 : 24,
+          ),
+          SizedBox(height: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.blue : Colors.grey,
+              fontSize: isSelected ? 12 : 11,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class BottomNavigationExample extends StatefulWidget {
   @override
   _BottomNavigationExampleState createState() => _BottomNavigationExampleState();
