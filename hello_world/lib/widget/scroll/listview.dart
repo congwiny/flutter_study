@@ -5,11 +5,47 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: SeparatedListViewExample(),
+      body: CustomListViewExample(),
     );
   }
 }
 
+class CustomListViewExample extends StatelessWidget {
+  final List<Color> colors = [
+    Colors.red, Colors.blue, Colors.green, Colors.orange,
+    Colors.purple, Colors.teal, Colors.amber, Colors.deepOrange
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.custom(
+      //使用 SliverChildDelegate 实现高度自定义。
+      childrenDelegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+          return Container(
+            height: 100.0,
+            color: colors[index % colors.length],
+            child: Center(
+              child: Text(
+                'Custom Item $index',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+        },
+        childCount: 50,
+        addAutomaticKeepAlives: true,
+        addRepaintBoundaries: true,
+      ),
+    );
+  }
+}
+
+// ListView.separated - 带分隔符的列表
 class SeparatedListViewExample extends StatelessWidget {
   final List<String> items = List.generate(20, (index) => 'Section $index');
 
