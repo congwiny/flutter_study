@@ -5,7 +5,34 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: DynamicListViewExample(),
+      body: SeparatedListViewExample(),
+    );
+  }
+}
+
+class SeparatedListViewExample extends StatelessWidget {
+  final List<String> items = List.generate(20, (index) => 'Section $index');
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: items.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider(
+          color: Colors.grey[300],
+          thickness: 1.0,
+          height: 1.0,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            items[index],
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+        );
+      },
     );
   }
 }
