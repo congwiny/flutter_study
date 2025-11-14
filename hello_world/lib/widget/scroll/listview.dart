@@ -5,8 +5,185 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: AnimatedListViewExample(),
+      body: ComprehensiveListViewExample(),
     );
+  }
+}
+
+class ComprehensiveListViewExample extends StatefulWidget {
+  @override
+  _ComprehensiveListViewExampleState createState() => _ComprehensiveListViewExampleState();
+}
+
+class _ComprehensiveListViewExampleState extends State<ComprehensiveListViewExample> {
+  final List<Map<String, dynamic>> _products = List.generate(50, (index) {
+    return {
+      'id': index,
+      'name': 'Product $index',
+      'price': (index + 1) * 10.0,
+      'category': 'Category ${index % 5}',
+      'isFavorite': false,
+    };
+  });
+
+  final ScrollController _scrollController = ScrollController();
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  List<Map<String, dynamic>> get _filteredProducts {
+    if (_searchQuery.isEmpty) return _products;
+    return _products.where((product) {
+      return product['name'].toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
+  }
+
+  void _toggleFavorite(int id) {
+    setState(() {
+      final index = _products.indexWhere((product) => product['id'] == id);
+      if (index != -1) {
+        _products[index]['isFavorite'] = !_products[index]['isFavorite'];
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Product List'),
+        backgroundColor: Colors.blue,
+      ),
+      body: Column(
+        children: [
+          // 搜索栏
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search products...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
+              },
+            ),
+          ),
+          // 结果统计
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${_filteredProducts.length} products found',
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+                Text(
+                  'Search: "$_searchQuery"',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ],
+            ),
+          ),
+          // 列表内容
+          Expanded(
+            child: _filteredProducts.isEmpty
+                ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.search_off, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No products found',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                ],
+              ),
+            )
+                : ListView.builder(
+              controller: _scrollController,
+              itemCount: _filteredProducts.length,
+              itemBuilder: (context, index) {
+                final product = _filteredProducts[index];
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                  elevation: 2.0,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.blue[100],
+                      child: Text(
+                        '${product['id']}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    title: Text(
+                      product['name'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Category: ${product['category']}'),
+                        Text(
+                          '\$${product['price']}',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        product['isFavorite']
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: product['isFavorite'] ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: () => _toggleFavorite(product['id']),
+                    ),
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Selected: ${product['name']}'),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _scrollController.animateTo(
+            0,
+            duration: Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        },
+        child: Icon(Icons.arrow_upward),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
   }
 }
 
