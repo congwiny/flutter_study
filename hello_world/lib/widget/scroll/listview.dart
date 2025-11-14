@@ -5,7 +5,53 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: SectionedListViewExample(),
+      body: AnimatedListViewExample(),
+    );
+  }
+}
+
+class AnimatedListViewExample extends StatefulWidget {
+  @override
+  _AnimatedListViewExampleState createState() => _AnimatedListViewExampleState();
+}
+
+class _AnimatedListViewExampleState extends State<AnimatedListViewExample> {
+  final List<String> _items = List.generate(10, (index) => 'Item $index');
+
+  void _addItem() {
+    setState(() {
+      _items.add('New Item ${_items.length}');
+    });
+  }
+
+  void _removeItem(int index) {
+    setState(() {
+      _items.removeAt(index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: _items.length,
+      itemBuilder: (context, index) {
+        return Dismissible(
+          key: Key(_items[index]),
+          background: Container(color: Colors.red),
+          secondaryBackground: Container(color: Colors.green),
+          onDismissed: (direction) => _removeItem(index),
+          child: Card(
+            child: ListTile(
+              title: Text(_items[index]),
+              subtitle: Text('Swipe to dismiss'),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => _removeItem(index),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
