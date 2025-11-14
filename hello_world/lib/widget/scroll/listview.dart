@@ -5,10 +5,91 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: CustomListViewExample(),
+      body: ScrollControllerExample(),
     );
   }
 }
+
+class ScrollControllerExample extends StatefulWidget {
+  @override
+  _ScrollControllerExampleState createState() => _ScrollControllerExampleState();
+}
+
+class _ScrollControllerExampleState extends State<ScrollControllerExample> {
+  final ScrollController _controller = ScrollController();
+  double _scrollOffset = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      setState(() {
+        _scrollOffset = _controller.offset;
+      });
+    });
+  }
+
+  void _scrollToTop() {
+    _controller.animateTo(
+      0.0,
+      duration: Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _scrollToBottom() {
+    _controller.animateTo(
+      _controller.position.maxScrollExtent,
+      duration: Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(8.0),
+          color: Colors.grey[200],
+          child: Text('Scroll Offset: ${_scrollOffset.toStringAsFixed(2)}'),
+        ),
+        Expanded(
+          child: ListView.builder(
+            controller: _controller,
+            itemCount: 100,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text('Item $index'),
+                subtitle: Text('Scroll to see controller in action'),
+              );
+            },
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: _scrollToTop,
+              child: Text('To Top'),
+            ),
+            ElevatedButton(
+              onPressed: _scrollToBottom,
+              child: Text('To Bottom'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
 
 class CustomListViewExample extends StatelessWidget {
   final List<Color> colors = [
