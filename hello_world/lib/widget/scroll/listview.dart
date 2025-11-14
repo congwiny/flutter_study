@@ -5,8 +5,91 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: ScrollControllerExample(),
+      body: RefreshableListViewExample(),
     );
+  }
+}
+
+//下拉刷新与上拉加载
+class RefreshableListViewExample extends StatefulWidget {
+  @override
+  _RefreshableListViewExampleState createState() => _RefreshableListViewExampleState();
+}
+
+class _RefreshableListViewExampleState extends State<RefreshableListViewExample> {
+  final List<String> _items = List.generate(20, (index) => 'Initial Item $index');
+  final ScrollController _scrollController = ScrollController();
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >= _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      _loadMoreData();
+    }
+  }
+
+  Future<void> _refreshData() async {
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      _items.clear();
+      _items.addAll(List.generate(20, (index) => 'Refreshed Item $index'));
+    });
+  }
+
+  Future<void> _loadMoreData() async {
+    if (_isLoading) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      final startIndex = _items.length;
+      _items.addAll(List.generate(10, (index) => 'Loaded Item ${startIndex + index}'));
+      _isLoading = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshIndicator(
+      onRefresh: _refreshData,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: _items.length + 1, // 为加载指示器预留位置
+        itemBuilder: (context, index) {
+          if (index == _items.length) {
+            return _isLoading
+                ? Container(
+              padding: EdgeInsets.all(16.0),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+                : SizedBox.shrink();
+          }
+
+          return ListTile(
+            title: Text(_items[index]),
+            leading: Icon(Icons.star),
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
 
