@@ -5,10 +5,70 @@ class ListViewExamplePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ListView 示例')),
-      body: RefreshableListViewExample(),
+      body: SectionedListViewExample(),
     );
   }
 }
+
+class SectionedListViewExample extends StatelessWidget {
+  final Map<String, List<String>> sections = {
+    'Fruits': ['Apple', 'Banana', 'Orange', 'Grapes'],
+    'Vegetables': ['Carrot', 'Broccoli', 'Spinach', 'Tomato'],
+    'Dairy': ['Milk', 'Cheese', 'Yogurt', 'Butter'],
+    'Meat': ['Chicken', 'Beef', 'Pork', 'Fish'],
+  };
+
+  // 生成扁平化索引：每个元素记录是 head 还是 item，并保存对应内容
+  List<_Entry> _flatten() {
+    final List<_Entry> list = [];
+    for (final e in sections.entries) {
+      list.add(_Entry.header(e.key));
+      for (final item in e.value) {
+        list.add(_Entry.item(item));
+      }
+      // 可选：在每组后面插入分隔占位
+      list.add(_Entry.divider());
+    }
+    return list;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final flat = _flatten();
+    return ListView.builder(
+      itemCount: flat.length,
+      itemBuilder: (context, index) {
+        final e = flat[index];
+        if (e.type == _EntryType.header) {
+          return Container(
+            padding: EdgeInsets.all(16.0),
+            color: Colors.blue[50],
+            child: Text(e.text!, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          );
+        } else if (e.type == _EntryType.item) {
+          return ListTile(
+            key: ValueKey(e.text),
+            title: Text(e.text!),
+            leading: Icon(Icons.check_circle_outline),
+            onTap: () { /* 真实逻辑 */ },
+          );
+        } else {
+          return Divider(height: 1, color: Colors.grey[300]);
+        }
+      },
+    );
+  }
+}
+
+enum _EntryType { header, item, divider }
+class _Entry {
+  final _EntryType type;
+  final String? text;
+  _Entry.header(this.text) : type = _EntryType.header;
+  _Entry.item(this.text) : type = _EntryType.item;
+  _Entry.divider() : type = _EntryType.divider, text = null;
+}
+
 
 //下拉刷新与上拉加载
 class RefreshableListViewExample extends StatefulWidget {
